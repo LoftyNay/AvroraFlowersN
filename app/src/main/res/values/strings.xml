@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">AvroraFlowers</string>
+    <string name="app_name">Avrora Flowers</string>
+    <string name="main_item_nav">Главный</string>
+    <string name="cart_item_nav">Корзина</string>
+    <string name="catalog_item_nav">Каталог</string>
+    <string name="orders_item_nav">Заказы</string>
+    <string name="create_order">Оформить заказ</string>
+    <string name="repeat_last_order">Повторить прошлый заказ</string>
+    <string name="load_last_order">Загрузить прошлый заказ</string>
+    <string name="hello">Здравствуйте,\nАлександр</string>
+    <string name="contacts">Контакты</string>
+    <string name="about">О компании</string>
 </resources>

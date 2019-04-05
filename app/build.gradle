@@ -31,7 +31,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //Android X Library
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
@@ -51,13 +51,14 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     //Navigation
-    implementation 'android.arch.navigation:navigation-fragment:1.0.0'
-    implementation 'android.arch.navigation:navigation-ui:1.0.0'
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0'
 
     //Moxy Android X MVP
     implementation 'tech.schoolhelper:moxy-x-android:1.7.0'
     implementation 'tech.schoolhelper:moxy-x-material:1.7.0'
     implementation 'tech.schoolhelper:moxy-x-androidx:1.7.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     kapt 'tech.schoolhelper:moxy-x-compiler:1.7.0'
 
     //EventBus
@@ -70,9 +71,6 @@ dependencies {
     implementation 'com.google.dagger:dagger-android:2.20'
     kapt 'com.google.dagger:dagger-android-processor:2.20'
     kapt 'com.google.dagger:dagger-compiler:2.20'
-
-
-
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/frameLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+                android:text="@string/hello"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:lineSpacingExtra="5dp"
+                android:textColor="@android:color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/mainHelloTextView"
+                app:layout_constraintBottom_toTopOf="@+id/createOrderButton" app:layout_constraintVertical_bias="0.39"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/createOrderButton"
+                android:text="@string/create_order"
+                android:layout_width="300dp"
+                android:layout_height="64dp"
+                android:singleLine="true"
+                style="@style/ButtonColorFill"
+                app:layout_constraintBottom_toTopOf="@+id/repeatLastOrderButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="8dp"
+                app:cornerRadius="4dp"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/repeatLastOrderButton"
+                android:text="@string/repeat_last_order"
+                android:layout_width="300dp"
+                android:layout_height="64dp"
+                android:layout_marginBottom="8dp"
+                style="@style/ButtonOutlined"
+                app:layout_constraintBottom_toTopOf="@+id/loadLastOrderButton"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cornerRadius="4dp"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/loadLastOrderButton"
+                android:text="@string/load_last_order"
+                android:layout_width="300dp"
+                android:layout_height="64dp"
+                style="@style/ButtonOutlined"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:cornerRadius="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/mainHelloTextView"
+                app:layout_constraintVertical_bias="0.55"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/contactsMainButton"
+                android:text="@string/contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loadLastOrderButton"
+                app:layout_constraintHorizontal_bias="0.15" app:layout_constraintVertical_bias="0.56"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/aboutMainButton"
+                android:text="@string/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loadLastOrderButton"
+                app:layout_constraintHorizontal_bias="0.85" app:layout_constraintVertical_bias="0.56"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
