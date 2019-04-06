@@ -12,5 +12,5 @@
     <fragment android:id="@+id/navigation_catalog" android:name="com.ltn.avroraflowers.ui.fragments.CatalogFragment"
               android:label="@string/catalog_item_nav"/>
     <fragment android:id="@+id/navigation_orders" android:name="com.ltn.avroraflowers.ui.fragments.OrdersFragment"
-              android:label="@string/orders_item_nav"/>
+              android:label="@string/orders_item_nav"/><action android:id="@+id/action_global_navigation_main" app:destination="@id/navigation_main"/>
 </navigation>

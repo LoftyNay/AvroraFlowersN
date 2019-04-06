@@ -1,50 +1,52 @@
 package com.ltn.avroraflowers.ui.activities
 
 import android.os.Bundle
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
+import android.view.MenuItem
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ltn.avroraflowers.R
+import com.ltn.avroraflowers.ui.base.BaseActivity
+import com.ltn.avroraflowers.ui.fragments.CartFragment
+import com.ltn.avroraflowers.ui.fragments.CatalogFragment
+import com.ltn.avroraflowers.ui.fragments.MainFragment
+import com.ltn.avroraflowers.ui.fragments.OrdersFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
-
-    private lateinit var navController: NavController
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        navigationSetup()
+        supportActionBar?.hide()
+
+        bottomNavigation.setOnNavigationItemSelectedListener(this)
+        loadFragment(MainFragment())
     }
 
-    private fun navigationSetup() {
-        navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        bottomNavigation.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener(this)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, null)
-    }
-
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
-        if (destination.id == R.id.navigation_main) {
-            supportActionBar?.hide()
-        } else {
-            supportActionBar?.title = destination.label
-            supportActionBar?.show()
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.bottom_navigation_main -> {
+                loadFragment(MainFragment())
+                supportActionBar?.hide()
+            }
+            R.id.bottom_navigation_cart -> {
+                loadFragment(CartFragment())
+                supportActionBar?.show()
+                supportActionBar?.title = resources.getString(R.string.cart_item_nav)
+            }
+            R.id.bottom_navigation_catalog -> {
+                loadFragment(CatalogFragment())
+                supportActionBar?.show()
+                supportActionBar?.title = resources.getString(R.string.catalog_item_nav)
+            }
+            R.id.bottom_navigation_orders -> {
+                loadFragment(OrdersFragment())
+                supportActionBar?.show()
+                supportActionBar?.title = resources.getString(R.string.orders_item_nav)
+            }
         }
+        return true
     }
-
-    /*
-        toolbarHide = toolbar.animate().translationY((-toolbar.bottom).toFloat()).setInterpolator(AccelerateInterpolator())
-        toolbarShow = toolbar.animate().translationY(0F).setInterpolator(DecelerateInterpolator())*/
 }

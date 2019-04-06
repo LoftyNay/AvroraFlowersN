@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/navigation_main"
+            android:id="@+id/bottom_navigation_main"
             android:icon="@drawable/ic_bottom_nav_main"
             android:title="@string/main_item_nav"/>
     <item
-            android:id="@+id/navigation_cart"
+            android:id="@+id/bottom_navigation_cart"
             android:icon="@drawable/ic_bottom_nav_cart"
             android:title="@string/cart_item_nav"/>
     <item
-            android:id="@+id/navigation_catalog"
+            android:id="@+id/bottom_navigation_catalog"
             android:icon="@drawable/ic_bottom_nav_catalog"
             android:title="@string/catalog_item_nav"/>
     <item
-            android:id="@+id/navigation_orders"
+            android:id="@+id/bottom_navigation_orders"
             android:icon="@drawable/ic_bottom_nav_orders"
             android:title="@string/orders_item_nav"/>
 </menu>
