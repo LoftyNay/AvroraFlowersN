@@ -7,6 +7,7 @@
         android:layout_height="?attr/actionBarSize"
         android:contentInsetLeft="25dp"
         android:contentInsetStart="25dp"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:contentInsetLeft="25dp"
         app:contentInsetStart="25dp"
         android:theme="@style/ToolbarTheme">

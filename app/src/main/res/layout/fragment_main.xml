@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" android:id="@+id/frameLayout">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,29 +60,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/mainHelloTextView"
                 app:layout_constraintVertical_bias="0.55"/>
 
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/contactsMainButton"
-                android:text="@string/contacts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loadLastOrderButton"
-                app:layout_constraintHorizontal_bias="0.15" app:layout_constraintVertical_bias="0.56"/>
-
-        <com.google.android.material.button.MaterialButton
-                android:id="@+id/aboutMainButton"
-                android:text="@string/about"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/TextButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/loadLastOrderButton"
-                app:layout_constraintHorizontal_bias="0.85" app:layout_constraintVertical_bias="0.56"/>
+        <include layout="@layout/contacts_about_buttons_layout"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="8dp"
+                 app:layout_constraintTop_toBottomOf="@+id/loadLastOrderButton"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintVertical_bias="0.45"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -10,4 +10,14 @@
     <string name="hello">Здравствуйте,\nАлександр</string>
     <string name="contacts">Контакты</string>
     <string name="about">О компании</string>
+    <string name="login">Вход</string>
+    <string name="register">Регистрация</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="name">Имя</string>
+    <string name="last_name">Фамилия</string>
+    <string name="phone_number">Телефон</string>
+    <string name="skype">Skype</string>
+    <string name="to_register_b">Зарегистрироваться</string>
+    <string name="to_login_b">Войти</string>
 </resources>
