@@ -14,9 +14,9 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    @Singleton
     @Provides
-    fun provideRetrofit() : Retrofit {
+    @Singleton
+    fun provideRetrofit(): Retrofit {
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -25,8 +25,8 @@ class NetworkModule {
         return retrofit
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideApi(retrofit: Retrofit): ApiAvrora {
         return retrofit.create(ApiAvrora::class.java)
     }

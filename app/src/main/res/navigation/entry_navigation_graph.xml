@@ -10,7 +10,7 @@
         <action android:id="@+id/toRegisterActivity" app:destination="@id/registerActivity"/>
     </fragment>
 
-    <fragment android:id="@+id/entryLoginFragment" android:name="com.ltn.avroraflowers.ui.fragments.EntryLoginFragment"
+    <fragment android:id="@+id/entryLoginFragment" android:name="com.ltn.avroraflowers.ui.fragments.entryLoginFragment.EntryLoginFragment"
               android:label="EntryLoginFragment"/>
     <activity android:id="@+id/registerActivity" android:name="com.ltn.avroraflowers.ui.activities.RegisterActivity"
               android:label="RegisterActivity"/>
