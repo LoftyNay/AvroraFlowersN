@@ -34,11 +34,12 @@ class EntryLoginInteractor : BaseInteractor(), IEntryLoginInteractor {
                             onCheckUserDataFromServer.onWrongPassword()
                         }
                     }
+                    onCheckUserDataFromServer.onCheckEnded()
                     disposable.dispose()
                 },
                 { error ->
                     Log.d(Constants.GLOBAL_LOG, error.message)
-                    disposable.dispose()
+                    onCheckUserDataFromServer.onCheckEnded()
                 }
             )
     }

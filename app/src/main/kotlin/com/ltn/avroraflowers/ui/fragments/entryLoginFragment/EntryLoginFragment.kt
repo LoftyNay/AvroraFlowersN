@@ -7,13 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.activities.MainActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
-import com.ltn.avroraflowers.ui.base.BaseView
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.view.EntryLoginFragmentView
 import com.ltn.avroraflowers.utils.Constants
@@ -44,7 +42,7 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
     }
 
     override fun onClick(v: View?) {
-        when(v?.id) {
+        when (v?.id) {
             R.id.confLoginButton -> {
                 val email = emailEditLogin.text?.trim().toString()
                 val password = passwordEditLogin.text?.trim().toString()
@@ -74,21 +72,24 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
     }
 
     override fun showEmailNotFound() {
-        Log.d(Constants.GLOBAL_LOG, "EMAIL NOT FOUND")
         textInputEmailLayoutLogin.error = "Пользователя с таким Email не существует"
         textInputPasswordLayoutLogin.error = null
     }
 
-    //FIXME
     override fun showWrongPassword() {
-        Log.d(Constants.GLOBAL_LOG, "WRONG PASS")
+        passwordEditLogin.requestFocus()
         textInputPasswordLayoutLogin.error = "Неверный пароль"
         textInputEmailLayoutLogin.error = null
     }
 
     override fun showProgress() {
+        utils.viewToFront(progressBarInLoginButton)
+        progressBarInLoginButton.visibility = View.VISIBLE
+        utils.hideTextAndDisableButton(confLoginButton)
     }
 
     override fun hideProgress() {
+        progressBarInLoginButton.visibility = View.INVISIBLE
+        utils.showTextAndEnableButton(confLoginButton)
     }
 }

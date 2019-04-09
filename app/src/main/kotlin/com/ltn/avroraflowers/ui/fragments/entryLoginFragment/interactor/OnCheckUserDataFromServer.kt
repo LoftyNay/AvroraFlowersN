@@ -4,4 +4,5 @@ interface OnCheckUserDataFromServer {
     fun onValidUserData()
     fun onEmailNotFound()
     fun onWrongPassword()
+    fun onCheckEnded()
 }
