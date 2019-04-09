@@ -18,7 +18,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/textInputPasswordLayoutLogin"
-                app:layout_constraintVertical_chainStyle="packed" app:layout_constraintVertical_bias="0.41000003">
+                app:layout_constraintVertical_chainStyle="packed">
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/emailEditLogin"
                     android:imeOptions="actionNext"
