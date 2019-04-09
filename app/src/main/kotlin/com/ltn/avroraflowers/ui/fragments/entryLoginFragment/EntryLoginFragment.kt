@@ -76,14 +76,15 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
     override fun showEmailNotFound() {
         Log.d(Constants.GLOBAL_LOG, "EMAIL NOT FOUND")
         textInputEmailLayoutLogin.error = "Пользователя с таким Email не существует"
+        textInputPasswordLayoutLogin.error = null
     }
 
     //FIXME
     override fun showWrongPassword() {
         Log.d(Constants.GLOBAL_LOG, "WRONG PASS")
         textInputPasswordLayoutLogin.error = "Неверный пароль"
+        textInputEmailLayoutLogin.error = null
     }
-
 
     override fun showProgress() {
     }
