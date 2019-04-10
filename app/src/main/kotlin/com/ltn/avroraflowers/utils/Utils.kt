@@ -22,13 +22,13 @@ class Utils(var context: Context) {
         view.invalidate()
     }
 
-    fun showTextAndEnableButton(button: MaterialButton) {
+    fun showTextAndEnableButton(button: MaterialButton, text: String) {
         button.isEnabled = true
-        button.text = context.resources.getString(R.string.login)
+        button.text = text
     }
 
     fun hideTextAndDisableButton(button: MaterialButton) {
-        button.text = null
         button.isEnabled = false
+        button.text = null
     }
 }

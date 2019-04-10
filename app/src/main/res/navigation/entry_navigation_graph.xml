@@ -12,6 +12,6 @@
 
     <fragment android:id="@+id/entryLoginFragment" android:name="com.ltn.avroraflowers.ui.fragments.entryLoginFragment.EntryLoginFragment"
               android:label="EntryLoginFragment"/>
-    <activity android:id="@+id/registerActivity" android:name="com.ltn.avroraflowers.ui.activities.RegisterActivity"
+    <activity android:id="@+id/registerActivity" android:name="com.ltn.avroraflowers.ui.activities.registerActivity.RegisterActivity"
               android:label="RegisterActivity"/>
 </navigation>

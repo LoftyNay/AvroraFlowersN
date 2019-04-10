@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.R
@@ -15,6 +16,7 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.view.EntryLoginFragmentView
 import com.ltn.avroraflowers.utils.Constants
+import com.ltn.avroraflowers.utils.TextWatch
 import com.ltn.avroraflowers.utils.Utils
 import kotlinx.android.synthetic.main.fragment_entry_login.*
 import javax.inject.Inject
@@ -39,6 +41,9 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
         utils.showSoftKeyboard(emailEditLogin)
 
         confLoginButton.setOnClickListener(this)
+
+        emailEditLogin.addTextChangedListener(TextWatch(textInputEmailLayoutLogin))
+        passwordEditLogin.addTextChangedListener(TextWatch(textInputPasswordLayoutLogin))
     }
 
     override fun onClick(v: View?) {
@@ -68,7 +73,6 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
 
     override fun userDataValidationOk() {
         startActivity(Intent(activity, MainActivity::class.java))
-        Log.d(Constants.GLOBAL_LOG, "OK")
     }
 
     override fun showEmailNotFound() {
@@ -82,6 +86,11 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
         textInputEmailLayoutLogin.error = null
     }
 
+    override fun showConnectionProblem() {
+        Toast.makeText(context?.applicationContext, "Проблемы с соединением, попробуйте позже", Toast.LENGTH_LONG)
+            .show()
+    }
+
     override fun showProgress() {
         utils.viewToFront(progressBarInLoginButton)
         progressBarInLoginButton.visibility = View.VISIBLE
@@ -90,6 +99,6 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
 
     override fun hideProgress() {
         progressBarInLoginButton.visibility = View.INVISIBLE
-        utils.showTextAndEnableButton(confLoginButton)
+        utils.showTextAndEnableButton(confLoginButton, resources.getString(R.string.to_login_b))
     }
 }

@@ -11,8 +11,6 @@ import io.reactivex.schedulers.Schedulers
 
 class EntryLoginInteractor : BaseInteractor(), IEntryLoginInteractor {
 
-    private lateinit var disposable: Disposable
-
     override fun checkUserDataFromServer(
         email: String,
         password: String,
@@ -40,6 +38,8 @@ class EntryLoginInteractor : BaseInteractor(), IEntryLoginInteractor {
                 { error ->
                     Log.d(Constants.GLOBAL_LOG, error.message)
                     onCheckUserDataFromServer.onCheckEnded()
+                    onCheckUserDataFromServer.onFailure()
+                    disposable.dispose()
                 }
             )
     }

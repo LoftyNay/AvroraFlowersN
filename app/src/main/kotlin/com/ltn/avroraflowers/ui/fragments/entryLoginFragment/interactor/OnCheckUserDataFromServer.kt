@@ -5,4 +5,5 @@ interface OnCheckUserDataFromServer {
     fun onEmailNotFound()
     fun onWrongPassword()
     fun onCheckEnded()
+    fun onFailure()
 }

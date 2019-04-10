@@ -20,4 +20,8 @@
     <string name="skype">Skype</string>
     <string name="to_register_b">Зарегистрироваться</string>
     <string name="to_login_b">Войти</string>
+    <string name="email_validation_msg">Некорректный Email</string>
+    <string name="name_validation_msg">Некорректный ввод</string>
+    <string name="password_validation_msg">Не менее 5 символов</string>
+    <string name="user_exist_msg">Пользователь с таким Email уже зарегистрирован</string>
 </resources>

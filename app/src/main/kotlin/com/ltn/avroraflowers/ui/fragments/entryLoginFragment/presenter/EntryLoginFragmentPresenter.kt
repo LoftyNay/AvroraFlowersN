@@ -38,6 +38,10 @@ class EntryLoginFragmentPresenter : BasePresenter<EntryLoginFragmentView>(), IEn
         entryLoginInteractor.checkUserDataFromServer(email, password, this)
     }
 
+    override fun onFailure() {
+        viewState.showConnectionProblem()
+    }
+
     override fun onValidUserData() {
         viewState.userDataValidationOk()
     }
