@@ -6,11 +6,21 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.MainActivity">
+        tools:context=".ui.activities.mainActivity.MainActivity">
 
     <include layout="@layout/toolbar"/>
 
-    <FrameLayout
+    <com.ltn.avroraflowers.ui.activities.mainActivity.BottomNavigationViewPager
+            android:id="@+id/viewPagerMain"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="56dp">
+    </com.ltn.avroraflowers.ui.activities.mainActivity.BottomNavigationViewPager>
+
+ <!--   <FrameLayout
             android:id="@+id/main_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigation">
-    </FrameLayout>
+    </FrameLayout> -->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"

@@ -9,6 +9,12 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 
 class CatalogFragment : BaseFragment() {
 
+    companion object {
+        fun newInstance(): CatalogFragment {
+            return CatalogFragment()
+        }
+    }
+
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_catalog, container, false)
     }

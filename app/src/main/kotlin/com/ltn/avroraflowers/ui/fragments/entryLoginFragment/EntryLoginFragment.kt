@@ -7,14 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.R
-import com.ltn.avroraflowers.ui.activities.MainActivity
+import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.view.EntryLoginFragmentView
