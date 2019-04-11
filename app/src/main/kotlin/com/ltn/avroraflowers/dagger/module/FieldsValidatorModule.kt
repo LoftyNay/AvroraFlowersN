@@ -11,7 +11,7 @@ class FieldsValidatorModule {
 
     @Singleton
     @Provides
-    fun provideFieldsValidator(context: Context): FieldsValidator {
-        return FieldsValidator(context)
+    fun provideFieldsValidator(): FieldsValidator {
+        return FieldsValidator()
     }
 }

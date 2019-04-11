@@ -72,12 +72,29 @@ class RegisterActivity : BaseActivity(), RegisterActivityView, View.OnClickListe
     }
 
     override fun showUserExist() {
-        textInputEmailLayoutRegister.requestFocus()
         textInputEmailLayoutRegister.error = resources.getString(R.string.user_exist_msg)
+        textInputEmailLayoutRegister.requestFocus()
+    }
+
+    override fun showWrongInputErrorMessage(v: View) {
+        when(v.id) {
+            R.id.textInputNameLayoutRegister -> {
+                textInputNameLayoutRegister.error = resources.getString(R.string.name_validation_msg)
+                textInputNameLayoutRegister.requestFocus()
+            }
+            R.id.textInputEmailLayoutRegister -> {
+                textInputEmailLayoutRegister.error = resources.getString(R.string.email_validation_msg)
+                textInputEmailLayoutRegister.requestFocus()
+            }
+            R.id.textInputPasswordLayoutRegister -> {
+                textInputPasswordLayoutRegister.error = resources.getString(R.string.password_validation_msg)
+                textInputPasswordLayoutRegister.requestFocus()
+            }
+        }
     }
 
     override fun showConnectionProblem() {
-        Toast.makeText(applicationContext, "Проблемы с соединением, попробуйте позже", Toast.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, resources.getString(R.string.error_connection), Toast.LENGTH_LONG).show()
     }
 
     override fun showProgress() {

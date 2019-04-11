@@ -1,7 +1,6 @@
 package com.ltn.avroraflowers.ui.activities.registerActivity.interactor
 
 import android.util.Log
-import com.google.android.material.textfield.TextInputEditText
 import com.ltn.avroraflowers.model.UserRegister
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.utils.Constants
@@ -11,40 +10,34 @@ import io.reactivex.schedulers.Schedulers
 
 class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor {
 
-    override fun validateAndRegisterUser(
-        name: TextInputEditText,
-        email: TextInputEditText,
-        password: TextInputEditText,
-        onRegisterUser: OnRegisterUser
+    override fun registerUser(
+        email: String,
+        password: String,
+        onRegisterUserListener: OnRegisterUserListener
     ) {
-        if (fieldsValidator.isNameValid(name) && fieldsValidator.isEmailValid(email)
-            && fieldsValidator.isPasswordValid(password)
-        ) {
-            disposable = apiAvrora.userRegister(UserRegister(email.text.toString(), password.text.toString()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { result ->
-                        when (result.code) {
-                            STATUS_CODE.USER_EXIST.value -> {
-                                onRegisterUser.onUserExist()
-                            }
-                            STATUS_CODE.CREATED.value -> {
-                                onRegisterUser.onUserRegistered()
-                            }
+        val userData = UserRegister(email, password)
+        disposable = apiAvrora.userRegister(userData)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { result ->
+                    when (result.code) {
+                        STATUS_CODE.USER_EXIST.value -> {
+                            onRegisterUserListener.onUserExist()
                         }
-                        disposable.dispose()
-                        onRegisterUser.onValidateAndRegisterUserEnded()
-                    },
-                    { error ->
-                        Log.d(Constants.GLOBAL_LOG, error.message)
-                        disposable.dispose()
-                        onRegisterUser.onFailure()
-                        onRegisterUser.onValidateAndRegisterUserEnded()
+                        STATUS_CODE.CREATED.value -> {
+                            onRegisterUserListener.onUserRegistered()
+                        }
                     }
-                )
-        } else {
-            onRegisterUser.onValidateAndRegisterUserEnded()
-        }
+                    disposable.dispose()
+                    onRegisterUserListener.onRegisterUserEnded()
+                },
+                { error ->
+                    Log.d(Constants.GLOBAL_LOG, error.message)
+                    disposable.dispose()
+                    onRegisterUserListener.onFailure()
+                    onRegisterUserListener.onRegisterUserEnded()
+                }
+            )
     }
 }

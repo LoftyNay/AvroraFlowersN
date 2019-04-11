@@ -6,12 +6,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.base.BaseActivity
 import com.ltn.avroraflowers.ui.fragments.CartFragment
-import com.ltn.avroraflowers.ui.fragments.CatalogFragment
+import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
 import com.ltn.avroraflowers.ui.fragments.MainFragment
 import com.ltn.avroraflowers.ui.fragments.OrdersFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
-
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 

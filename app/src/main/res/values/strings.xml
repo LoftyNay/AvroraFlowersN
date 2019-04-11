@@ -24,4 +24,5 @@
     <string name="name_validation_msg">Некорректный ввод</string>
     <string name="password_validation_msg">Не менее 5 символов</string>
     <string name="user_exist_msg">Пользователь с таким Email уже зарегистрирован</string>
+    <string name="error_connection">Проблемы с соединением, попробуйте позже</string>
 </resources>

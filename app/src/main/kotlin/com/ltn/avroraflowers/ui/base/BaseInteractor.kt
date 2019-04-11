@@ -13,9 +13,6 @@ abstract class BaseInteractor {
     @Inject
     lateinit var apiAvrora: ApiAvrora
 
-    @Inject
-    lateinit var fieldsValidator: FieldsValidator
-
     init {
         App.component.inject(this)
     }

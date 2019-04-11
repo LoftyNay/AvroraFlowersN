@@ -3,11 +3,14 @@ package com.ltn.avroraflowers.ui.fragments.entryLoginFragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.R
@@ -15,7 +18,6 @@ import com.ltn.avroraflowers.ui.activities.MainActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.view.EntryLoginFragmentView
-import com.ltn.avroraflowers.utils.Constants
 import com.ltn.avroraflowers.utils.TextWatch
 import com.ltn.avroraflowers.utils.Utils
 import kotlinx.android.synthetic.main.fragment_entry_login.*
@@ -72,7 +74,8 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
     }
 
     override fun userDataValidationOk() {
-        startActivity(Intent(activity, MainActivity::class.java))
+        startActivity(Intent(activity, MainActivity::class.java), null)
+        activity?.finish()
     }
 
     override fun showEmailNotFound() {

@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/entry_navigation_graph" app:startDestination="@id/entryStartFragment">
+            android:id="@+id/entry_navigation_graph"
+            app:startDestination="@id/entryStartFragment">
 
     <fragment android:id="@+id/entryStartFragment" android:name="com.ltn.avroraflowers.ui.fragments.EntryStartFragment"
               android:label="EntryStartFragment">
+
         <action android:id="@+id/toLoginFragment"
                 app:destination="@id/entryLoginFragment"/>
         <action android:id="@+id/toRegisterActivity" app:destination="@id/registerActivity"/>
     </fragment>
 
-    <fragment android:id="@+id/entryLoginFragment" android:name="com.ltn.avroraflowers.ui.fragments.entryLoginFragment.EntryLoginFragment"
-              android:label="EntryLoginFragment"/>
-    <activity android:id="@+id/registerActivity" android:name="com.ltn.avroraflowers.ui.activities.registerActivity.RegisterActivity"
+    <fragment android:id="@+id/entryLoginFragment"
+              android:name="com.ltn.avroraflowers.ui.fragments.entryLoginFragment.EntryLoginFragment"
+              android:label="EntryLoginFragment">
+    </fragment>
+
+    <activity android:id="@+id/registerActivity"
+              android:name="com.ltn.avroraflowers.ui.activities.registerActivity.RegisterActivity"
               android:label="RegisterActivity"/>
 </navigation>

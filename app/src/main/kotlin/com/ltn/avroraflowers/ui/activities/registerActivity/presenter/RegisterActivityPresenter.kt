@@ -1,20 +1,23 @@
 package com.ltn.avroraflowers.ui.activities.registerActivity.presenter
 
 import android.content.Context
-import android.util.Log
+import android.view.View
 import com.arellomobile.mvp.InjectViewState
 import com.google.android.material.textfield.TextInputEditText
 import com.ltn.avroraflowers.App
-import com.ltn.avroraflowers.ui.activities.registerActivity.interactor.OnRegisterUser
+import com.ltn.avroraflowers.ui.activities.registerActivity.interactor.OnRegisterUserListener
 import com.ltn.avroraflowers.ui.activities.registerActivity.interactor.RegisterActivityInteractor
 import com.ltn.avroraflowers.ui.activities.registerActivity.view.RegisterActivityView
 import com.ltn.avroraflowers.ui.base.BasePresenter
-import com.ltn.avroraflowers.utils.Constants
+import com.ltn.avroraflowers.utils.FieldsValidator
 import javax.inject.Inject
 
 @InjectViewState
 class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegisterActivityPresenter,
-    OnRegisterUser {
+    OnRegisterUserListener {
+
+    @Inject
+    lateinit var fieldsValidator: FieldsValidator
 
     @Inject
     lateinit var registerActivityInteractor: RegisterActivityInteractor
@@ -34,15 +37,36 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
         emailEditText: TextInputEditText,
         passwordEditText: TextInputEditText
     ) {
-        viewState.showProgress()
-        registerActivityInteractor.validateAndRegisterUser(nameEditText, emailEditText, passwordEditText, this)
+        when {
+            !fieldsValidator.isNameValid(nameEditText) -> {
+                viewState.showWrongInputErrorMessage(nameEditText.parent.parent as View)
+            }
+            !fieldsValidator.isEmailValid(emailEditText) -> {
+                viewState.showWrongInputErrorMessage(emailEditText.parent.parent as View)
+            }
+            !fieldsValidator.isPasswordValid(passwordEditText) -> {
+                viewState.showWrongInputErrorMessage(passwordEditText.parent.parent as View)
+            }
+            else -> {
+                viewState.showProgress()
+                registerActivityInteractor.registerUser(
+                    emailEditText.text?.trim().toString(),
+                    passwordEditText.text?.trim().toString(),
+                    this
+                )
+            }
+        }
+    }
+
+    override fun onWrongInput(v: View) {
+        viewState.showWrongInputErrorMessage(v)
     }
 
     override fun onFailure() {
         viewState.showConnectionProblem()
     }
 
-    override fun onValidateAndRegisterUserEnded() {
+    override fun onRegisterUserEnded() {
         viewState.hideProgress()
     }
 
