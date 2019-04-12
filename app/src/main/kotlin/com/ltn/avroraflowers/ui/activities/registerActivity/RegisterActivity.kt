@@ -13,6 +13,7 @@ import com.ltn.avroraflowers.ui.activities.registerActivity.view.RegisterActivit
 import com.ltn.avroraflowers.ui.base.BaseActivity
 import com.ltn.avroraflowers.utils.TextWatch
 import com.ltn.avroraflowers.utils.Utils
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.toolbar.*
 import javax.inject.Inject

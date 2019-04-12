@@ -58,7 +58,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:cornerRadius="4dp"
                 app:layout_constraintTop_toBottomOf="@+id/mainHelloTextView"
-                app:layout_constraintVertical_bias="0.55"/>
+                app:layout_constraintVertical_bias="0.58000004"/>
 
         <include layout="@layout/contacts_about_buttons_layout"
                  android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                  app:layout_constraintStart_toStartOf="parent"
                  app:layout_constraintEnd_toEndOf="parent"
                  app:layout_constraintBottom_toBottomOf="parent"
-                 app:layout_constraintVertical_bias="0.45"/>
+                 app:layout_constraintVertical_bias="0.65999997"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

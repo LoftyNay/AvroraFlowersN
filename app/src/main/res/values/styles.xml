@@ -16,7 +16,7 @@
     <style name="ToolbarTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="android:colorControlNormal">@android:color/white</item>
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:elevation">4dp</item>
+
     </style>
 
     <style name="BottomNavigationView" parent="Theme.MaterialComponents.Light">

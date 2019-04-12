@@ -7,8 +7,6 @@ import com.ltn.avroraflowers.ui.fragments.CartFragment
 import com.ltn.avroraflowers.ui.fragments.MainFragment
 import com.ltn.avroraflowers.ui.fragments.OrdersFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
-import android.R
-
 
 
 class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
@@ -24,8 +22,15 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
 
     private val FRAGMENTS_COUNT = 4
 
+    init {
+        addFragment(MainFragment.newInstance())
+        addFragment(CartFragment.newInstance())
+        addFragment(CatalogFragment.newInstance())
+        addFragment(OrdersFragment.newInstance())
+    }
+
     override fun getItem(position: Int): Fragment {
-        return fragmentsList.get(position)
+        return fragmentsList[position]
     }
 
     override fun getCount(): Int {

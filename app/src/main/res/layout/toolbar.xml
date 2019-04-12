@@ -2,13 +2,18 @@
 <androidx.appcompat.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/toolbar"
+        app:layout_scrollFlags="scroll|enterAlways"
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
         android:layout_height="?attr/actionBarSize"
-        android:contentInsetLeft="25dp"
-        android:contentInsetStart="25dp"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:contentInsetLeft="25dp"
-        app:contentInsetStart="25dp"
+        android:contentInsetLeft="20dp"
+        android:contentInsetStart="20dp"
+        android:elevation="4dp"
+        app:contentInsetLeft="20dp"
+        app:contentInsetStart="20dp"
         android:theme="@style/ToolbarTheme">
 </androidx.appcompat.widget.Toolbar>
+
+
+
+

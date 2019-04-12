@@ -5,6 +5,6 @@ import com.ltn.avroraflowers.model.Category
 
 data class ResponseCategory (
     val count: Int,
-    @SerializedName("result")
-    val listCategories: List<Category>
+    val title: String,
+    val image: String
 )

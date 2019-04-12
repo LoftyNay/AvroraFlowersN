@@ -2,6 +2,7 @@ package com.ltn.avroraflowers.ui.activities.mainActivity
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
@@ -20,10 +21,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        supportActionBar?.hide()
+        //supportActionBar?.hide()
 
         bottomNavigation.setOnNavigationItemSelectedListener(this)
-
         initViewPager()
     }
 
@@ -32,24 +32,25 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             R.id.bottom_navigation_main -> {
                 viewPagerMain.setCurrentItem(ViewPagerAdapter.MAIN_FRAGMENT)
                 item.setChecked(true)
-                supportActionBar?.hide()
+                supportActionBar?.title = resources.getString(R.string.app_name)
+               // supportActionBar?.hide()
             }
             R.id.bottom_navigation_cart -> {
                 viewPagerMain.setCurrentItem(ViewPagerAdapter.CART_FRAGMENT)
                 item.setChecked(true)
-                supportActionBar?.show()
+              //  supportActionBar?.show()
                 supportActionBar?.title = resources.getString(R.string.cart_item_nav)
             }
             R.id.bottom_navigation_catalog -> {
                 viewPagerMain.setCurrentItem(ViewPagerAdapter.CATALOG_FRAGMENT)
                 item.setChecked(true)
-                supportActionBar?.show()
+               // supportActionBar?.show()
                 supportActionBar?.title = resources.getString(R.string.catalog_item_nav)
             }
             R.id.bottom_navigation_orders -> {
                 viewPagerMain.setCurrentItem(ViewPagerAdapter.ORDERS_FRAGMENT)
                 item.setChecked(true)
-                supportActionBar?.show()
+             //   supportActionBar?.show()
                 supportActionBar?.title = resources.getString(R.string.orders_item_nav)
             }
         }
@@ -57,14 +58,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun initViewPager() {
-        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
-        viewPagerAdapter.se
-        viewPagerMain.offscreenPageLimit = Constants.PAGE_LIMIT
+        viewPagerMain.setEnablePaging(false)
+        viewPagerMain.setEnableSmoothScroll(false)
 
-        viewPagerAdapter.addFragment(MainFragment.newInstance())
-        viewPagerAdapter.addFragment(CartFragment.newInstance())
-        viewPagerAdapter.addFragment(CatalogFragment.newInstance())
-        viewPagerAdapter.addFragment(OrdersFragment.newInstance())
+        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
+        viewPagerMain.offscreenPageLimit = Constants.PAGE_LIMIT
         viewPagerMain.adapter = viewPagerAdapter
     }
 }
