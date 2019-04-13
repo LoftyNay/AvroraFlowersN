@@ -1,5 +1,6 @@
 package com.ltn.avroraflowers.network
 
+import com.ltn.avroraflowers.model.Category
 import com.ltn.avroraflowers.model.UserLogin
 import com.ltn.avroraflowers.model.UserRegister
 import com.ltn.avroraflowers.network.Response.ResponseCategory
@@ -14,10 +15,10 @@ interface ApiAvrora {
     fun getCategories(
         @Query("order_by") orderBy: String,
         @Query("type") typeSort: String
-    ): Observable<ResponseCategory>
+    ): Observable<List<Category>>
 
     @GET("/categories")
-    fun getCategories(): Observable<ResponseCategory>
+    fun getCategories(): Observable<List<Category>>
 
     @Headers("Content-type: application/json")
     @POST("/login")

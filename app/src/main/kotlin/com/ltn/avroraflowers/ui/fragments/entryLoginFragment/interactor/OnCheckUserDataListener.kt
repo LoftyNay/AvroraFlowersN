@@ -1,6 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor
 
-interface OnCheckUserDataFromServer {
+interface OnCheckUserDataListener {
     fun onValidUserData()
     fun onEmailNotFound()
     fun onWrongPassword()

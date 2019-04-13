@@ -5,14 +5,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.cardview.widget.CardView
-import androidx.core.widget.ImageViewCompat
-import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.model.Category
+import com.squareup.picasso.Picasso
 
-class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
+class CategoriesAdapter(private val onClickCardListener: OnCardItemClickListener) :
+    RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     private var categoriesList: MutableList<Category> = ArrayList()
 
@@ -36,12 +36,25 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //holder.imageCategory.setImageDrawable(R.dr)
+
+        Picasso.get()
+            .load(categoriesList[position].image)
+            .fit()
+            .centerCrop()
+            .into(holder.imageCategory)
+
         holder.titleCategory.text = categoriesList[position].title
+        holder.categoryCardItem.setOnClickListener { onClickCardListener.onItemClick(position) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val categoryCardItem = itemView.findViewById<MaterialCardView>(R.id.categoryCardItem)
         val imageCategory = itemView.findViewById<AppCompatImageView>(R.id.imageItemCategoryRecycler)
         val titleCategory = itemView.findViewById<TextView>(R.id.textViewItemCategoryRecycler)
+    }
+
+
+    interface OnCardItemClickListener {
+        fun onItemClick(position: Int)
     }
 }

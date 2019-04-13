@@ -4,7 +4,5 @@ import com.google.gson.annotations.SerializedName
 import com.ltn.avroraflowers.model.Category
 
 data class ResponseCategory (
-    val count: Int,
-    val title: String,
-    val image: String
+    val categories: List<Category>
 )

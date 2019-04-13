@@ -33,7 +33,6 @@ class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor
                     onRegisterUserListener.onRegisterUserEnded()
                 },
                 { error ->
-                    Log.d(Constants.GLOBAL_LOG, error.message)
                     disposable.dispose()
                     onRegisterUserListener.onFailure()
                     onRegisterUserListener.onRegisterUserEnded()
