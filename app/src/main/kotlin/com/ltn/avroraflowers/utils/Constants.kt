@@ -7,5 +7,7 @@ class Constants {
         val GLOBAL_LOG = "GLOBAL_LOG"
 
         val PAGE_LIMIT = 4
+
+        val CATALOG_STACK = "b_stack_catalog"
     }
 }

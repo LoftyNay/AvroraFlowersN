@@ -4,15 +4,12 @@ import android.app.Application
 import com.ltn.avroraflowers.dagger.ApplicationComponent
 import com.ltn.avroraflowers.dagger.DaggerApplicationComponent
 import com.ltn.avroraflowers.dagger.module.ContextModule
+import com.ltn.avroraflowers.dagger.module.UtilsModule
 
 class App : Application() {
 
     companion object {
         lateinit var component: ApplicationComponent
-    }
-
-    fun getComponent(): ApplicationComponent {
-        return component
     }
 
     override fun onCreate() {

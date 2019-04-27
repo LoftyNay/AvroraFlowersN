@@ -1,6 +1,7 @@
 package com.ltn.avroraflowers.ui.fragments.catalogFragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,18 @@ import com.ltn.avroraflowers.model.Category
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.view.CatalogFragmentView
+import com.ltn.avroraflowers.ui.fragments.productsFragment.ProductsFragment
+import com.ltn.avroraflowers.utils.Constants
 
 
 class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.OnCardItemClickListener {
 
     companion object {
-        fun newInstance(): CatalogFragment {
+        val TAG = "CatalogFragment"
+
+        lateinit var catalogFragment: CatalogFragment
+
+        fun getInstance(): CatalogFragment {
             return CatalogFragment()
         }
     }
@@ -36,7 +43,6 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         catalogFragmentPresenter.attach(view.context)
         super.onViewCreated(view, savedInstanceState)
-
         initRecycler(view)
         catalogFragmentPresenter.loadCategories()
     }
@@ -50,8 +56,14 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
         recyclerView.adapter = categoriesAdapter
     }
 
-    override fun onItemClick(position: Int) {
-        Toast.makeText(activity, position.toString(), Toast.LENGTH_SHORT).show()
+    override fun onItemClick(id: Int) {
+        val fragment = ProductsFragment.getInstance(id)
+        parentFragment?.childFragmentManager?.beginTransaction()
+            ?.add(R.id.fragmentCatalogContainer, fragment, ProductsFragment.TAG)
+            ?.show(fragment)
+            ?.hide(this)
+            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.commit()
     }
 
     override fun showCategoriesList(categories: List<Category>) {
@@ -64,7 +76,6 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     override fun hideProgress() {
     }
 
-    //FIXME
     override fun showConnectionProblem() {
     }
 }

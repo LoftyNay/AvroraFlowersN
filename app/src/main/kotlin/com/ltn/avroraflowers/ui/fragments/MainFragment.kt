@@ -11,7 +11,7 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 class MainFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(): MainFragment {
+        fun getInstance(): MainFragment {
             return MainFragment()
         }
     }

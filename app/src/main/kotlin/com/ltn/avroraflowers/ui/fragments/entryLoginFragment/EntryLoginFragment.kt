@@ -54,11 +54,6 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
         }
     }
 
-    override fun onAttach(context: Context) {
-        App.component.inject(this)
-        super.onAttach(context)
-    }
-
     override fun onDetach() {
         super.onDetach()
         entryLoginFragmentPresenter.detach()

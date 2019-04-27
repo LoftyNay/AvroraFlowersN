@@ -11,7 +11,7 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 class CartFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(): CartFragment {
+        fun getInstance(): CartFragment {
             return CartFragment()
         }
     }

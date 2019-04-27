@@ -11,10 +11,11 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.model.Category
 import com.squareup.picasso.Picasso
 
-class CategoriesAdapter(private val onClickCardListener: OnCardItemClickListener) :
-    RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
+//fixme
+class ProductsAdapter(private val onClickCardListener: OnCardItemClickListener) :
+    RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
-    private var categoriesList: MutableList<Category> = ArrayList()
+    private var products: MutableList<Category> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.category_item_recycler, parent, false)
@@ -22,29 +23,29 @@ class CategoriesAdapter(private val onClickCardListener: OnCardItemClickListener
     }
 
     override fun getItemCount(): Int {
-        return categoriesList.size
+        return products.size
     }
 
     fun addCategory(category: Category) {
-        categoriesList.add(category)
+        products.add(category)
         notifyDataSetChanged()
     }
 
     fun addAll(categories: List<Category>) {
-        categoriesList.addAll(categories)
+        products.addAll(categories)
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         Picasso.get()
-            .load(categoriesList[position].image)
+            .load(products[position].image)
             .fit()
             .centerCrop()
             .into(holder.imageCategory)
 
-        holder.titleCategory.text = categoriesList[position].title
-        holder.categoryCardItem.setOnClickListener { onClickCardListener.onItemClick(categoriesList[position]._id) }
+        holder.titleCategory.text = products[position].title
+        holder.categoryCardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

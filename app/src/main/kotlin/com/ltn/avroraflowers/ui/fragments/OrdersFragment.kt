@@ -10,7 +10,7 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 class OrdersFragment : BaseFragment() {
 
     companion object {
-        fun newInstance(): OrdersFragment {
+        fun getInstance(): OrdersFragment {
             return OrdersFragment()
         }
     }

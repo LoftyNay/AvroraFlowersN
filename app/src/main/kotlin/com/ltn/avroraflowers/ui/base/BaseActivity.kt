@@ -5,6 +5,4 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.ltn.avroraflowers.R
 
 abstract class BaseActivity : MvpAppCompatActivity() {
-
-
 }

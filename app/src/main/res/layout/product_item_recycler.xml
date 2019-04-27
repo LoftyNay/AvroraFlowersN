@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:foreground="?attr/selectableItemBackground"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="4dp"
+        android:id="@+id/categoryCardItem"
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageItemCategoryRecycler"
+                android:src="@drawable/avf_lg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+                android:text="Лизиантус"
+                android:textStyle="bold"
+                android:id="@+id/textViewHeadProductsRecycler"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline" android:layout_marginEnd="16dp"/>
+
+        <TextView
+                android:text="бело-розовый"
+                android:id="@+id/textViewDescProductsRecycler"
+                android:layout_height="wrap_content"
+                android:alpha="0.7"
+                android:layout_width="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline" android:layout_marginEnd="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textViewHeadProductsRecycler"/>
+
+        <TextView
+                android:text="Упаковка"
+                android:id="@+id/textViewPackProductsRecycler"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDescProductsRecycler" android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+                android:tooltipText="200"
+                style="@style/Widget.AppCompat.Spinner.DropDown"
+                android:layout_width="0dp"
+                android:layout_height="36dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textViewDescProductsRecycler"
+                app:layout_constraintStart_toStartOf="@+id/guideline2" android:layout_marginStart="8dp">
+        </androidx.appcompat.widget.AppCompatSpinner>
+
+
+        <androidx.constraintlayout.widget.Guideline
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:id="@+id/guideline"
+                app:layout_constraintGuide_begin="155dp"
+                android:orientation="vertical"
+        />
+        <androidx.constraintlayout.widget.Guideline android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content" android:id="@+id/guideline2"
+                                                    app:layout_constraintGuide_begin="284dp"
+                                                    android:orientation="vertical"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

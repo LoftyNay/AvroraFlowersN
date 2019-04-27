@@ -7,6 +7,7 @@ import com.ltn.avroraflowers.ui.fragments.CartFragment
 import com.ltn.avroraflowers.ui.fragments.MainFragment
 import com.ltn.avroraflowers.ui.fragments.OrdersFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
+import com.ltn.avroraflowers.ui.fragments.catalogFragment.HostCatalogFragment
 
 
 class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
@@ -23,10 +24,10 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
     private val FRAGMENTS_COUNT = 4
 
     init {
-        addFragment(MainFragment.newInstance())
-        addFragment(CartFragment.newInstance())
-        addFragment(CatalogFragment.newInstance())
-        addFragment(OrdersFragment.newInstance())
+        addFragment(MainFragment.getInstance())
+        addFragment(CartFragment.getInstance())
+        addFragment(HostCatalogFragment.getInstance())
+        addFragment(OrdersFragment.getInstance())
     }
 
     override fun getItem(position: Int): Fragment {
