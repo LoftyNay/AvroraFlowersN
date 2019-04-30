@@ -17,6 +17,7 @@ import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragm
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.view.CatalogFragmentView
 import com.ltn.avroraflowers.ui.fragments.productsFragment.ProductsFragment
 import com.ltn.avroraflowers.utils.Constants
+import kotlinx.android.synthetic.main.fragment_catalog.*
 
 
 class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.OnCardItemClickListener {
@@ -43,17 +44,16 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         catalogFragmentPresenter.attach(view.context)
         super.onViewCreated(view, savedInstanceState)
-        initRecycler(view)
+        initRecycler()
         catalogFragmentPresenter.loadCategories()
     }
 
-    private fun initRecycler(view: View) {
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewCatalogFragment)
-        recyclerView.isNestedScrollingEnabled = false
-        recyclerView.layoutManager = GridLayoutManager(activity, 2, RecyclerView.VERTICAL, false)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 40, true, 0))
+    private fun initRecycler() {
+        recyclerViewCatalogFragment.isNestedScrollingEnabled = false
+        recyclerViewCatalogFragment.layoutManager = GridLayoutManager(activity, 2, RecyclerView.VERTICAL, false)
+        recyclerViewCatalogFragment.addItemDecoration(GridSpacingItemDecoration(2, 40, true, 0))
         categoriesAdapter = CategoriesAdapter(this)
-        recyclerView.adapter = categoriesAdapter
+        recyclerViewCatalogFragment.adapter = categoriesAdapter
     }
 
     override fun onItemClick(id: Int) {

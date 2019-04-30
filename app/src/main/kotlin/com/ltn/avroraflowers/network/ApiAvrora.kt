@@ -1,6 +1,7 @@
 package com.ltn.avroraflowers.network
 
 import com.ltn.avroraflowers.model.Category
+import com.ltn.avroraflowers.model.Product
 import com.ltn.avroraflowers.model.UserLogin
 import com.ltn.avroraflowers.model.UserRegister
 import com.ltn.avroraflowers.network.Response.ResponseCategory
@@ -19,6 +20,9 @@ interface ApiAvrora {
 
     @GET("/categories")
     fun getCategories(): Observable<List<Category>>
+
+    @GET("/categories/{id}/products")
+    fun getProductsByCategoryId(@Path("id") id: Int): Observable<List<Product>>
 
     @Headers("Content-type: application/json")
     @POST("/login")

@@ -11,6 +11,7 @@ import com.ltn.avroraflowers.ui.base.BasePresenter
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.EntryLoginFragment
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
+import com.ltn.avroraflowers.ui.fragments.productsFragment.presenter.ProductsFragmentPresenter
 import dagger.Component
 import javax.inject.Singleton
 
@@ -33,6 +34,7 @@ interface ApplicationComponent {
     fun inject(entryLoginFragmentPresenter: EntryLoginFragmentPresenter)
     fun inject(registerActivityPresenter: RegisterActivityPresenter)
     fun inject(catalogFragmentPresenter: CatalogFragmentPresenter)
+    fun inject(productsFragmentPresenter: ProductsFragmentPresenter)
 
     //IN INTERACTOR
     fun inject(baseInteractor: BaseInteractor)

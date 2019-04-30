@@ -25,8 +25,8 @@
 
         <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardSearchEdit"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
@@ -50,10 +50,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="?attr/actionBarSize"
-            app:layout_behavior= "@string/appbar_scrolling_view_behavior"
+            android:clipToPadding="true"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"
             app:layout_constraintTop_toTopOf="parent">
     </com.ltn.avroraflowers.ui.activities.mainActivity.BottomNavigationViewPager>
 
@@ -66,5 +67,6 @@
             app:itemIconTint="@drawable/bottom_navigation_selector"
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_navigation"
-            app:elevation="8dp"/>
+            app:elevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

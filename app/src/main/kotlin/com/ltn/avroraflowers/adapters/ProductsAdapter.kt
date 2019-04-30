@@ -3,22 +3,27 @@ package com.ltn.avroraflowers.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
-import com.ltn.avroraflowers.model.Category
+import com.ltn.avroraflowers.model.Product
 import com.squareup.picasso.Picasso
 
-//fixme
-class ProductsAdapter(private val onClickCardListener: OnCardItemClickListener) :
-    RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
-    private var products: MutableList<Category> = ArrayList()
+class ProductsAdapter(
+    private val onClickCardListener: OnCardItemClickListener,
+    private val onAddToCartClickListener: OnAddToCartClickListener
+) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
+
+    private var products: MutableList<Product> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_item_recycler, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item_recycler, parent, false)
         return ViewHolder(view)
     }
 
@@ -26,35 +31,76 @@ class ProductsAdapter(private val onClickCardListener: OnCardItemClickListener) 
         return products.size
     }
 
-    fun addCategory(category: Category) {
-        products.add(category)
-        notifyDataSetChanged()
-    }
-
-    fun addAll(categories: List<Category>) {
-        products.addAll(categories)
+    fun addAll(products: List<Product>) {
+        this.products.addAll(products)
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
+        holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id) }
         Picasso.get()
             .load(products[position].image)
             .fit()
             .centerCrop()
-            .into(holder.imageCategory)
+            .into(holder.image)
 
-        holder.titleCategory.text = products[position].title
-        holder.categoryCardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id) }
+        holder.title.text = products[position].title
+        holder.colorProduct.text = products[position].description.subSequence(0, 10)
+        holder.packSpinner.adapter = ArrayAdapter<Int>(
+            holder.cardItem.context,
+            android.R.layout.simple_spinner_item,
+            listOf(200, 400, 600)
+        )
+
+        holder.minusInCardButton.setOnClickListener {
+            minusCount(holder)
+        }
+
+        holder.plusInCardButton.setOnClickListener {
+            plusCount(holder)
+        }
+
+        holder.addInCardButton.setOnClickListener {
+            onAddToCartClickListener.onAddToCartClick(products[position]._id)
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val categoryCardItem = itemView.findViewById<MaterialCardView>(R.id.categoryCardItem)
-        val imageCategory = itemView.findViewById<AppCompatImageView>(R.id.imageItemCategoryRecycler)
-        val titleCategory = itemView.findViewById<TextView>(R.id.textViewItemCategoryRecycler)
+        val cardItem = itemView.findViewById<MaterialCardView>(R.id.productsCardItem)
+        val image = itemView.findViewById<AppCompatImageView>(R.id.imageItemProductRecycler)
+        val title = itemView.findViewById<TextView>(R.id.textViewHeadProductsRecycler)
+        val colorProduct = itemView.findViewById<TextView>(R.id.textViewColorProductsRecycler)
+        val packSpinner = itemView.findViewById<Spinner>(R.id.productsPackSpinner)
+        val minusInCardButton = itemView.findViewById<ImageButton>(R.id.productsMinusInCardButton)
+        val countInCard = itemView.findViewById<TextView>(R.id.productsCountInCard)
+        val plusInCardButton = itemView.findViewById<ImageButton>(R.id.productsPlusInCardButton)
+        val addInCardButton = itemView.findViewById<ImageButton>(R.id.productsAddInCardButton)
     }
+
+    private fun minusCount(holder: ViewHolder) {
+        val count = Integer.decode(holder.countInCard.text.toString())
+        if (count <= 1) {
+            holder.countInCard.isEnabled = false
+        } else {
+            holder.countInCard.text = (count - 1).toString()
+        }
+    }
+
+    private fun plusCount(holder: ViewHolder) {
+        val count = Integer.decode(holder.countInCard.text.toString())
+        if (count >= 50) {
+            holder.countInCard.isEnabled = false
+        } else {
+            holder.countInCard.text = (count + 1).toString()
+        }
+    }
+
 
     interface OnCardItemClickListener {
         fun onItemClick(id: Int)
+    }
+
+    interface OnAddToCartClickListener {
+        fun onAddToCartClick(id: Int)
     }
 }

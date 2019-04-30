@@ -25,11 +25,6 @@ class CategoriesAdapter(private val onClickCardListener: OnCardItemClickListener
         return categoriesList.size
     }
 
-    fun addCategory(category: Category) {
-        categoriesList.add(category)
-        notifyDataSetChanged()
-    }
-
     fun addAll(categories: List<Category>) {
         categoriesList.addAll(categories)
         notifyDataSetChanged()
