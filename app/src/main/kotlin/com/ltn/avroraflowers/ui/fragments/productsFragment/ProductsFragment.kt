@@ -1,13 +1,11 @@
 package com.ltn.avroraflowers.ui.fragments.productsFragment
 
+import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -15,11 +13,14 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ProductsAdapter
 import com.ltn.avroraflowers.model.Product
 import com.ltn.avroraflowers.ui.base.BaseFragment
-import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.GridSpacingItemDecoration
+import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragment
 import com.ltn.avroraflowers.ui.fragments.productsFragment.presenter.ProductsFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.productsFragment.view.ProductsFragmentView
+import com.ltn.avroraflowers.utils.Constants
+import kotlinx.android.synthetic.main.fragment_catalog.*
 import kotlinx.android.synthetic.main.fragment_catalog_products.*
+import kotlinx.android.synthetic.main.product_item_recycler.*
 
 class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.OnCardItemClickListener,
     ProductsAdapter.OnAddToCartClickListener {
@@ -65,11 +66,19 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
     }
 
     override fun onItemClick(id: Int) {
-        Toast.makeText(activity, "item click" , Toast.LENGTH_SHORT).show()
+        val fragment = InnerProductFragment.getInstance()
+        parentFragment?.childFragmentManager?.beginTransaction()
+            ?.add(R.id.fragmentCatalogContainer, fragment, ProductsFragment.TAG)
+            ?.show(fragment)
+            ?.hide(this)
+            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.commit()
+        Toast.makeText(activity, "item click", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onAddToCartClick(id: Int) {
-        Toast.makeText(activity, "button click" , Toast.LENGTH_SHORT).show()
+    override fun onAddToCartClick(id: Int, count: Int, perPack: Int) {
+        productsFragmentPresenter.addProductToCart(id, count, perPack)
+        Toast.makeText(activity, "button click", Toast.LENGTH_SHORT).show()
     }
 
     override fun showProducts(products: List<Product>) {
@@ -77,11 +86,14 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
     }
 
     override fun showProgress() {
+        progressBarProducts.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        progressBarProducts.visibility = View.GONE
     }
 
     override fun showConnectionProblem() {
+
     }
 }

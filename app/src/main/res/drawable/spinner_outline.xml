@@ -14,4 +14,5 @@
             <corners android:radius="4dp"/>
         </shape>
     </item>
+    <item android:gravity="right|center_vertical" android:drawable="@drawable/ic_arrow_drop_down_black_24dp"/>
 </ripple>

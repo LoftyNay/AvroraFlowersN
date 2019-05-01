@@ -3,10 +3,9 @@ package com.ltn.avroraflowers.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.ltn.avroraflowers.ui.fragments.CartFragment
+import com.ltn.avroraflowers.ui.fragments.cartFragment.HostCartFragment
 import com.ltn.avroraflowers.ui.fragments.MainFragment
 import com.ltn.avroraflowers.ui.fragments.OrdersFragment
-import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.HostCatalogFragment
 
 
@@ -25,7 +24,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
 
     init {
         addFragment(MainFragment.getInstance())
-        addFragment(CartFragment.getInstance())
+        addFragment(HostCartFragment.getInstance())
         addFragment(HostCatalogFragment.getInstance())
         addFragment(OrdersFragment.getInstance())
     }

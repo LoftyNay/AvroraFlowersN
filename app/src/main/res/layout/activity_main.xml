@@ -27,7 +27,9 @@
                 android:id="@+id/cardSearchEdit"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +37,7 @@
                 app:layout_constraintStart_toStartOf="parent">
             <EditText
                     android:id="@+id/catalogSearchEdit"
-                    android:layout_width="380dp"
+                    android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:enabled="false"
                     android:background="@drawable/search_edit_outline_catalog"

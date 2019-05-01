@@ -23,7 +23,8 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
     }
 
     override fun getProductsFromServerByCategoryId(id: Int) {
-        productsFragmentInteractor.requestProductsByCategoryId(id, object: OnRequestProductsListener {
+        viewState.showProgress()
+        productsFragmentInteractor.requestProductsByCategoryId(id, object : OnRequestProductsListener {
             override fun onSuccessful(products: List<Product>) {
                 viewState.showProducts(products)
             }
@@ -33,33 +34,29 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             }
 
             override fun onRequestEnded() {
+                viewState.hideProgress()
             }
 
         })
     }
 
-    override fun addProductToCartByUserToken(token: String) {
-        productsFragmentInteractor.requestAddProductToCartByUserToken(token, object: OnAddToCartProductsListener {
-            override fun onSuccessful(productName: String) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun addProductToCart(id: Int, count: Int, perPack: Int) {
+        productsFragmentInteractor.requestAddProductToCart(id, count, perPack, object : OnAddToCartProductsListener {
+            override fun onSuccessful() {
             }
 
             override fun onFailure() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onRequestEnded() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
 
+            }
         })
     }
 
     override fun detach() {
-
     }
 
     override fun destroy() {
-
     }
 }

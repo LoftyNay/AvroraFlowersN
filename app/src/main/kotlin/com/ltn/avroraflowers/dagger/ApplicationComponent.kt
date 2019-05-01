@@ -8,6 +8,7 @@ import com.ltn.avroraflowers.ui.activities.registerActivity.presenter.RegisterAc
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.ui.base.BasePresenter
+import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.EntryLoginFragment
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
@@ -35,6 +36,7 @@ interface ApplicationComponent {
     fun inject(registerActivityPresenter: RegisterActivityPresenter)
     fun inject(catalogFragmentPresenter: CatalogFragmentPresenter)
     fun inject(productsFragmentPresenter: ProductsFragmentPresenter)
+    fun inject(cartFragmentPresenter: CartFragmentPresenter)
 
     //IN INTERACTOR
     fun inject(baseInteractor: BaseInteractor)

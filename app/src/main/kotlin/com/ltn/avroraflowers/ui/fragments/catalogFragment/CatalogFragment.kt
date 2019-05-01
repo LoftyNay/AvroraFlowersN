@@ -71,11 +71,14 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     }
 
     override fun showProgress() {
+        progressBarCatalog.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        progressBarCatalog.visibility = View.GONE
     }
 
     override fun showConnectionProblem() {
+
     }
 }

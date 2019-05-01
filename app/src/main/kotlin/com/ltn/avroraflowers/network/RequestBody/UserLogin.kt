@@ -1,4 +1,4 @@
-package com.ltn.avroraflowers.model
+package com.ltn.avroraflowers.network.RequestBody
 
 data class UserLogin(
     var email: String,

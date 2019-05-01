@@ -1,6 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor
 
-import com.ltn.avroraflowers.model.UserLogin
+import com.ltn.avroraflowers.network.RequestBody.UserLogin
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.utils.STATUS_CODE
 import io.reactivex.android.schedulers.AndroidSchedulers

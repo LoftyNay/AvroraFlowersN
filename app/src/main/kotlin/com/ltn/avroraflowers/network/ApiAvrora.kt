@@ -1,12 +1,14 @@
 package com.ltn.avroraflowers.network
 
+import com.ltn.avroraflowers.model.CartItem
 import com.ltn.avroraflowers.model.Category
 import com.ltn.avroraflowers.model.Product
-import com.ltn.avroraflowers.model.UserLogin
-import com.ltn.avroraflowers.model.UserRegister
-import com.ltn.avroraflowers.network.Response.ResponseCategory
-import com.ltn.avroraflowers.network.Response.ResponseLogin
-import com.ltn.avroraflowers.network.Response.ResponseRegister
+import com.ltn.avroraflowers.network.RequestBody.AddToCart
+import com.ltn.avroraflowers.network.RequestBody.UserLogin
+import com.ltn.avroraflowers.network.RequestBody.UserRegister
+import com.ltn.avroraflowers.network.Response.LoginResponse
+import com.ltn.avroraflowers.network.Response.RegisterResponse
+import com.ltn.avroraflowers.network.Response.SampleResponse
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -26,9 +28,15 @@ interface ApiAvrora {
 
     @Headers("Content-type: application/json")
     @POST("/login")
-    fun userLogin(@Body userLogin: UserLogin): Observable<ResponseLogin>
+    fun userLogin(@Body userLogin: UserLogin): Observable<LoginResponse>
 
     @Headers("Content-type: application/json")
     @POST("/registration")
-    fun userRegister(@Body userRegister: UserRegister): Observable<ResponseRegister>
+    fun userRegister(@Body userRegister: UserRegister): Observable<RegisterResponse>
+
+    @POST("/user/cart")
+    fun addProductInCart(@Header("access-token") accessToken: String, @Body addToCart: AddToCart): Observable<SampleResponse>
+
+    @GET("/user/cart")
+    fun getProductsInCart(@Header("access-token") accessToken: String): Observable<List<CartItem>>
 }

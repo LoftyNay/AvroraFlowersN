@@ -1,9 +1,7 @@
 package com.ltn.avroraflowers.ui.activities.registerActivity.interactor
 
-import android.util.Log
-import com.ltn.avroraflowers.model.UserRegister
+import com.ltn.avroraflowers.network.RequestBody.UserRegister
 import com.ltn.avroraflowers.ui.base.BaseInteractor
-import com.ltn.avroraflowers.utils.Constants
 import com.ltn.avroraflowers.utils.STATUS_CODE
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
