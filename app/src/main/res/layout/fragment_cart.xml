@@ -13,23 +13,35 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewCart"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:nestedScrollingEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toTopOf="@+id/footerCart"
+                app:layout_constraintTop_toTopOf="parent">
         </androidx.recyclerview.widget.RecyclerView>
+
         <androidx.core.widget.ContentLoadingProgressBar
                 android:id="@+id/progressBarCart"
                 style="?android:attr/progressBarStyle"
                 android:indeterminate="true"
                 android:visibility="gone"
+                android:layout_gravity="center_horizontal|center_vertical"
                 android:indeterminateTintMode="src_atop"
                 android:indeterminateTint="@color/colorPrimary"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <include layout="@layout/footer_recycler_item"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 android:layout_width="match_parent"
+                 android:layout_height="50dp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 android:id="@+id/footerCart"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

@@ -26,4 +26,6 @@
     <string name="user_exist_msg">Пользователь с таким Email уже зарегистрирован</string>
     <string name="error_connection">Проблемы с соединением, попробуйте позже</string>
     <string name="search">Поиск</string>
+    <string name="select_all_products">Выбрыть все товары</string>
+    <string name="products_select">Товаров выбрано - %s</string>
 </resources>

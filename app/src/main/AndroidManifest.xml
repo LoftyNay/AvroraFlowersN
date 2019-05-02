@@ -62,5 +62,6 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <service android:name=".ui.fragments.cartFragment.interactor.DeleteProductsFromCartService"/>
     </application>
 </manifest>

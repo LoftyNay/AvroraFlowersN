@@ -39,4 +39,7 @@ interface ApiAvrora {
 
     @GET("/user/cart")
     fun getProductsInCart(@Header("access-token") accessToken: String): Observable<List<CartItem>>
+
+    @DELETE("/user/cart/{id}")
+    fun deleteProductInCart(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<SampleResponse>
 }

@@ -2,9 +2,11 @@ package com.ltn.avroraflowers.ui.fragments.cartFragment
 
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.util.containsValue
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -17,7 +19,8 @@ import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_cart.*
 
-class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnCardItemClickListener {
+class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnClickListener,
+    CartProductsAdapter.OnSelectCheckBoxLitener {
 
     @InjectPresenter
     lateinit var cartFragmentPresenter: CartFragmentPresenter
@@ -42,7 +45,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnCar
     }
 
     private fun initRecycler() {
-        cartProductsAdapter = CartProductsAdapter(this)
+        cartProductsAdapter = CartProductsAdapter(this, this)
         recyclerViewCart.addItemDecoration(GridSpacingItemDecoration(1, 40, true, 0))
         recyclerViewCart.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerViewCart.adapter = cartProductsAdapter
@@ -52,13 +55,19 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnCar
         cartProductsAdapter.addAll(cartProducts)
     }
 
-    override fun onItemCheck(checked: Boolean) {
-        Log.d("GLL", checked.toString())
+    override fun onSelectedItemCheckBox(selected: Boolean) {
+        cartProductsAdapter.notifyFooter(selected)
     }
 
-    override fun onItemClick(id: Int) {
-
+    override fun onSelectedFooterCheckBox(selected: Boolean) {
+        cartProductsAdapter.notifySelectedItems(selected)
     }
+
+    override fun onDeleteButtonClick(listIds:  MutableList<Int>) {
+        cartFragmentPresenter.deleteProductsFromCart(listIds)
+    }
+
+    override fun onItemClick(id: Int) {}
 
     override fun showProgress() {
         progressBarCart.visibility = View.VISIBLE

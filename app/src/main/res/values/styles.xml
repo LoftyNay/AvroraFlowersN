@@ -29,6 +29,12 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="ButtonWhiteColorFill" parent="@style/Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@android:color/white</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <style name="ButtonOutlined" parent="@style/Widget.MaterialComponents.Button.OutlinedButton">
         <item name="strokeColor">@color/colorAccent</item>
         <item name="android:textColor">@color/colorAccent</item>
