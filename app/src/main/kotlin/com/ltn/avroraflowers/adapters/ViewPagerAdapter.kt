@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.ltn.avroraflowers.ui.fragments.cartFragment.HostCartFragment
 import com.ltn.avroraflowers.ui.fragments.MainFragment
-import com.ltn.avroraflowers.ui.fragments.OrdersFragment
+import com.ltn.avroraflowers.ui.fragments.ordersFragment.OrdersFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.HostCatalogFragment
 
 

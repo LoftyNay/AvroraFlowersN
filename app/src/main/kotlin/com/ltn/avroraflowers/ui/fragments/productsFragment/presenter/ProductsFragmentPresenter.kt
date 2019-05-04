@@ -5,6 +5,7 @@ import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.model.Product
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.ui.base.BasePresenter
 import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.OnAddToCartProductsListener
 import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.OnRequestProductsListener
@@ -23,8 +24,11 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
     }
 
     override fun getProductsFromServerByCategoryId(id: Int) {
-        viewState.showProgress()
         productsFragmentInteractor.requestProductsByCategoryId(id, object : OnRequestProductsListener {
+            override fun onRequestStart() {
+                viewState.showProgress()
+            }
+
             override fun onSuccessful(products: List<Product>) {
                 viewState.showProducts(products)
             }
@@ -42,6 +46,9 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
 
     override fun addProductToCart(id: Int, count: Int, perPack: Int) {
         productsFragmentInteractor.requestAddProductToCart(id, count, perPack, object : OnAddToCartProductsListener {
+            override fun onRequestStart() {
+            }
+
             override fun onSuccessful() {
             }
 
@@ -49,7 +56,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             }
 
             override fun onRequestEnded() {
-
+                CartProductsRepository.getInstance().callUpdate()
             }
         })
     }

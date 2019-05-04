@@ -1,6 +1,7 @@
 package com.ltn.avroraflowers.ui.fragments.productsFragment.interactor
 
 import android.util.Log
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.network.RequestBody.AddToCart
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.utils.Constants
@@ -13,19 +14,18 @@ class ProductsFragmentInteractor : BaseInteractor(), IProductsFragmentInteractor
         disposable = apiAvrora.getProductsByCategoryId(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRequestProductsListener.onRequestStart() }
+            .doFinally { onRequestProductsListener.onRequestEnded() }
+            .doOnError { onRequestProductsListener.onFailure() }
             .subscribe(
                 { result ->
-                    disposable.dispose()
                     onRequestProductsListener.onSuccessful(result)
-                    onRequestProductsListener.onRequestEnded()
-                },
-                { error ->
                     disposable.dispose()
-                    onRequestProductsListener.onFailure()
-                    onRequestProductsListener.onRequestEnded()
+                },
+                {
+                    disposable.dispose()
                 }
             )
-
     }
 
     override fun requestAddProductToCart(
@@ -38,19 +38,9 @@ class ProductsFragmentInteractor : BaseInteractor(), IProductsFragmentInteractor
         disposable = apiAvrora.addProductInCart(Constants.TEST_TOKEN, addToCardBody)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { result ->
-                    disposable.dispose()
-                    onAddToCartProductsListener.onSuccessful()
-                    onAddToCartProductsListener.onRequestEnded()
-                    Log.d("GLL", "ok")
-                },
-                { error ->
-                    disposable.dispose()
-                    onAddToCartProductsListener.onFailure()
-                    onAddToCartProductsListener.onRequestEnded()
-                    Log.d("GLL", "fail")
-                }
-            )
+            .doOnSubscribe { onAddToCartProductsListener.onRequestStart() }
+            .doFinally { onAddToCartProductsListener.onRequestEnded() }
+            .doOnError { onAddToCartProductsListener.onFailure() }
+            .subscribe()
     }
 }

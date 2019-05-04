@@ -18,6 +18,8 @@ import com.ltn.avroraflowers.ui.fragments.catalogFragment.view.CatalogFragmentVi
 import com.ltn.avroraflowers.ui.fragments.productsFragment.ProductsFragment
 import com.ltn.avroraflowers.utils.Constants
 import kotlinx.android.synthetic.main.fragment_catalog.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar_with_search.*
 
 
 class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.OnCardItemClickListener {
@@ -44,6 +46,7 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         catalogFragmentPresenter.attach(view.context)
         super.onViewCreated(view, savedInstanceState)
+        toolbarSearch.title = resources.getString(R.string.catalog_item_nav)
         initRecycler()
         catalogFragmentPresenter.loadCategories()
     }

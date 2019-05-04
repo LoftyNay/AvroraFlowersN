@@ -1,8 +1,6 @@
 package com.ltn.avroraflowers.network
 
-import com.ltn.avroraflowers.model.CartItem
-import com.ltn.avroraflowers.model.Category
-import com.ltn.avroraflowers.model.Product
+import com.ltn.avroraflowers.model.*
 import com.ltn.avroraflowers.network.RequestBody.AddToCart
 import com.ltn.avroraflowers.network.RequestBody.UserLogin
 import com.ltn.avroraflowers.network.RequestBody.UserRegister
@@ -42,4 +40,10 @@ interface ApiAvrora {
 
     @DELETE("/user/cart/{id}")
     fun deleteProductInCart(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<SampleResponse>
+
+    @GET("/user/orders")
+    fun getOrders(@Header("access-token") accessToken: String): Observable<List<OrderItem>>
+
+    @GET("/user/orders/{id}/products")
+    fun getProductsInOrderById(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<List<OrderInner>>
 }

@@ -28,8 +28,11 @@ class CatalogFragmentPresenter : BasePresenter<CatalogFragmentView>(), ICatalogF
     }
 
     override fun loadCategories() {
-        viewState.showProgress()
         catalogFragmentInteractor.requestCategoriesFromServer(this)
+    }
+
+    override fun onRequestStart() {
+        viewState.showProgress()
     }
 
     override fun onSuccessful(categories: List<Category>) {

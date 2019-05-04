@@ -107,7 +107,6 @@ class ProductsAdapter(
         }
     }
 
-
     interface OnCardItemClickListener {
         fun onItemClick(id: Int)
     }

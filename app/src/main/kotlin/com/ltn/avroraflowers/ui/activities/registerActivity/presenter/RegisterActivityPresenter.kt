@@ -48,7 +48,6 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
                 viewState.showWrongInputErrorMessage(passwordEditText.parent.parent as View)
             }
             else -> {
-                viewState.showProgress()
                 registerActivityInteractor.registerUser(
                     emailEditText.text?.trim().toString(),
                     passwordEditText.text?.trim().toString(),
@@ -56,6 +55,10 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
                 )
             }
         }
+    }
+
+    override fun onRequestStart() {
+        viewState.showProgress()
     }
 
     override fun onWrongInput(v: View) {
@@ -66,15 +69,15 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
         viewState.showConnectionProblem()
     }
 
-    override fun onRegisterUserEnded() {
-        viewState.hideProgress()
-    }
-
     override fun onUserRegistered() {
         viewState.showUserRegisteredOk()
     }
 
     override fun onUserExist() {
         viewState.showUserExist()
+    }
+
+    override fun onRequestEnded() {
+        viewState.hideProgress()
     }
 }

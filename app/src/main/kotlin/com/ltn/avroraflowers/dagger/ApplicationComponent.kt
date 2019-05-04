@@ -5,10 +5,10 @@ import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.activities.registerActivity.RegisterActivity
 import com.ltn.avroraflowers.ui.activities.registerActivity.presenter.RegisterActivityPresenter
 import com.ltn.avroraflowers.ui.base.BaseInteractor
-import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.DeleteProductsFromCartService
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
+import com.ltn.avroraflowers.ui.fragments.ordersFragment.presenter.OrdersFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.productsFragment.presenter.ProductsFragmentPresenter
 import dagger.Component
 import javax.inject.Singleton
@@ -30,13 +30,11 @@ interface ApplicationComponent {
 
     //IN PRESENTER
     fun inject(entryLoginFragmentPresenter: EntryLoginFragmentPresenter)
-
     fun inject(registerActivityPresenter: RegisterActivityPresenter)
     fun inject(catalogFragmentPresenter: CatalogFragmentPresenter)
     fun inject(productsFragmentPresenter: ProductsFragmentPresenter)
     fun inject(cartFragmentPresenter: CartFragmentPresenter)
-
-    fun inject(deleteProductsFromCartService: DeleteProductsFromCartService)
+    fun inject(ordersFragmentPresenter: OrdersFragmentPresenter)
 
     //IN INTERACTOR
     fun inject(baseInteractor: BaseInteractor)

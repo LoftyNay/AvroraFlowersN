@@ -1,5 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.util.SparseBooleanArray
@@ -13,19 +14,25 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.CartProductsAdapter
 import com.ltn.avroraflowers.model.CartItem
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.GridSpacingItemDecoration
+import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragment
+import com.ltn.avroraflowers.ui.fragments.productsFragment.ProductsFragment
+import com.ltn.avroraflowers.utils.Constants
+import kotlinx.android.synthetic.main.footer_recycler_item.*
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar_with_search.*
 
-class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnClickListener,
-    CartProductsAdapter.OnSelectCheckBoxLitener {
+class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnClickListener, View.OnClickListener {
 
     @InjectPresenter
     lateinit var cartFragmentPresenter: CartFragmentPresenter
 
-    lateinit var cartProductsAdapter: CartProductsAdapter
+    private lateinit var cartProductsAdapter: CartProductsAdapter
 
     companion object {
         fun getInstance(): CartFragment {
@@ -40,34 +47,43 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         cartFragmentPresenter.attach(view.context)
         super.onViewCreated(view, savedInstanceState)
+        toolbarSearch.title = resources.getString(R.string.cart_item_nav)
         initRecycler()
-        cartFragmentPresenter.getCartProducts()
+        CartProductsRepository.getInstance().callUpdate()
     }
 
     private fun initRecycler() {
-        cartProductsAdapter = CartProductsAdapter(this, this)
-        recyclerViewCart.addItemDecoration(GridSpacingItemDecoration(1, 40, true, 0))
+        cartProductsAdapter = CartProductsAdapter(this)
+        recyclerViewCart.addItemDecoration(GridSpacingItemDecoration(1, 5, false, 0))
         recyclerViewCart.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerViewCart.adapter = cartProductsAdapter
     }
 
-    override fun showCartProducts(cartProducts: List<CartItem>) {
-        cartProductsAdapter.addAll(cartProducts)
-    }
-
-    override fun onSelectedItemCheckBox(selected: Boolean) {
-        cartProductsAdapter.notifyFooter(selected)
-    }
-
-    override fun onSelectedFooterCheckBox(selected: Boolean) {
-        cartProductsAdapter.notifySelectedItems(selected)
-    }
-
-    override fun onDeleteButtonClick(listIds:  MutableList<Int>) {
+    override fun onDeleteButtonClick(listIds: MutableList<Int>) {
         cartFragmentPresenter.deleteProductsFromCart(listIds)
     }
 
-    override fun onItemClick(id: Int) {}
+    override fun invalidateRecycler(invalidateType: Int) {
+        cartProductsAdapter.invalidate(invalidateType)
+    }
+
+    override fun onClick(v: View?) {
+        when(v) {
+            toConfirmCartProductsButton -> {
+                cartFragmentPresenter.sendOrder()
+            }
+        }
+    }
+
+    override fun onItemClick(id: Int) {
+        val fragment = InnerProductFragment.getInstance()
+        parentFragment?.childFragmentManager?.beginTransaction()
+            ?.add(R.id.cartFragmentContainer, fragment, ProductsFragment.TAG)
+            ?.show(fragment)
+            ?.hide(this)
+            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.commit()
+    }
 
     override fun showProgress() {
         progressBarCart.visibility = View.VISIBLE

@@ -4,6 +4,7 @@ import com.ltn.avroraflowers.ui.activities.registerActivity.interactor.RegisterA
 import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.CartFragmentInteractor
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.interactor.CatalogFragmentInteractor
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor.EntryLoginInteractor
+import com.ltn.avroraflowers.ui.fragments.ordersFragment.interactor.OrdersFragmentInteractor
 import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.ProductsFragmentInteractor
 import dagger.Module
 import dagger.Provides
@@ -40,5 +41,11 @@ class InteractorsModule {
     @Singleton
     fun provideCartFragmentInteractor(): CartFragmentInteractor {
         return CartFragmentInteractor()
+    }
+
+    @Provides
+    @Singleton
+    fun provideOrdersFragmentInteractor(): OrdersFragmentInteractor {
+        return OrdersFragmentInteractor()
     }
 }

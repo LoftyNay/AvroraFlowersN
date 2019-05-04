@@ -28,4 +28,6 @@
     <string name="search">Поиск</string>
     <string name="select_all_products">Выбрыть все товары</string>
     <string name="products_select">Товаров выбрано - %s</string>
+    <string name="send">Отправить</string>
+    <string name="save">Сохранить</string>
 </resources>

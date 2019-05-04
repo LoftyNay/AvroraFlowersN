@@ -17,6 +17,9 @@ class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor
         disposable = apiAvrora.userRegister(userData)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRegisterUserListener.onRequestStart() }
+            .doFinally { onRegisterUserListener.onRequestEnded() }
+            .doOnError { onRegisterUserListener.onFailure() }
             .subscribe(
                 { result ->
                     when (result.code) {
@@ -28,12 +31,9 @@ class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor
                         }
                     }
                     disposable.dispose()
-                    onRegisterUserListener.onRegisterUserEnded()
                 },
-                { error ->
+                {
                     disposable.dispose()
-                    onRegisterUserListener.onFailure()
-                    onRegisterUserListener.onRegisterUserEnded()
                 }
             )
     }

@@ -1,6 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment.presenter
 
 interface ICartFragmentPresenter {
-    fun getCartProducts()
+    fun sendOrder()
     fun deleteProductsFromCart(listIds: MutableList<Int>)
 }

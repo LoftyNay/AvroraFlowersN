@@ -9,51 +9,12 @@
         android:layout_height="match_parent"
         tools:context=".ui.activities.mainActivity.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
-            android:layout_width="match_parent"
-            android:gravity="center_horizontal|center_vertical"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-        <include layout="@layout/toolbar"
-                 android:layout_height="wrap_content"
-                 android:layout_width="match_parent"
-                 app:layout_scrollFlags="scroll|enterAlways|snap"/>
-
-        <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardSearchEdit"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="14dp"
-                android:layout_marginRight="14dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardElevation="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-            <EditText
-                    android:id="@+id/catalogSearchEdit"
-                    android:layout_width="match_parent"
-                    android:layout_height="46dp"
-                    android:enabled="false"
-                    android:background="@drawable/search_edit_outline_catalog"
-                    android:hint="@string/search"
-                    android:textSize="14sp"
-                    android:drawableEnd="@drawable/ic_search_catalog"/>
-        </com.google.android.material.card.MaterialCardView>
-    </com.google.android.material.appbar.AppBarLayout>
-
     <com.ltn.avroraflowers.ui.activities.mainActivity.BottomNavigationViewPager
             android:id="@+id/viewPagerMain"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="?attr/actionBarSize"
             android:clipToPadding="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/bottomNavigation"

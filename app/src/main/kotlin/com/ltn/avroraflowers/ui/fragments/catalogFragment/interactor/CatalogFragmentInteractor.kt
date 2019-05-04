@@ -12,16 +12,16 @@ class CatalogFragmentInteractor: BaseInteractor(), ICatalogFragmentInteractor {
         disposable = apiAvrora.getCategories()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRequestCategoriesListener.onRequestStart() }
+            .doFinally { onRequestCategoriesListener.onRequestEnded() }
+            .doOnError { onRequestCategoriesListener.onFailure() }
             .subscribe(
                 { result->
-                    disposable.dispose()
                     onRequestCategoriesListener.onSuccessful(result)
-                    onRequestCategoriesListener.onRequestEnded()
-                },
-                { error ->
                     disposable.dispose()
-                    onRequestCategoriesListener.onFailure()
-                    onRequestCategoriesListener.onRequestEnded()
+                },
+                {
+                    disposable.dispose()
                 }
             )
     }

@@ -1,7 +1,5 @@
 package com.ltn.avroraflowers.adapters
 
-import android.content.Context
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,35 +7,35 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatCheckBox
-import androidx.core.util.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.model.CartItem
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 
-class CartProductsAdapter(
-    private val onClickListener: OnClickListener,
-    private val onSelectCheckBoxLitener: OnSelectCheckBoxLitener
-) : RecyclerView.Adapter<ViewHolder>() {
+class CartProductsAdapter(private val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolder>() {
 
-    //    private val TYPE_HEADER = 0
+    companion object {
+        val INVALIDATE_TYPE_DELETE = 0
+        val INVALIDATE_TYPE_ADD = 1
+    }
+
     private val TYPE_ITEM = 1
     private val TYPE_FOOTER = 2
 
-    private var cartProducts: MutableList<CartItem> = ArrayList()
-    private var listCheckedItems = SparseBooleanArray()
+    private var cartProducts: MutableList<CartItem> = CartProductsRepository.getInstance().getList()
+
     private var isFooterCheckBoxSelected: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         lateinit var itemView: View
         when (viewType) {
-            /*     TYPE_HEADER -> {
-                     itemView = LayoutInflater.from(parent.context).inflate(R.layout.header_recycler_cart, parent, false)
-                     return HeaderViewHolder(itemView)
-                 }*/
             TYPE_FOOTER -> {
                 itemView = LayoutInflater.from(parent.context).inflate(R.layout.footer_recycler_item, parent, false)
                 return FooterViewHolder(itemView)
@@ -53,66 +51,72 @@ class CartProductsAdapter(
         return cartProducts.size + 1
     }
 
-    fun notifySelectedItems(selected: Boolean) {
-        setSelectedCheckBox(selected)
+    private fun notifySelectedItems(selected: Boolean) {
+        cartProducts.forEach { it.checked = selected }
         notifyDataSetChanged()
     }
 
-    fun notifyFooter(check: Boolean) {
-        isFooterCheckBoxSelected = check
-        notifyItemChanged(cartProducts.size)
-    }
-
-    fun addAll(cartProducts: List<CartItem>) {
-        this.cartProducts.addAll(cartProducts)
-        this.cartProducts.reverse()
-        for (i in cartProducts.indices)
-            listCheckedItems.put(i, false)
+    private fun notifyFooter() {
+        val item = cartProducts.find { item -> !item.checked }
+        isFooterCheckBoxSelected = item == null
         notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        when (holder) {
-//            is HeaderViewHolder -> {
-
-//            }
-            is ItemViewHolder -> {
-                holder.title.text = cartProducts[position].title
-                holder.colorText.text = cartProducts[position].color
-                holder.cartCardItem.setOnClickListener { onClickListener.onItemClick(cartProducts[position]._id) }
-                holder.checkItem.isChecked = listCheckedItems[position]
-                holder.checkItem.setOnClickListener {
-                    listCheckedItems[position] = !listCheckedItems[position]
-                    if (listCheckedItems.containsValue(false))
-                        onSelectCheckBoxLitener.onSelectedItemCheckBox(false)
-                    else
-                        onSelectCheckBoxLitener.onSelectedItemCheckBox(true)
-                }
-                initPerPackSpinner(holder, position)
-                initCountPackSpinner(holder, position)
-            }
-            is FooterViewHolder -> {
-                holder.selectAllCheckBox.isChecked = isFooterCheckBoxSelected
-                holder.selectAllCheckBox.setOnClickListener {
-                    onSelectCheckBoxLitener.onSelectedFooterCheckBox(!isFooterCheckBoxSelected)
-                    isFooterCheckBoxSelected = !isFooterCheckBoxSelected
-                }
-                holder.deleteButton.setOnClickListener {
-                    val listIds: MutableList<Int> = ArrayList()
-                    for (i in listCheckedItems.keyIterator()) {
-                        if (listCheckedItems[i]) {
-                            listIds.add(cartProducts[i]._id)
-                        }
+    fun invalidate(invalidateType: Int) {
+        when (invalidateType) {
+            INVALIDATE_TYPE_DELETE -> {
+                val iterator = cartProducts.iterator()
+                var iterable = 0
+                while (iterator.hasNext()) {
+                    val item = iterator.next()
+                    if (item.checked) {
+                        iterator.remove()
+                        notifyItemRemoved(iterable)
+                        notifyItemRangeChanged(iterable, cartProducts.size)
                     }
-                    onClickListener.onDeleteButtonClick(listIds)
+                    iterable++
                 }
+            }
+            INVALIDATE_TYPE_ADD -> {
+                notifyDataSetChanged()
             }
         }
     }
 
-    /*  class HeaderViewHolder(itemView: View) : ViewHolder(itemView) {
-
-      }*/
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        when (holder) {
+            is ItemViewHolder -> {
+                holder.title.text = cartProducts[position].title
+                holder.colorText.text = cartProducts[position].color
+                holder.cartCardItem.setOnClickListener { onClickListener.onItemClick(cartProducts[position]._id) }
+                holder.checkItem.isChecked = cartProducts[position].checked
+                holder.checkItem.setOnClickListener {
+                    cartProducts[position].checked = !cartProducts[position].checked
+                    notifyFooter()
+                }
+                initPerPackSpinner(holder, position)
+                initCountPackSpinner(holder)
+            }
+            is FooterViewHolder -> {
+                holder.selectAllCheckBox.isChecked = isFooterCheckBoxSelected
+                holder.selectAllCheckBox.setOnClickListener {
+                    notifySelectedItems(!isFooterCheckBoxSelected)
+                    isFooterCheckBoxSelected = !isFooterCheckBoxSelected
+                }
+                holder.deleteButton.setOnClickListener {
+                    Observable.fromIterable(cartProducts)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .filter { item -> item.checked }
+                        .concatMapIterable { item -> mutableListOf(item._id) }
+                        .toList()
+                        .subscribe { result ->
+                            onClickListener.onDeleteButtonClick(result)
+                        }
+                }
+            }
+        }
+    }
 
     class ItemViewHolder(itemView: View) : ViewHolder(itemView) {
         val cartCardItem = itemView.findViewById<MaterialCardView>(R.id.cartCardItem)
@@ -131,18 +135,12 @@ class CartProductsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         when (position) {
-            // 0 -> return TYPE_HEADER
             cartProducts.size -> return TYPE_FOOTER
             else -> return TYPE_ITEM;
         }
     }
 
-    private fun setSelectedCheckBox(select: Boolean) {
-        for (i in listCheckedItems.keyIterator())
-            listCheckedItems.put(i, select)
-    }
-
-    private fun initCountPackSpinner(holder: ItemViewHolder, position: Int) {
+    private fun initCountPackSpinner(holder: ItemViewHolder) {
         val listCountSpinner = listOf(1, 2, 3)
         val arrayAdapter = ArrayAdapter<Int>(
             holder.cartCardItem.context,
@@ -172,10 +170,5 @@ class CartProductsAdapter(
     interface OnClickListener {
         fun onItemClick(id: Int)
         fun onDeleteButtonClick(listIds: MutableList<Int>)
-    }
-
-    interface OnSelectCheckBoxLitener {
-        fun onSelectedItemCheckBox(selected: Boolean)
-        fun onSelectedFooterCheckBox(selected: Boolean)
     }
 }

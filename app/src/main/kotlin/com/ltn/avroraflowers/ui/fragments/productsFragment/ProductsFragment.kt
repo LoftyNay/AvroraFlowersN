@@ -1,11 +1,9 @@
 package com.ltn.avroraflowers.ui.fragments.productsFragment
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -18,9 +16,8 @@ import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragm
 import com.ltn.avroraflowers.ui.fragments.productsFragment.presenter.ProductsFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.productsFragment.view.ProductsFragmentView
 import com.ltn.avroraflowers.utils.Constants
-import kotlinx.android.synthetic.main.fragment_catalog.*
 import kotlinx.android.synthetic.main.fragment_catalog_products.*
-import kotlinx.android.synthetic.main.product_item_recycler.*
+import kotlinx.android.synthetic.main.toolbar_with_search.*
 
 class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.OnCardItemClickListener,
     ProductsAdapter.OnAddToCartClickListener {
@@ -52,6 +49,7 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
         productsFragmentPresenter.attach(view.context)
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
+        toolbarSearch.title = "dd"
         val categoryId = arguments?.getInt(KEY_ID)
         if (categoryId != null) {
             productsFragmentPresenter.getProductsFromServerByCategoryId(categoryId)
@@ -73,12 +71,10 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
             ?.hide(this)
             ?.addToBackStack(Constants.CATALOG_STACK)
             ?.commit()
-        Toast.makeText(activity, "item click", Toast.LENGTH_SHORT).show()
     }
 
     override fun onAddToCartClick(id: Int, count: Int, perPack: Int) {
         productsFragmentPresenter.addProductToCart(id, count, perPack)
-        Toast.makeText(activity, "button click", Toast.LENGTH_SHORT).show()
     }
 
     override fun showProducts(products: List<Product>) {
