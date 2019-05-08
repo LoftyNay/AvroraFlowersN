@@ -1,11 +1,9 @@
 package com.ltn.avroraflowers.ui.fragments.catalogFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -17,8 +15,8 @@ import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragm
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.view.CatalogFragmentView
 import com.ltn.avroraflowers.ui.fragments.productsFragment.ProductsFragment
 import com.ltn.avroraflowers.utils.Constants
+import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_catalog.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_with_search.*
 
 
@@ -44,7 +42,7 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        catalogFragmentPresenter.attach(view.context)
+        catalogFragmentPresenter.attach()
         super.onViewCreated(view, savedInstanceState)
         toolbarSearch.title = resources.getString(R.string.catalog_item_nav)
         initRecycler()
@@ -54,7 +52,14 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     private fun initRecycler() {
         recyclerViewCatalogFragment.isNestedScrollingEnabled = false
         recyclerViewCatalogFragment.layoutManager = GridLayoutManager(activity, 2, RecyclerView.VERTICAL, false)
-        recyclerViewCatalogFragment.addItemDecoration(GridSpacingItemDecoration(2, 40, true, 0))
+        recyclerViewCatalogFragment.addItemDecoration(
+            GridSpacingItemDecoration(
+                2,
+                40,
+                true,
+                0
+            )
+        )
         categoriesAdapter = CategoriesAdapter(this)
         recyclerViewCatalogFragment.adapter = categoriesAdapter
     }

@@ -1,9 +1,7 @@
 package com.ltn.avroraflowers.network
 
 import com.ltn.avroraflowers.model.*
-import com.ltn.avroraflowers.network.RequestBody.AddToCart
-import com.ltn.avroraflowers.network.RequestBody.UserLogin
-import com.ltn.avroraflowers.network.RequestBody.UserRegister
+import com.ltn.avroraflowers.network.RequestBody.*
 import com.ltn.avroraflowers.network.Response.LoginResponse
 import com.ltn.avroraflowers.network.Response.RegisterResponse
 import com.ltn.avroraflowers.network.Response.SampleResponse
@@ -20,6 +18,9 @@ interface ApiAvrora {
 
     @GET("/categories")
     fun getCategories(): Observable<List<Category>>
+
+    @GET("/products/{id}")
+    fun getProductById(@Path("id") id: Int): Observable<Product>
 
     @GET("/categories/{id}/products")
     fun getProductsByCategoryId(@Path("id") id: Int): Observable<List<Product>>
@@ -43,6 +44,12 @@ interface ApiAvrora {
 
     @GET("/user/orders")
     fun getOrders(@Header("access-token") accessToken: String): Observable<List<OrderItem>>
+
+    @POST("/user/orders")
+    fun addOrder(@Header("access-token") accessToken: String, @Body addOrder: AddOrder): Observable<SampleResponse>
+
+    @POST("/user/orders/products")
+    fun addProductsInOrder(@Header("access-token") accessToken: String, @Body productInOrder: ProductInOrder): Observable<SampleResponse>
 
     @GET("/user/orders/{id}/products")
     fun getProductsInOrderById(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<List<OrderInner>>

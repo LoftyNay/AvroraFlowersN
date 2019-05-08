@@ -8,6 +8,7 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
 
+
 class HostCartFragment : BaseFragment() {
 
     companion object {

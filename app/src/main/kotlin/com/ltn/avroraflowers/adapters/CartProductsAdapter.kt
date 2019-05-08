@@ -88,7 +88,7 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
             is ItemViewHolder -> {
                 holder.title.text = cartProducts[position].title
                 holder.colorText.text = cartProducts[position].color
-                holder.cartCardItem.setOnClickListener { onClickListener.onItemClick(cartProducts[position]._id) }
+                holder.cartCardItem.setOnClickListener { onClickListener.onItemClick(cartProducts[position].product_id) }
                 holder.checkItem.isChecked = cartProducts[position].checked
                 holder.checkItem.setOnClickListener {
                     cartProducts[position].checked = !cartProducts[position].checked

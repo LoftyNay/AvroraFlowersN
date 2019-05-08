@@ -6,7 +6,7 @@ import com.arellomobile.mvp.MvpView
 import com.ltn.avroraflowers.App
 
 abstract class BasePresenter<mvpView : MvpView> : MvpPresenter<mvpView>() {
-    abstract fun attach(context: Context)
+    abstract fun attach()
     abstract fun detach()
     abstract fun destroy()
 }

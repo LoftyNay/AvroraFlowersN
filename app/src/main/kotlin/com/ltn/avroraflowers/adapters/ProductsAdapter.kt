@@ -36,6 +36,7 @@ class ProductsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id) }
+
         Picasso.get()
             .load(products[position].image)
             .fit()

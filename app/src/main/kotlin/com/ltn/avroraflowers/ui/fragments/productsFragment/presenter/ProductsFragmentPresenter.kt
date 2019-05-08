@@ -19,7 +19,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
     @Inject
     lateinit var productsFragmentInteractor: ProductsFragmentInteractor
 
-    override fun attach(context: Context) {
+    override fun attach() {
         App.component.inject(this)
     }
 

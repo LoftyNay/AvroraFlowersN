@@ -1,4 +1,4 @@
-package com.ltn.avroraflowers.ui.fragments.catalogFragment
+package com.ltn.avroraflowers.utils
 
 import android.graphics.Rect
 import android.view.View

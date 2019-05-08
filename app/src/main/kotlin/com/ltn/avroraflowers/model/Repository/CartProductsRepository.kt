@@ -1,10 +1,9 @@
 package com.ltn.avroraflowers.model.Repository
 
+import android.util.Log
 import com.ltn.avroraflowers.model.CartItem
 
-class CartProductsRepository : BaseRepository<CartItem>() {
-
-    private var onUpdateCartListener: OnUpdateCartListener? = null
+class CartProductsRepository : BaseRepository<CartItem, CartProductsRepository.OnCartListener>() {
 
     companion object {
         private var cartProductsRepository: CartProductsRepository? = null
@@ -15,15 +14,13 @@ class CartProductsRepository : BaseRepository<CartItem>() {
         }
     }
 
-    fun registerListener(onUpdateCartListener: OnUpdateCartListener) {
-        this.onUpdateCartListener = onUpdateCartListener
-    }
-
     override fun callUpdate() {
-        onUpdateCartListener?.onUpdateProductsInCart()
+        listeners.forEach {
+            it.onUpdateProductsInCart()
+        }
     }
 
-    interface OnUpdateCartListener {
+    interface OnCartListener {
         fun onUpdateProductsInCart()
     }
 }

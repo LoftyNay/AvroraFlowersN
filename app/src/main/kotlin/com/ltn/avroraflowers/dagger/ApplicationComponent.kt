@@ -8,6 +8,8 @@ import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.catalogFragment.presenter.CatalogFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
+import com.ltn.avroraflowers.ui.fragments.innerOrderFragment.presenter.InnerOrderFragmentPresenter
+import com.ltn.avroraflowers.ui.fragments.innerProductFragment.presenter.InnerProductFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.ordersFragment.presenter.OrdersFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.productsFragment.presenter.ProductsFragmentPresenter
 import dagger.Component
@@ -35,6 +37,8 @@ interface ApplicationComponent {
     fun inject(productsFragmentPresenter: ProductsFragmentPresenter)
     fun inject(cartFragmentPresenter: CartFragmentPresenter)
     fun inject(ordersFragmentPresenter: OrdersFragmentPresenter)
+    fun inject(innerOrderFragmentPresenter: InnerOrderFragmentPresenter)
+    fun inject(innerProductFragmentPresenter: InnerProductFragmentPresenter)
 
     //IN INTERACTOR
     fun inject(baseInteractor: BaseInteractor)

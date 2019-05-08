@@ -11,7 +11,7 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ProductsAdapter
 import com.ltn.avroraflowers.model.Product
 import com.ltn.avroraflowers.ui.base.BaseFragment
-import com.ltn.avroraflowers.ui.fragments.catalogFragment.GridSpacingItemDecoration
+import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
 import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragment
 import com.ltn.avroraflowers.ui.fragments.productsFragment.presenter.ProductsFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.productsFragment.view.ProductsFragmentView
@@ -29,7 +29,6 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
 
     companion object {
         val KEY_ID = "id"
-
         val TAG = "ProductsFragment"
 
         fun getInstance(id: Int): ProductsFragment {
@@ -46,7 +45,7 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        productsFragmentPresenter.attach(view.context)
+        productsFragmentPresenter.attach()
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         toolbarSearch.title = "dd"
@@ -58,15 +57,22 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
 
     private fun initRecycler() {
         productsAdapter = ProductsAdapter(this, this)
-        recyclerViewProductsFragment.addItemDecoration(GridSpacingItemDecoration(1, 40, true, 0))
+        recyclerViewProductsFragment.addItemDecoration(
+            GridSpacingItemDecoration(
+                1,
+                40,
+                true,
+                0
+            )
+        )
         recyclerViewProductsFragment.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerViewProductsFragment.adapter = productsAdapter
     }
 
     override fun onItemClick(id: Int) {
-        val fragment = InnerProductFragment.getInstance()
+        val fragment = InnerProductFragment.getInstance(id)
         parentFragment?.childFragmentManager?.beginTransaction()
-            ?.add(R.id.fragmentCatalogContainer, fragment, ProductsFragment.TAG)
+            ?.add(R.id.fragmentCatalogContainer, fragment, InnerProductFragment.TAG)
             ?.show(fragment)
             ?.hide(this)
             ?.addToBackStack(Constants.CATALOG_STACK)

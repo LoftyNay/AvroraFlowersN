@@ -3,19 +3,20 @@ package com.ltn.avroraflowers.model
 import com.google.gson.annotations.SerializedName
 
 data class Product(
-    val _id: Int,
-    val category_id: Int,
-    val title: String,
-    val description: String,
-    val image: String,
-    val price: String,
+    var _id: Int,
+    var category_id: Int,
+    var title: String,
+    var color: String,
+    var description: String,
+    var image: String,
+    var price: String,
 
     @SerializedName(value = "atributes_per_pack")
-    val perPack: Int,
+    var perPack: Int,
 
     @SerializedName(value = "atributes_seasonality")
-    val seasonality: String,
+    var seasonality: String,
 
     @SerializedName(value = "atributes_stem_length")
-    val stemLength: String
+    var stemLength: String
 )

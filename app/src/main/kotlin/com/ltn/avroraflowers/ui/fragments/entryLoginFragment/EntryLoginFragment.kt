@@ -32,7 +32,7 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        entryLoginFragmentPresenter.attach(view.context)
+        entryLoginFragmentPresenter.attach()
         super.onViewCreated(view, savedInstanceState)
 
         emailEditLogin.requestFocus()

@@ -16,7 +16,7 @@ class OrdersFragmentInteractor : BaseInteractor(), IOrdersFragmentInteractor {
             .doOnError { onRequestOrdersListener.onFailure() }
             .subscribe(
                 { result ->
-                    onRequestOrdersListener.onSuccessful(result)
+                    onRequestOrdersListener.onSuccessful(result.sortedWith(compareByDescending { it._id }))
                     disposable.dispose()
                 },
                 {

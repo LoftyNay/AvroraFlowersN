@@ -1,5 +1,9 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment.interactor
 
+import android.util.Log
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
+import com.ltn.avroraflowers.network.RequestBody.AddOrder
+import com.ltn.avroraflowers.network.RequestBody.ProductInOrder
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.utils.Constants
 import io.reactivex.Observable
@@ -19,7 +23,6 @@ class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
                 { result ->
                     onRequestCartProductsListener.onSuccessful(result.sortedWith(compareByDescending({ it._id })))
                     disposable.dispose()
-
                 },
                 {
                     disposable.dispose()
@@ -38,13 +41,39 @@ class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
             .doOnSubscribe { onDeleteCartProductsListener.onRequestStart() }
             .doFinally { onDeleteCartProductsListener.onRequestEnded() }
             .doOnComplete { onDeleteCartProductsListener.onSuccessful() }
-            .subscribe({},{ error ->
+            .subscribe({}, {
                 onDeleteCartProductsListener.onFailure()
             })
     }
 
     override fun requestSendOrder(onSendOrderListener: OnSendOrderListener) {
-       // disposable =
-
+        disposable = apiAvrora.addOrder(Constants.TEST_TOKEN, AddOrder("10$", "На обработке"))
+            .flatMap {
+                Observable.fromIterable(CartProductsRepository.getInstance().getList()).flatMap {
+                    apiAvrora.addProductsInOrder(
+                        Constants.TEST_TOKEN,
+                        ProductInOrder(it.count_pack, it.per_pack, it.price, it.product_id)
+                    )
+                }
+            }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .doOnSubscribe { onSendOrderListener.onRequestStart() }
+            .doOnError { onSendOrderListener.onFailure() }
+            .doFinally { onSendOrderListener.onRequestEnded() }
+            .doOnComplete { onSendOrderListener.onSuccessful() }
+            .subscribe()
     }
 }
+
+
+/*
+just(AddOrder("10$", "Упаковка"))
+.flatMap { order -> apiAvrora.addOrder(Constants.TEST_TOKEN, order) }
+.flatMap { apiAvrora.addProductsInOrder(Constants.TEST_TOKEN, ) }
+//disposable = Observable.fromIterable(CartProductsRepository.getInstance().getList())
+//  .
+// disposable =
+
+}
+}*/

@@ -13,12 +13,12 @@ import com.ltn.avroraflowers.ui.fragments.ordersFragment.view.OrdersFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragmentPresenter, OrdersRepository.OnUpdateOrdersListener {
+class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragmentPresenter, OrdersRepository.OnOrdersListener {
 
     @Inject
     lateinit var ordersFragmentInteractor: OrdersFragmentInteractor
 
-    override fun attach(context: Context) {
+    override fun attach() {
         App.component.inject(this)
         OrdersRepository.getInstance().registerListener(this)
     }
@@ -32,7 +32,6 @@ class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragm
             override fun onSuccessful(orders: List<OrderItem>) {
                 OrdersRepository.getInstance().addAllItems(orders)
                 viewState.invalidateRecycler()
-                Log.d("GLL", "OK")
             }
 
             override fun onFailure() {
@@ -52,5 +51,6 @@ class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragm
     }
 
     override fun destroy() {
+        OrdersRepository.getInstance().unregisterListener(this)
     }
 }

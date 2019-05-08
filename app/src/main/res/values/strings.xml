@@ -30,4 +30,5 @@
     <string name="products_select">Товаров выбрано - %s</string>
     <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
+    <string name="add_to_cart">Добавить в корзину</string>
 </resources>

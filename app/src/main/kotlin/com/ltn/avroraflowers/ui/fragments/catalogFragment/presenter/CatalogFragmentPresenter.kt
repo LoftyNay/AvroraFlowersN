@@ -17,7 +17,7 @@ class CatalogFragmentPresenter : BasePresenter<CatalogFragmentView>(), ICatalogF
     @Inject
     lateinit var catalogFragmentInteractor: CatalogFragmentInteractor
 
-    override fun attach(context: Context) {
+    override fun attach() {
         App.component.inject(this)
     }
 

@@ -52,7 +52,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     override fun onBackPressed() {
         val currentChildFragmentManager = viewPagerAdapter.getItem(viewPagerMain.currentItem).childFragmentManager
-        if (currentChildFragmentManager.backStackEntryCount > 0) {
+        if (currentChildFragmentManager.backStackEntryCount != 0) {
             currentChildFragmentManager.popBackStack()
         } else {
             super.onBackPressed()

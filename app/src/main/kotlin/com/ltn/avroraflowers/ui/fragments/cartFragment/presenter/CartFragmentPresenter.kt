@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @InjectViewState
 class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPresenter,
-    CartProductsRepository.OnUpdateCartListener {
+    CartProductsRepository.OnCartListener {
 
     @Inject
     lateinit var cartFragmentInteractor: CartFragmentInteractor
@@ -26,52 +26,9 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
     @Inject
     lateinit var context: Context
 
-    override fun attach(context: Context) {
+    override fun attach() {
         App.component.inject(this)
         CartProductsRepository.getInstance().registerListener(this)
-    }
-
-    override fun sendOrder() {
-        cartFragmentInteractor.requestSendOrder(object : OnSendOrderListener {
-            override fun onRequestStart() {
-                viewState.showProgress()
-            }
-
-            override fun onSuccessful() {
-                //fixme
-                OrdersRepository.getInstance().callUpdate()
-                //viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
-            }
-
-            override fun onFailure() {
-                viewState.showConnectionProblem()
-            }
-
-            override fun onRequestEnded() {
-                viewState.hideProgress()
-            }
-        })
-    }
-
-    override fun deleteProductsFromCart(listIds: MutableList<Int>) {
-        cartFragmentInteractor.requestDeleteProductsFromCart(listIds, object : OnDeleteCartProductsListener {
-            override fun onRequestStart() {
-                viewState.showProgress()
-            }
-
-            override fun onFailure() {
-                viewState.showConnectionProblem()
-                Log.d("GLL", "FAIL")
-            }
-
-            override fun onSuccessful() {
-                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
-            }
-
-            override fun onRequestEnded() {
-                viewState.hideProgress()
-            }
-        })
     }
 
     //Singleton ProductsRepository update call CartFragment
@@ -96,9 +53,49 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
         })
     }
 
-    override fun detach() {
+    override fun sendOrder() {
+        cartFragmentInteractor.requestSendOrder(object : OnSendOrderListener {
+            override fun onRequestStart() {
+                viewState.showProgress()
+            }
+
+            override fun onSuccessful() {
+                OrdersRepository.getInstance().callUpdate()
+            }
+
+            override fun onFailure() {
+                viewState.showConnectionProblem()
+            }
+
+            override fun onRequestEnded() {
+                viewState.hideProgress()
+            }
+        })
     }
 
+    override fun deleteProductsFromCart(listIds: MutableList<Int>) {
+        cartFragmentInteractor.requestDeleteProductsFromCart(listIds, object : OnDeleteCartProductsListener {
+            override fun onRequestStart() {
+                viewState.showProgress()
+            }
+
+            override fun onFailure() {
+                viewState.showConnectionProblem()
+            }
+
+            override fun onSuccessful() {
+                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
+            }
+
+            override fun onRequestEnded() {
+                viewState.hideProgress()
+            }
+        })
+    }
+
+    override fun detach() {}
+
     override fun destroy() {
+        CartProductsRepository.getInstance().unregisterListener(this)
     }
 }

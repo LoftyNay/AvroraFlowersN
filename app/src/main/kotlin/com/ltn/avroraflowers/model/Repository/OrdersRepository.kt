@@ -2,9 +2,7 @@ package com.ltn.avroraflowers.model.Repository
 
 import com.ltn.avroraflowers.model.OrderItem
 
-class OrdersRepository : BaseRepository<OrderItem>() {
-
-    private var onUpdateOrdersListener: OnUpdateOrdersListener? = null
+class OrdersRepository : BaseRepository<OrderItem, OrdersRepository.OnOrdersListener>() {
 
     companion object {
         private var ordersRepository: OrdersRepository? = null
@@ -15,15 +13,13 @@ class OrdersRepository : BaseRepository<OrderItem>() {
         }
     }
 
-    fun registerListener(onUpdateOrdersListener: OnUpdateOrdersListener) {
-        this.onUpdateOrdersListener = onUpdateOrdersListener
-    }
-
     override fun callUpdate() {
-        onUpdateOrdersListener?.onUpdateOrders()
+        listeners.forEach {
+            it.onUpdateOrders()
+        }
     }
 
-    interface OnUpdateOrdersListener {
+    interface OnOrdersListener {
         fun onUpdateOrders()
     }
 }

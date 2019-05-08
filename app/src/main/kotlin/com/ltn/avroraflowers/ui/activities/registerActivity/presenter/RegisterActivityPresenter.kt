@@ -22,7 +22,7 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
     @Inject
     lateinit var registerActivityInteractor: RegisterActivityInteractor
 
-    override fun attach(context: Context) {
+    override fun attach() {
         App.component.inject(this)
     }
 

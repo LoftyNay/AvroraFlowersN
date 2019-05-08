@@ -1,30 +1,23 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.util.containsValue
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.CartProductsAdapter
-import com.ltn.avroraflowers.model.CartItem
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
-import com.ltn.avroraflowers.ui.fragments.catalogFragment.GridSpacingItemDecoration
+import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
 import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragment
-import com.ltn.avroraflowers.ui.fragments.productsFragment.ProductsFragment
 import com.ltn.avroraflowers.utils.Constants
-import kotlinx.android.synthetic.main.footer_recycler_item.*
 import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_with_search.*
 
 class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnClickListener, View.OnClickListener {
@@ -45,10 +38,11 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnCli
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        cartFragmentPresenter.attach(view.context)
+        cartFragmentPresenter.attach()
         super.onViewCreated(view, savedInstanceState)
         toolbarSearch.title = resources.getString(R.string.cart_item_nav)
         initRecycler()
+        toConfirmCartProductsButton.setOnClickListener(this)
         CartProductsRepository.getInstance().callUpdate()
     }
 
@@ -71,18 +65,24 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.OnCli
         when(v) {
             toConfirmCartProductsButton -> {
                 cartFragmentPresenter.sendOrder()
+                Log.d("GLL", "inp")
             }
         }
     }
 
     override fun onItemClick(id: Int) {
-        val fragment = InnerProductFragment.getInstance()
+        val fragment = InnerProductFragment.getInstance(id)
         parentFragment?.childFragmentManager?.beginTransaction()
-            ?.add(R.id.cartFragmentContainer, fragment, ProductsFragment.TAG)
+            ?.add(R.id.cartFragmentContainer, fragment, InnerProductFragment.TAG)
             ?.show(fragment)
             ?.hide(this)
             ?.addToBackStack(Constants.CATALOG_STACK)
             ?.commit()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cartFragmentPresenter.destroy()
     }
 
     override fun showProgress() {

@@ -30,7 +30,7 @@ class RegisterActivity : BaseActivity(), RegisterActivityView, View.OnClickListe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.component.inject(this)
-        registerActivityPresenter.attach(this)
+        registerActivityPresenter.attach()
 
         setContentView(R.layout.activity_register)
 

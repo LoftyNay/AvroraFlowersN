@@ -18,7 +18,7 @@ class EntryLoginFragmentPresenter : BasePresenter<EntryLoginFragmentView>(), IEn
     @Inject
     lateinit var entryLoginInteractor: EntryLoginInteractor
 
-    override fun attach(context: Context) {
+    override fun attach() {
         App.component.inject(this)
     }
 

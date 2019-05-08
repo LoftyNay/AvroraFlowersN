@@ -8,7 +8,7 @@ class Constants {
 
         val PAGE_LIMIT = 4
 
-        val CATALOG_STACK = "b_stack_catalog"
+        val CATALOG_STACK = "b_stack"
 
         val TEST_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJ3aXp0ZW1hQGdtYWlsLmNvbSIsImlhdCI6MTU1NTE2MzU2OH0.l24XahiDrx8j9_YMMcCPAQnG0E-dOwhHeijDVLfMboQ"
     }
