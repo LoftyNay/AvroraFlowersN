@@ -66,7 +66,7 @@ class InnerOrderFragment : BaseFragment(), InnerOrderFragmentView, InnerOrderAda
             ?.add(R.id.fragmentOrdersContainer, fragment, ProductsFragment.TAG)
             ?.show(fragment)
             ?.hide(this)
-            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.addToBackStack(Constants.STACK)
             ?.commit()
     }
 

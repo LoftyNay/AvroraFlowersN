@@ -1,7 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.ordersFragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -71,7 +70,7 @@ class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardI
             ?.add(R.id.fragmentOrdersContainer, fragment, InnerOrderFragment.TAG)
             ?.show(fragment)
             ?.hide(this)
-            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.addToBackStack(Constants.STACK)
             ?.commit()
     }
 

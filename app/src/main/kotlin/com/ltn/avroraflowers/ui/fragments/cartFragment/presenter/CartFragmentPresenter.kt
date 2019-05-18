@@ -40,7 +40,6 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
 
             override fun onSuccessful(cartProducts: List<CartItem>) {
                 CartProductsRepository.getInstance().addAllItems(cartProducts)
-                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_ADD)
             }
 
             override fun onFailure() {
@@ -49,6 +48,7 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
 
             override fun onRequestEnded() {
                 viewState.hideProgress()
+                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_ADD)
             }
         })
     }

@@ -75,7 +75,7 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
             ?.add(R.id.fragmentCatalogContainer, fragment, InnerProductFragment.TAG)
             ?.show(fragment)
             ?.hide(this)
-            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.addToBackStack(Constants.STACK)
             ?.commit()
     }
 

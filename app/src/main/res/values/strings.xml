@@ -8,6 +8,24 @@
     <string name="repeat_last_order">Повторить прошлый заказ</string>
     <string name="load_last_order">Загрузить прошлый заказ</string>
     <string name="hello">Здравствуйте,\nАлександр</string>
+    <string name="date">%1$s.%2$s.%3$d</string>
+    <string name="pick_date_message">Уважаемый %s, вы не выбрали дату загрузки!</string>
+    <string name="pick_date_positive">Выбрать</string>
+    <string name="cancel">Отмена</string>
+    <string name="error_send_order">Оформление заказа не завершено</string>
+    <string name="send_order">Заказ передан на обработку</string>
+
+
+    <string name="confirm_order_message">Оформление заказа на дату 1%s, пункт вывоза - 2%s.</string>
+    <string name="confirm">Подтвердить</string>
+
+    <string name="empty_cart">Ваша корзина пуста\nВы можете перейти в каталог для добавления товаров</string>
+    <string name="confirm_exit_message">Вы действительно хотите выйти из приложения?</string>
+
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+
+
     <string name="contacts">Контакты</string>
     <string name="about">О компании</string>
     <string name="login">Вход</string>
@@ -31,4 +49,8 @@
     <string name="send">Отправить</string>
     <string name="save">Сохранить</string>
     <string name="add_to_cart">Добавить в корзину</string>
+    <string name="amsterdam">Амстердам</string>
+    <string name="delete">Удалить</string>
+    <string name="pick_all_products">Выбрать все товары</string>
+    <string name="to_catalog">В каталог</string>
 </resources>

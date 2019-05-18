@@ -1,8 +1,10 @@
 package com.ltn.avroraflowers.adapters
 
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
@@ -14,12 +16,17 @@ import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.model.CartItem
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
+import com.ltn.avroraflowers.ui.base.BaseFragment
+import com.ltn.avroraflowers.utils.Constants
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 
-class CartProductsAdapter(private val onClickListener: OnClickListener) : RecyclerView.Adapter<ViewHolder>() {
+class CartProductsAdapter(
+    private val adapterListener: AdapterListener,
+    private val emptyListener: BaseFragment.EmptyListener
+) : RecyclerView.Adapter<ViewHolder>() {
 
     companion object {
         val INVALIDATE_TYPE_DELETE = 0
@@ -32,6 +39,7 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
     private var cartProducts: MutableList<CartItem> = CartProductsRepository.getInstance().getList()
 
     private var isFooterCheckBoxSelected: Boolean = false
+    private var isVisibleDeleteButton: Boolean = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         lateinit var itemView: View
@@ -53,12 +61,15 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
 
     private fun notifySelectedItems(selected: Boolean) {
         cartProducts.forEach { it.checked = selected }
+        isVisibleDeleteButton = selected
         notifyDataSetChanged()
     }
 
     private fun notifyFooter() {
-        val item = cartProducts.find { item -> !item.checked }
-        isFooterCheckBoxSelected = item == null
+        var cartItem = cartProducts.find { item -> !item.checked }
+        isFooterCheckBoxSelected = cartItem == null
+        cartItem = cartProducts.find { item -> item.checked } //optimize
+        isVisibleDeleteButton = cartItem != null
         notifyDataSetChanged()
     }
 
@@ -81,6 +92,18 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
                 notifyDataSetChanged()
             }
         }
+        if (cartProducts.count() == 0) {
+            emptyListener.onShowEmpty()
+            isFooterCheckBoxSelected = false
+            isVisibleDeleteButton = false
+        } else {
+            emptyListener.onHideEmpty()
+        }
+        Handler().post {
+            adapterListener.showCountOnFooter(
+                cartProducts.sumBy { it.per_pack },
+                cartProducts.sumBy { it.count_pack })
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -88,14 +111,14 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
             is ItemViewHolder -> {
                 holder.title.text = cartProducts[position].title
                 holder.colorText.text = cartProducts[position].color
-                holder.cartCardItem.setOnClickListener { onClickListener.onItemClick(cartProducts[position].product_id) }
+                holder.cartCardItem.setOnClickListener { adapterListener.onItemClick(cartProducts[position].product_id) }
                 holder.checkItem.isChecked = cartProducts[position].checked
                 holder.checkItem.setOnClickListener {
                     cartProducts[position].checked = !cartProducts[position].checked
                     notifyFooter()
                 }
                 initPerPackSpinner(holder, position)
-                initCountPackSpinner(holder)
+                initCountPackSpinner(holder, position)
             }
             is FooterViewHolder -> {
                 holder.selectAllCheckBox.isChecked = isFooterCheckBoxSelected
@@ -103,6 +126,7 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
                     notifySelectedItems(!isFooterCheckBoxSelected)
                     isFooterCheckBoxSelected = !isFooterCheckBoxSelected
                 }
+                holder.deleteButton.visibility = if (isVisibleDeleteButton) View.VISIBLE else View.GONE
                 holder.deleteButton.setOnClickListener {
                     Observable.fromIterable(cartProducts)
                         .subscribeOn(Schedulers.io())
@@ -111,7 +135,8 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
                         .concatMapIterable { item -> mutableListOf(item._id) }
                         .toList()
                         .subscribe { result ->
-                            onClickListener.onDeleteButtonClick(result)
+                            adapterListener.onDeleteButtonClick(result)
+                            isVisibleDeleteButton = false
                         }
                 }
             }
@@ -129,7 +154,7 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
 
     class FooterViewHolder(itemView: View) : ViewHolder(itemView) {
         val selectAllCheckBox = itemView.findViewById<AppCompatCheckBox>(R.id.checkBoxFooterCart)
-        val textStatus = itemView.findViewById<TextView>(R.id.textFooterCart)
+        //val textStatus = itemView.findViewById<TextView>(R.id.textFooterCart)
         val deleteButton = itemView.findViewById<MaterialButton>(R.id.deleteItemsFooterCartButton)
     }
 
@@ -140,24 +165,37 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
         }
     }
 
-    private fun initCountPackSpinner(holder: ItemViewHolder) {
-        val listCountSpinner = listOf(1, 2, 3)
+    private fun initCountPackSpinner(holder: ItemViewHolder, position: Int) {
+        val listCountSpinner = Constants.LIST_COUNT_PACK
         val arrayAdapter = ArrayAdapter<Int>(
             holder.cartCardItem.context,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_row,
             listCountSpinner
         )
         holder.countPackSpinner.adapter = arrayAdapter
         for (item in listCountSpinner) {
-            holder.countPackSpinner.setSelection(listCountSpinner.indexOf(item))
+            if (item == cartProducts[position].count_pack)
+                holder.countPackSpinner.setSelection(listCountSpinner.indexOf(item))
+        }
+        holder.countPackSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                cartProducts[position].count_pack = listCountSpinner[pos]
+                Handler().post {
+                    adapterListener.showCountOnFooter(
+                        cartProducts.sumBy { it.per_pack },
+                        cartProducts.sumBy { it.count_pack })
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
     private fun initPerPackSpinner(holder: ItemViewHolder, position: Int) {
-        val listPerPackSpinner = listOf(200, 400, 600)
+        val listPerPackSpinner = Constants.LIST_PER_PACK
         holder.perPackSpinner.adapter = ArrayAdapter<Int>(
             holder.cartCardItem.context,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_row,
             listPerPackSpinner
         )
         for (item in listPerPackSpinner) {
@@ -165,10 +203,23 @@ class CartProductsAdapter(private val onClickListener: OnClickListener) : Recycl
                 holder.perPackSpinner.setSelection(listPerPackSpinner.indexOf(item))
             }
         }
+        holder.perPackSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                cartProducts[position].per_pack = listPerPackSpinner[pos]
+                Handler().post {
+                    adapterListener.showCountOnFooter(
+                        cartProducts.sumBy { it.per_pack },
+                        cartProducts.sumBy { it.count_pack })
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
-    interface OnClickListener {
+    interface AdapterListener {
         fun onItemClick(id: Int)
         fun onDeleteButtonClick(listIds: MutableList<Int>)
+        fun showCountOnFooter(countPerPack: Int, countPack: Int)
     }
 }

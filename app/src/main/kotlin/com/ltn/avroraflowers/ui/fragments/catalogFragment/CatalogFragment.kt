@@ -70,7 +70,7 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
             ?.add(R.id.fragmentCatalogContainer, fragment, ProductsFragment.TAG)
             ?.show(fragment)
             ?.hide(this)
-            ?.addToBackStack(Constants.CATALOG_STACK)
+            ?.addToBackStack(Constants.STACK)
             ?.commit()
     }
 

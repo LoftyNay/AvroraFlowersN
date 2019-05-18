@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.model.Product
+import com.ltn.avroraflowers.utils.Constants
 import com.squareup.picasso.Picasso
 import android.widget.AdapterView.OnItemSelectedListener as OnItemSelectedListener1
 
@@ -44,11 +45,11 @@ class ProductsAdapter(
             .into(holder.image)
 
         holder.title.text = products[position].title
-        holder.colorProduct.text = products[position].description.subSequence(0, 10)
-        val listSpinner = listOf(200, 400, 600)
+        holder.colorProduct.text = products[position].color
+        val listSpinner = Constants.LIST_PER_PACK
         holder.packSpinner.adapter = ArrayAdapter<Int>(
             holder.cardItem.context,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_row,
             listSpinner
         )
 
@@ -101,7 +102,7 @@ class ProductsAdapter(
     }
 
     private fun plusCount(count: Int, holder: ViewHolder) {
-        if (count >= 50) {
+        if (count >= Constants.COUNT_PACK_MAX) {
             holder.countInCard.isEnabled = false
         } else {
             holder.countInCard.text = (count + 1).toString()
