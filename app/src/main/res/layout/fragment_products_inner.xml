@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"
+             android:layout_height="?attr/actionBarSize"
+             android:layout_width="match_parent"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             android:id="@+id/toolbarInnerProd"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageProductInner"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="13dp"
+            android:layout_marginStart="13dp"
+            app:layout_constraintTop_toBottomOf="@+id/toolbarInnerProd"/>
+
+    <TextView
+            android:text="Лизиантус"
+            android:textStyle="bold"
+            android:id="@+id/titleProductInner"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:paddingBottom="3dp"
+            android:paddingTop="6dp"
+            android:layout_marginStart="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageProductInner"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="13dp" android:textSize="20sp"
+            android:layout_marginTop="12dp"/>
+
+    <TextView
+            android:text="бело-розовый"
+            android:id="@+id/colorProductInner"
+            android:layout_height="wrap_content"
+            android:alpha="0.7"
+            android:layout_width="0dp"
+            android:layout_marginStart="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleProductInner"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="13dp"
+            android:textSize="16sp"/>
+
+    <TextView
+            android:id="@+id/descriptionInnerProduct"
+            android:text="guyg ger gergher gerhg erig  hergiu erhug uiergheuri ghreuig hergiu er"
+            android:textColor="@color/cardview_dark_background"
+            android:enabled="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@+id/colorProductInner" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"/>
+
+    <TextView
+            android:text="Упаковка"
+            android:id="@+id/packageProductInner"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionInnerProduct" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/radioGroup"/>
+
+    <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionInnerProduct" android:id="@+id/radioGroup"
+            android:layout_marginTop="18dp" android:layout_marginEnd="4dp">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+                android:background="@drawable/radio_buttons_selector"
+                android:button="@android:color/transparent"
+                android:gravity="center_vertical|center_horizontal"
+                android:checked="true"
+                android:text="200"
+                android:textColor="@drawable/radio_buttons_text_color_selector"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/packageProductInner"
+                android:id="@+id/materialRadioButton"
+                app:layout_constraintEnd_toStartOf="@+id/materialRadioButton3"
+                android:layout_marginEnd="8dp" android:layout_marginTop="8dp"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+                android:background="@drawable/radio_buttons_selector"
+                android:button="@android:color/transparent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="300"
+                android:textColor="@drawable/radio_buttons_text_color_selector"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@+id/packageProductInner"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/materialRadioButton2"
+                android:layout_marginTop="8dp"
+                android:id="@+id/materialRadioButton3"/>
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+                android:background="@drawable/radio_buttons_selector"
+                android:button="@android:color/transparent"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="400"
+                android:textColor="@drawable/radio_buttons_text_color_selector"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/packageProductInner"
+                android:id="@+id/materialRadioButton2"/>
+    </RadioGroup>
+
+    <TextView
+            android:text="Количество"
+            android:id="@+id/countTextProductInner"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="13dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp"
+            android:layout_marginTop="44dp"
+            app:layout_constraintTop_toBottomOf="@+id/packageProductInner"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/minusInCardInnerProduct"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/products_fragment_buttons_background"
+            android:src="@drawable/ic_remove_in_card"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/countInnerProduct"/>
+
+    <TextView
+            android:id="@+id/countInnerProduct"
+            android:text="1"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/products_fragment_buttons_background"
+            android:textColor="@color/cardview_dark_background"
+            android:enabled="false"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/plusInCardInnerProduct" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
+
+    <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/plusInCardInnerProduct"
+            android:background="@drawable/products_fragment_buttons_background"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_card_plus"
+            android:layout_marginEnd="12dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" app:layout_constraintTop_toBottomOf="@+id/radioGroup"/>
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/addToCartInnerProduct"
+            android:text="@string/add_to_cart"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:singleLine="true"
+            style="@style/ButtonColorFill"
+            app:cornerRadius="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp" android:layout_marginBottom="8dp"/>
+
+    <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/progressBarProductInner"
+            style="?android:attr/progressBarStyle"
+            android:indeterminate="true"
+            android:visibility="gone"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
