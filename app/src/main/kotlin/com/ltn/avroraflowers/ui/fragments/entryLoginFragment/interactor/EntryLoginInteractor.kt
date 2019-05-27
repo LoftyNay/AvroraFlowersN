@@ -1,5 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor
 
+import android.util.Log
 import com.ltn.avroraflowers.network.RequestBody.UserLogin
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.utils.STATUS_CODE
@@ -20,7 +21,7 @@ class EntryLoginInteractor : BaseInteractor(), IEntryLoginInteractor {
                 { result ->
                     when (result.code) {
                         STATUS_CODE.OK.value -> {
-                            onCheckUserDataListener.onValidUserData()
+                            onCheckUserDataListener.onValidUserData(result)
                         }
                         STATUS_CODE.USER_NOT_FOUND.value -> {
                             onCheckUserDataListener.onEmailNotFound()
@@ -34,6 +35,7 @@ class EntryLoginInteractor : BaseInteractor(), IEntryLoginInteractor {
                 },
                 { error ->
                     disposable.dispose()
+                    Log.d("GLL", error.message)
                     onCheckUserDataListener.onCheckEnded()
                     onCheckUserDataListener.onFailure()
                 }

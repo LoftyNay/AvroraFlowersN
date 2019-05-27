@@ -67,9 +67,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
-    //fixme
-
-    fun confirmExitDialog() {
+    private fun confirmExitDialog() {
         val alertDialog = AlertDialog.Builder(this)
             .setMessage(getString(R.string.confirm_exit_message))
             .setPositiveButton(getString(R.string.yes)) { dialog, which ->

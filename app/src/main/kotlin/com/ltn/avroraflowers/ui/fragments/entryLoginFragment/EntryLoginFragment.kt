@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.R
+import com.ltn.avroraflowers.network.Response.LoginResponse
 import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.presenter.EntryLoginFragmentPresenter
@@ -33,6 +34,7 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         entryLoginFragmentPresenter.attach()
+        App.component.inject(this)
         super.onViewCreated(view, savedInstanceState)
 
         emailEditLogin.requestFocus()
@@ -64,8 +66,9 @@ class EntryLoginFragment : BaseFragment(), EntryLoginFragmentView, View.OnClickL
         entryLoginFragmentPresenter.destroy()
     }
 
-    override fun userDataValidationOk() {
-        startActivity(Intent(activity, MainActivity::class.java), null)
+    override fun userDataValidationOk(profile: LoginResponse) {
+        preferencesUtils.putUserData(profile)
+        //startActivity(Intent(activity, MainActivity::class.java), null)
         activity?.finish()
     }
 

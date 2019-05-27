@@ -21,6 +21,13 @@
             app:layout_constraintTop_toTopOf="parent">
     </com.ltn.avroraflowers.ui.activities.mainActivity.BottomNavigationViewPager>
 
+    <FrameLayout
+            android:id="@+id/mainContainer"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </FrameLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigation"
             android:background="@android:color/white"

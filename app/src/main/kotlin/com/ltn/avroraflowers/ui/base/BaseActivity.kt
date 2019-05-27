@@ -6,4 +6,6 @@ import com.ltn.avroraflowers.R
 
 abstract class BaseActivity : MvpAppCompatActivity() {
 
+
+
 }

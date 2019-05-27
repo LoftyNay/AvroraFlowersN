@@ -6,6 +6,7 @@
         android:layout_height="match_parent">
 
     <include layout="@layout/empty_layout"/>
+    <include layout="@layout/need_autorization_layout"/>
 
     <include layout="@layout/toolbar_with_search"
              app:layout_constraintEnd_toEndOf="parent"

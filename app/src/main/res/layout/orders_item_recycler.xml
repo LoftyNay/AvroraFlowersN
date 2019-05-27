@@ -2,7 +2,8 @@
 <com.google.android.material.card.MaterialCardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:foreground="?attr/selectableItemBackground"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:foreground="?attr/selectableItemBackground"
         app:cardElevation="2dp"
         app:cardCornerRadius="4dp"
         android:id="@+id/ordersCardItem"

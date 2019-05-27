@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.ltn.avroraflowers.App
+import com.ltn.avroraflowers.network.Response.LoginResponse
 import com.ltn.avroraflowers.ui.base.BasePresenter
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor.EntryLoginInteractor
 import com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor.OnCheckUserDataListener
@@ -38,8 +39,8 @@ class EntryLoginFragmentPresenter : BasePresenter<EntryLoginFragmentView>(), IEn
         viewState.showConnectionProblem()
     }
 
-    override fun onValidUserData() {
-        viewState.userDataValidationOk()
+    override fun onValidUserData(profile: LoginResponse) {
+        viewState.userDataValidationOk(profile)
     }
 
     override fun onEmailNotFound() {

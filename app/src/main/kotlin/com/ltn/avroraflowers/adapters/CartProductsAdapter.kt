@@ -106,6 +106,21 @@ class CartProductsAdapter(
         }
     }
 
+    fun invalidate() {
+        if (cartProducts.count() == 0) {
+            emptyListener.onShowEmpty()
+            isFooterCheckBoxSelected = false
+            isVisibleDeleteButton = false
+        } else {
+            emptyListener.onHideEmpty()
+        }
+        Handler().post {
+            adapterListener.showCountOnFooter(
+                cartProducts.sumBy { it.per_pack },
+                cartProducts.sumBy { it.count_pack })
+        }
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         when (holder) {
             is ItemViewHolder -> {

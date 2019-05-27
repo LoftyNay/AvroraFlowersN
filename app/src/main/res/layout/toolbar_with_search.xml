@@ -24,6 +24,8 @@
 
     <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardSearchEdit"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="14dp"

@@ -1,12 +1,16 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment
 
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -14,6 +18,7 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.CartProductsAdapter
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
+import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
@@ -25,7 +30,8 @@ import kotlinx.android.synthetic.main.footer_recycler_item.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.header_recycler_cart.*
 
-class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.AdapterListener, BaseFragment. EmptyListener, View.OnClickListener {
+class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.AdapterListener, BaseFragment.EmptyListener,
+    View.OnClickListener {
 
     @InjectPresenter
     lateinit var cartFragmentPresenter: CartFragmentPresenter
@@ -75,27 +81,33 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         when (v) {
             toConfirmCartProductsButton -> {
                 if (tvDateCart.text == "") {
-                    showDialog("Внимание", getString(R.string.pick_date_message, "Александр"),
+                    showDialog("Внимание", getString(R.string.pick_date_message, preferencesUtils.getName()),
                         getString(R.string.pick_date_positive), getString(R.string.cancel), object : DialogListener {
                             override fun onPositive() {
                                 showDatePicker(object : DatePickerDialog.OnDateSetListener {
                                     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                                         convertAndSetData(month, dayOfMonth, year)
                                         cartFragmentPresenter.sendOrder()
-                                        Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG).show()
+                                        Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG)
+                                            .show()
                                     }
                                 })
                             }
+
                             override fun onNegative() {
                                 Toast.makeText(activity, getString(R.string.error_send_order), Toast.LENGTH_LONG).show()
                             }
                         })
                 } else {
-                    showDialog("Александр", getString(R.string.confirm_order_message), getString(R.string.confirm),
-                        getString(R.string.cancel), object : DialogListener {
+                    showDialog(preferencesUtils.getName()!!,
+                        getString(R.string.confirm_order_message),
+                        getString(R.string.confirm),
+                        getString(R.string.cancel),
+                        object : DialogListener {
                             override fun onPositive() {
                                 Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG).show()
                             }
+
                             override fun onNegative() {
                                 Toast.makeText(activity, getString(R.string.error_send_order), Toast.LENGTH_LONG).show()
                             }
@@ -112,17 +124,46 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         }
     }
 
+    override fun userLogin(status: Boolean) {
+        when (status) {
+            true -> {
+                hideNeedAutorizationBlock()
+                contentBlock.visibility = View.VISIBLE
+                footerCart.visibility = View.VISIBLE
+                cartProductsAdapter.invalidate()
+            }
+            false -> {
+                hideEmptyBlock()
+                contentBlock.visibility = View.GONE
+                footerCart.visibility = View.GONE
+                showNeedAutorizationBlock(View.OnClickListener {
+                    startActivity(
+                        Intent(
+                            activity,
+                            EntryActivity::class.java
+                        )
+                    )
+                })
+            }
+        }
+    }
+
     override fun showCountOnFooter(countPerPack: Int, countPack: Int) {
         inPackCount.text = countPerPack.toString()
         packCount.text = countPack.toString()
     }
 
     override fun onShowEmpty() {
-        showEmptyBlock(getString(R.string.empty_cart), View.OnClickListener { context.setPagerItem(ViewPagerAdapter.CATALOG_FRAGMENT) })
-        if (footerRecyclerItemCart != null && headerCart != null && footerCart != null) {
-            contentBlock.visibility = View.GONE
-            footerCart.visibility = View.GONE
-        }
+        if (preferencesUtils.isLogin()) {
+            showEmptyBlock(
+                getString(R.string.empty_cart),
+                View.OnClickListener { mContext.setPagerItem(ViewPagerAdapter.CATALOG_FRAGMENT) })
+            if (footerRecyclerItemCart != null && headerCart != null && footerCart != null) {
+                contentBlock.visibility = View.GONE
+                footerCart.visibility = View.GONE
+            }
+        } else
+            onHideEmpty()
     }
 
     override fun onHideEmpty() {
@@ -162,10 +203,12 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
     override fun showProgress() {
         progressBarCart.visibility = View.VISIBLE
         contentBlock.isEnabled = false
+        footerCart.isEnabled = false
     }
 
     override fun hideProgress() {
         progressBarCart.visibility = View.GONE
+        footerCart.isEnabled = true
         contentBlock.isEnabled = true
     }
 

@@ -1,27 +1,25 @@
 package com.ltn.avroraflowers.ui.base
 
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import com.arellomobile.mvp.MvpAppCompatFragment
-import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
+import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import kotlinx.android.synthetic.main.empty_layout.*
-import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.need_autorization_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_with_search.*
 import java.util.*
 
 
-abstract class BaseFragment : MvpAppCompatFragment() {
+abstract class BaseFragment : BaseLoginFragment() {
 
     var toolbarTitle: String? = null
-    lateinit var context: MainActivity
+    lateinit var mContext: MainActivity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflateView(inflater, container, savedInstanceState)
@@ -32,15 +30,26 @@ abstract class BaseFragment : MvpAppCompatFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        context = view.context as MainActivity
+        if (activity is MainActivity) {
+            mContext = activity as MainActivity
+        }
 
         if (toolbarSearch != null) {
             toolbarSearch.title = toolbarTitle
         }
-        if (toolbarSearch != null) {
-            toolbarSearch.title = toolbarTitle
+
+        if (cardSearchEdit != null) {
+            cardSearchEdit.setOnClickListener {
+                SearchFragment.getInstance().show(fragmentManager!!, SearchFragment.TAG)
+            }
+
+            if (toolbar != null) {
+                toolbar.title = toolbarTitle
+            }
         }
     }
+
+    //TODO TO MESSAGE BASE FRAGMENT!!!
 
     fun showDialog(
         title: String,
@@ -83,6 +92,20 @@ abstract class BaseFragment : MvpAppCompatFragment() {
         datePickerDialog.show()
     }
 
+    fun showNeedAutorizationBlock(listener: View.OnClickListener) {
+        if (needAutorizationBlock != null) {
+            needAutorizationBlock.visibility = View.VISIBLE
+            buttonNeedAutorization.setOnClickListener(listener)
+        }
+    }
+
+    fun hideNeedAutorizationBlock() {
+        refreshUserStatus(false)
+        if (needAutorizationBlock != null) {
+            needAutorizationBlock.visibility = View.GONE
+        }
+    }
+
     fun showEmptyBlock(text: String, listener: View.OnClickListener) {
         if (emptyBlock != null) {
             tvEmpty.text = text
@@ -96,6 +119,10 @@ abstract class BaseFragment : MvpAppCompatFragment() {
             emptyBlock.visibility = View.GONE
         }
     }
+
+
+    override fun userLogin(status: Boolean) {}
+
 
     interface DialogListener {
         fun onPositive()

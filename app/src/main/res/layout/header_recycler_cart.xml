@@ -28,7 +28,7 @@
     <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/datePickButtonCart"
             android:src="@drawable/ic_date_pick_cart"
-            android:background="@android:color/transparent"
+            android:background="?android:selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"

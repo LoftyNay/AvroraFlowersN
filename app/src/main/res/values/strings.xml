@@ -7,7 +7,7 @@
     <string name="create_order">Оформить заказ</string>
     <string name="repeat_last_order">Повторить прошлый заказ</string>
     <string name="load_last_order">Загрузить прошлый заказ</string>
-    <string name="hello">Здравствуйте,\nАлександр</string>
+    <string name="hello">Здравствуйте,\n%1$s</string>
     <string name="date">%1$s.%2$s.%3$d</string>
     <string name="pick_date_message">Уважаемый %s, вы не выбрали дату загрузки!</string>
     <string name="pick_date_positive">Выбрать</string>
@@ -53,4 +53,8 @@
     <string name="delete">Удалить</string>
     <string name="pick_all_products">Выбрать все товары</string>
     <string name="to_catalog">В каталог</string>
+    <string name="login_for_order">Авторизоваться \nдля заказа</string>
+    <string name="exit_profile">Выйти из профиля?</string>
+    <string name="login_nf">Войти</string>
+    <string name="autorization_message">Для просмотра корзины необходимо выполнить вход в свой профиль</string>
 </resources>
