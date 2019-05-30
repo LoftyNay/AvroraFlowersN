@@ -33,7 +33,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
                 viewState.showProducts(products)
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
                 Log.d("GLL", "fail")
             }
 
@@ -52,7 +52,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             override fun onSuccessful() {
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
             }
 
             override fun onRequestEnded() {

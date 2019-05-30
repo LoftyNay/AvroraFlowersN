@@ -39,7 +39,7 @@ class CategoriesAdapter(private val onClickCardListener: OnCardItemClickListener
             .into(holder.imageCategory)
 
         holder.titleCategory.text = categoriesList[position].title
-        holder.categoryCardItem.setOnClickListener { onClickCardListener.onItemClick(categoriesList[position]._id) }
+        holder.categoryCardItem.setOnClickListener { onClickCardListener.onItemClick(categoriesList[position]._id, categoriesList[position].title) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,6 +49,6 @@ class CategoriesAdapter(private val onClickCardListener: OnCardItemClickListener
     }
 
     interface OnCardItemClickListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(id: Int, title: String)
     }
 }

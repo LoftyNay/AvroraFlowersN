@@ -13,13 +13,13 @@ class OrdersFragmentInteractor : BaseInteractor(), IOrdersFragmentInteractor {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestOrdersListener.onRequestStart() }
             .doFinally { onRequestOrdersListener.onRequestEnded() }
-            .doOnError { onRequestOrdersListener.onFailure() }
             .subscribe(
                 { result ->
                     onRequestOrdersListener.onSuccessful(result.sortedWith(compareByDescending { it._id }))
                     disposable.dispose()
                 },
                 {
+                    onRequestOrdersListener.onFailure(it)
                     disposable.dispose()
                 }
             )

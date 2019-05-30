@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -29,11 +30,13 @@ class InnerOrderFragment : BaseFragment(), InnerOrderFragmentView, InnerOrderAda
 
     companion object {
         val KEY_ID = "id"
+        val KEY_DATE = "date"
         val TAG = "InnerOrderFragment"
-        fun getInstance(id: Int): InnerOrderFragment {
+        fun getInstance(id: Int, date: String): InnerOrderFragment {
             val fragment = InnerOrderFragment()
             val bundle = Bundle()
             bundle.putInt(KEY_ID, id)
+            bundle.putString(KEY_DATE, date)
             fragment.arguments = bundle
             return fragment
         }
@@ -48,20 +51,27 @@ class InnerOrderFragment : BaseFragment(), InnerOrderFragmentView, InnerOrderAda
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         val orderId = arguments?.getInt(KEY_ID)
+        val date = arguments?.getString(KEY_DATE)
         if (orderId != null) {
+            (toolbarInnerOrder as Toolbar).title = date
             innerOrderFragmentPresenter.getOrderInfo(orderId)
         }
     }
 
     private fun initRecycler() {
         adapter = InnerOrderAdapter(this)
-        recyclerViewInnerOrder.addItemDecoration(GridSpacingItemDecoration(1, 10, true, 0))
+        recyclerViewInnerOrder.addItemDecoration(
+            GridSpacingItemDecoration(
+                1,
+                40,
+                true,
+                0))
         recyclerViewInnerOrder.layoutManager = LinearLayoutManager(activity as Context, RecyclerView.VERTICAL, false)
         recyclerViewInnerOrder.adapter = adapter
     }
 
-    override fun onItemClick(id: Int) {
-        val fragment = InnerProductFragment.getInstance(id)
+    override fun onItemClick(id: Int, title: String) {
+        val fragment = InnerProductFragment.getInstance(id, title)
         parentFragment?.childFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentOrdersContainer, fragment, ProductsFragment.TAG)
             ?.show(fragment)

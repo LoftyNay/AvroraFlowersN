@@ -16,13 +16,13 @@ class ProductsFragmentInteractor : BaseInteractor(), IProductsFragmentInteractor
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestProductsListener.onRequestStart() }
             .doFinally { onRequestProductsListener.onRequestEnded() }
-            .doOnError { onRequestProductsListener.onFailure() }
             .subscribe(
                 { result ->
                     onRequestProductsListener.onSuccessful(result)
                     disposable.dispose()
                 },
                 {
+                    onRequestProductsListener.onFailure(it)
                     disposable.dispose()
                 }
             )
@@ -40,7 +40,8 @@ class ProductsFragmentInteractor : BaseInteractor(), IProductsFragmentInteractor
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onAddToCartProductsListener.onRequestStart() }
             .doFinally { onAddToCartProductsListener.onRequestEnded() }
-            .doOnError { onAddToCartProductsListener.onFailure() }
-            .subscribe()
+            .subscribe({}, {
+                onAddToCartProductsListener.onFailure(it)
+            })
     }
 }

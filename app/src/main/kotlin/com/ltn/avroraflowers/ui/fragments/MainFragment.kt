@@ -11,7 +11,9 @@ import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.base.BaseLoginFragment
+import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.toolbar_with_search.*
 
 class MainFragment : BaseFragment() {
 
@@ -33,13 +35,9 @@ class MainFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         autorizationButtonFragmentMain.setOnClickListener { startActivity(Intent(context, EntryActivity::class.java)) }
-
         createOrderButton.setOnClickListener { mContext.setPagerItem(ViewPagerAdapter.CART_FRAGMENT) }
-
         repeatLastOrderButton.setOnClickListener {  }
-
         loadLastOrderButton.setOnClickListener {  }
-
         exitButtonFragmentMain.setOnClickListener {
             showDialog(
                 preferencesUtils.getName()!!,

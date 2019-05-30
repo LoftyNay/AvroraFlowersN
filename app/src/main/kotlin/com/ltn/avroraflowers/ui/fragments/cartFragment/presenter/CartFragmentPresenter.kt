@@ -14,6 +14,8 @@ import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.OnDeleteCartPr
 import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.OnRequestCartProductsListener
 import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.OnSendOrderListener
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
+import retrofit2.HttpException
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @InjectViewState
@@ -42,8 +44,10 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
                 CartProductsRepository.getInstance().addAllItems(cartProducts)
             }
 
-            override fun onFailure() {
-                viewState.showConnectionProblem()
+            override fun onFailure(throwable: Throwable) {
+                Log.d("GLL", throwable.toString())
+                if (throwable !is IllegalStateException)
+                    viewState.showConnectionProblem()
             }
 
             override fun onRequestEnded() {
@@ -61,9 +65,10 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
 
             override fun onSuccessful() {
                 OrdersRepository.getInstance().callUpdate()
+                viewState.orderSended()
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
             }
 
@@ -79,12 +84,35 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
                 viewState.showProgress()
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
             }
 
             override fun onSuccessful() {
                 viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
+
+            }
+
+            override fun onRequestEnded() {
+                viewState.hideProgress()
+            }
+        })
+    }
+
+
+    override fun deleteProductsFromCart() {
+        cartFragmentInteractor.requestDeleteProductsFromCart(object : OnDeleteCartProductsListener {
+            override fun onRequestStart() {
+                viewState.showProgress()
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                viewState.showConnectionProblem()
+            }
+
+            override fun onSuccessful() {
+                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
+
             }
 
             override fun onRequestEnded() {

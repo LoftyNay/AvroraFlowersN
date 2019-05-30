@@ -65,7 +65,7 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
         viewState.showWrongInputErrorMessage(v)
     }
 
-    override fun onFailure() {
+    override fun onFailure(throwable: Throwable) {
         viewState.showConnectionProblem()
     }
 

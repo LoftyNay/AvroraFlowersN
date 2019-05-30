@@ -39,7 +39,7 @@ class CatalogFragmentPresenter : BasePresenter<CatalogFragmentView>(), ICatalogF
         viewState.showCategoriesList(categories)
     }
 
-    override fun onFailure() {
+    override fun onFailure(throwable: Throwable) {
         viewState.showConnectionProblem()
     }
 

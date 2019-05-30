@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.card.MaterialCardView
+import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
 import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import kotlinx.android.synthetic.main.empty_layout.*
@@ -16,7 +19,7 @@ import kotlinx.android.synthetic.main.toolbar_with_search.*
 import java.util.*
 
 
-abstract class BaseFragment : BaseLoginFragment() {
+abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
 
     var toolbarTitle: String? = null
     lateinit var mContext: MainActivity
@@ -36,20 +39,18 @@ abstract class BaseFragment : BaseLoginFragment() {
 
         if (toolbarSearch != null) {
             toolbarSearch.title = toolbarTitle
-        }
-
-        if (cardSearchEdit != null) {
             cardSearchEdit.setOnClickListener {
                 SearchFragment.getInstance().show(fragmentManager!!, SearchFragment.TAG)
             }
+        }
 
-            if (toolbar != null) {
-                toolbar.title = toolbarTitle
-            }
+        if (toolbar != null) {
+            toolbar.title = toolbarTitle
         }
     }
 
-    //TODO TO MESSAGE BASE FRAGMENT!!!
+
+//TODO TO MESSAGE BASE FRAGMENT!!!
 
     fun showDialog(
         title: String,
@@ -120,9 +121,11 @@ abstract class BaseFragment : BaseLoginFragment() {
         }
     }
 
-
     override fun userLogin(status: Boolean) {}
 
+    override fun connectionProblem() {
+        Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
+    }
 
     interface DialogListener {
         fun onPositive()

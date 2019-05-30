@@ -31,12 +31,13 @@ class ProductsAdapter(
     }
 
     fun addAll(products: List<Product>) {
+        this.products.clear()
         this.products.addAll(products)
         notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id) }
+        holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id, products[position].title) }
 
         Picasso.get()
             .load(products[position].image)
@@ -110,7 +111,7 @@ class ProductsAdapter(
     }
 
     interface OnCardItemClickListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(id: Int, title: String)
     }
 
     interface OnAddToCartClickListener {

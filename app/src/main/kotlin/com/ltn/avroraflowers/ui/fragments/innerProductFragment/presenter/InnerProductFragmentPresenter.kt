@@ -31,7 +31,7 @@ class InnerProductFragmentPresenter: BasePresenter<InnerProductFragmentView>(), 
                 Log.d("GLL", "ok")
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
                 Log.d("GLL", "fail")
             }

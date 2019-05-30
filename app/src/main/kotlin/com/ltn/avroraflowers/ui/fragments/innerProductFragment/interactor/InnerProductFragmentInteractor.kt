@@ -13,15 +13,14 @@ class InnerProductFragmentInteractor: BaseInteractor(), IInnerProductFragmentInt
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestProductListener.onRequestStart() }
             .doFinally { onRequestProductListener.onRequestEnded() }
-            .doOnError { onRequestProductListener.onFailure() }
             .subscribe(
                 { result ->
                     onRequestProductListener.onSuccessful(result)
                     disposable.dispose()
                 },
                 {
+                    onRequestProductListener.onFailure(it)
                     disposable.dispose()
-                    Log.d("GLL", it.message.toString())
                 }
             )
     }

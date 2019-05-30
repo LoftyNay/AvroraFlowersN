@@ -55,6 +55,12 @@ class CartProductsAdapter(
         }
     }
 
+    fun clear() {
+        cartProducts.clear()
+        CartProductsRepository.getInstance().getList().clear()
+        invalidate()
+    }
+
     override fun getItemCount(): Int {
         return cartProducts.size + 1
     }
@@ -126,7 +132,7 @@ class CartProductsAdapter(
             is ItemViewHolder -> {
                 holder.title.text = cartProducts[position].title
                 holder.colorText.text = cartProducts[position].color
-                holder.cartCardItem.setOnClickListener { adapterListener.onItemClick(cartProducts[position].product_id) }
+                holder.cartCardItem.setOnClickListener { adapterListener.onItemClick(cartProducts[position].product_id, cartProducts[position].title) }
                 holder.checkItem.isChecked = cartProducts[position].checked
                 holder.checkItem.setOnClickListener {
                     cartProducts[position].checked = !cartProducts[position].checked
@@ -233,7 +239,7 @@ class CartProductsAdapter(
     }
 
     interface AdapterListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(id: Int, title: String)
         fun onDeleteButtonClick(listIds: MutableList<Int>)
         fun showCountOnFooter(countPerPack: Int, countPack: Int)
     }

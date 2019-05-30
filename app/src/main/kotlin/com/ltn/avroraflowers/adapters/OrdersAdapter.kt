@@ -33,21 +33,23 @@ class OrdersAdapter(private val onClickCardListener: OnCardItemClickListener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.orderCardItem.setOnClickListener { onClickCardListener.onItemClick(ordersList[position]._id) }
+        val date = newFormat.format(currentFormat.parse(ordersList[position].date))
+
+        holder.orderCardItem.setOnClickListener { onClickCardListener.onItemClick(ordersList[position]._id, date) }
         holder.status.text = ordersList[position].status
-        holder.date.text = newFormat.format(currentFormat.parse(ordersList[position].date))
-        holder.price.text = ordersList[position].price
+        holder.date.text = date
+      //  holder.price.text = ordersList[position].price
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val orderCardItem = itemView.findViewById<MaterialCardView>(R.id.ordersCardItem)
         val status = itemView.findViewById<TextView>(R.id.statusOrdersItem)
         val date = itemView.findViewById<TextView>(R.id.dateOrdersItem)
-        val price = itemView.findViewById<TextView>(R.id.sumOrdersItem)
+        //val price = itemView.findViewById<TextView>(R.id.sumOrdersItem)
     }
 
     interface OnCardItemClickListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(id: Int, date: String)
     }
 }
 

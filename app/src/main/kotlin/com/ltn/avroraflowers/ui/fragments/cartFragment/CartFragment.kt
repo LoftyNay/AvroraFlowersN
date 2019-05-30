@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.appcompat.widget.DialogTitle
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,6 +78,13 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         cartProductsAdapter.invalidate(invalidateType)
     }
 
+    override fun orderSended() {
+        Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG)
+            .show()
+        cartFragmentPresenter.deleteProductsFromCart()
+        cartProductsAdapter.clear()
+    }
+
     override fun onClick(v: View?) {
         when (v) {
             toConfirmCartProductsButton -> {
@@ -88,8 +96,6 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                                     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                                         convertAndSetData(month, dayOfMonth, year)
                                         cartFragmentPresenter.sendOrder()
-                                        Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG)
-                                            .show()
                                     }
                                 })
                             }
@@ -105,7 +111,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                         getString(R.string.cancel),
                         object : DialogListener {
                             override fun onPositive() {
-                                Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG).show()
+                                cartFragmentPresenter.sendOrder()
                             }
 
                             override fun onNegative() {
@@ -148,6 +154,10 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         }
     }
 
+    override fun showConnectionProblem() {
+        Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
+    }
+
     override fun showCountOnFooter(countPerPack: Int, countPack: Int) {
         inPackCount.text = countPerPack.toString()
         packCount.text = countPack.toString()
@@ -158,20 +168,16 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
             showEmptyBlock(
                 getString(R.string.empty_cart),
                 View.OnClickListener { mContext.setPagerItem(ViewPagerAdapter.CATALOG_FRAGMENT) })
-            if (footerRecyclerItemCart != null && headerCart != null && footerCart != null) {
-                contentBlock.visibility = View.GONE
-                footerCart.visibility = View.GONE
-            }
+            contentBlock.visibility = View.GONE
+            footerCart.visibility = View.GONE
         } else
             onHideEmpty()
     }
 
     override fun onHideEmpty() {
         hideEmptyBlock()
-        if (footerRecyclerItemCart != null && headerCart != null && footerCart != null) {
-            contentBlock.visibility = View.VISIBLE
-            footerCart.visibility = View.VISIBLE
-        }
+        contentBlock.visibility = View.VISIBLE
+        footerCart.visibility = View.VISIBLE
     }
 
     private fun convertAndSetData(month: Int, dayOfMonth: Int, year: Int) {
@@ -185,8 +191,8 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         )
     }
 
-    override fun onItemClick(id: Int) {
-        val fragment = InnerProductFragment.getInstance(id)
+    override fun onItemClick(id: Int, title: String) {
+        val fragment = InnerProductFragment.getInstance(id, title)
         parentFragment?.childFragmentManager?.beginTransaction()
             ?.add(R.id.cartFragmentContainer, fragment, InnerProductFragment.TAG)
             ?.show(fragment)
@@ -210,8 +216,5 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         progressBarCart.visibility = View.GONE
         footerCart.isEnabled = true
         contentBlock.isEnabled = true
-    }
-
-    override fun showConnectionProblem() {
     }
 }

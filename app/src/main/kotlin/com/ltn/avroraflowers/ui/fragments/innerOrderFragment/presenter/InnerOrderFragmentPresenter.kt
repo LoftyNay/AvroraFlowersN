@@ -28,7 +28,7 @@ class InnerOrderFragmentPresenter: BasePresenter<InnerOrderFragmentView>(), IInn
                 viewState.showProductsInOrder(list)
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
             }
 

@@ -23,10 +23,12 @@ class InnerProductFragment : BaseFragment(), InnerProductFragmentView {
     companion object {
         val TAG = "InnerProductFragment"
         val KEY_ID = "id"
-        fun getInstance(id: Int): InnerProductFragment {
+        val KEY_TITLE = "title"
+        fun getInstance(id: Int, title: String): InnerProductFragment {
             val fragment = InnerProductFragment()
             val bundle = Bundle()
             bundle.putInt(KEY_ID, id)
+            bundle.putString(KEY_TITLE, title)
             fragment.arguments = bundle
             return fragment
         }
@@ -40,25 +42,33 @@ class InnerProductFragment : BaseFragment(), InnerProductFragmentView {
         innerProductFragmentPresenter.attach()
         super.onViewCreated(view, savedInstanceState)
         val productId = arguments?.getInt(KEY_ID)
+        val title = arguments?.getString(KEY_TITLE)
         if (productId != null) {
-            Log.d("GLL", productId.toString())
             innerProductFragmentPresenter.getProduct(productId)
+            (toolbarInnerProd as Toolbar).title = title
         }
-        (toolbarInnerProd as Toolbar).title = "inner"
+
+        minusInCardInnerProduct.setOnClickListener {  }
+        plusInCardInnerProduct.setOnClickListener {  }
+        countInnerProduct
+//FIXME
+        addToCartInnerProduct.setOnClickListener {  }
     }
 
     override fun showProductInfo(product: Product) {
-        Picasso.get().load(product.image).fit().centerCrop().into(imageProductInner)
+        Picasso.get().load(product.image).into(imageProductInner)
         titleProductInner.text = product.title
         colorProductInner.text = product.color
         descriptionInnerProduct.text = product.description
     }
 
     override fun showProgress() {
+        contentBlock.visibility = View.GONE
         progressBarProductInner.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
+        contentBlock.visibility = View.VISIBLE
         progressBarProductInner.visibility = View.GONE
     }
 

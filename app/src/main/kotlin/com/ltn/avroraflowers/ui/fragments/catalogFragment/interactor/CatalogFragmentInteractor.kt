@@ -14,13 +14,13 @@ class CatalogFragmentInteractor: BaseInteractor(), ICatalogFragmentInteractor {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestCategoriesListener.onRequestStart() }
             .doFinally { onRequestCategoriesListener.onRequestEnded() }
-            .doOnError { onRequestCategoriesListener.onFailure() }
             .subscribe(
                 { result->
                     onRequestCategoriesListener.onSuccessful(result)
                     disposable.dispose()
                 },
                 {
+                    onRequestCategoriesListener.onFailure(it)
                     disposable.dispose()
                 }
             )

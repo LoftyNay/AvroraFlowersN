@@ -93,7 +93,7 @@
 
         <com.google.android.material.button.MaterialButton
                 android:id="@+id/loadLastOrderButton"
-                android:text="@string/load_last_order"
+                android:text="@string/load_order"
                 android:layout_width="300dp"
                 android:layout_height="64dp"
                 style="@style/ButtonOutlined"

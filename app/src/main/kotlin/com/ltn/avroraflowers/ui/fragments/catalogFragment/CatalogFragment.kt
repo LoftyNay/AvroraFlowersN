@@ -64,8 +64,8 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
         recyclerViewCatalogFragment.adapter = categoriesAdapter
     }
 
-    override fun onItemClick(id: Int) {
-        val fragment = ProductsFragment.getInstance(id)
+    override fun onItemClick(id: Int, title: String) {
+        val fragment = ProductsFragment.getInstance(id, title)
         parentFragment?.childFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentCatalogContainer, fragment, ProductsFragment.TAG)
             ?.show(fragment)

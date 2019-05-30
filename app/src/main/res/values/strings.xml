@@ -6,7 +6,7 @@
     <string name="orders_item_nav">Заказы</string>
     <string name="create_order">Оформить заказ</string>
     <string name="repeat_last_order">Повторить прошлый заказ</string>
-    <string name="load_last_order">Загрузить прошлый заказ</string>
+    <string name="load_order">Загрузить заказ</string>
     <string name="hello">Здравствуйте,\n%1$s</string>
     <string name="date">%1$s.%2$s.%3$d</string>
     <string name="pick_date_message">Уважаемый %s, вы не выбрали дату загрузки!</string>

@@ -30,7 +30,7 @@ class InnerOrderAdapter(private val onClickCardListener: OnCardItemClickListener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(ordersInnerList[position].product_id) }
+        holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(ordersInnerList[position].product_id, ordersInnerList[position].title) }
         holder.title.text = ordersInnerList[position].title
         holder.perPack.text = ordersInnerList[position].per_pack.toString()
         holder.countPack.text = ordersInnerList[position].count_pack.toString()
@@ -46,6 +46,6 @@ class InnerOrderAdapter(private val onClickCardListener: OnCardItemClickListener
     }
 
     interface OnCardItemClickListener {
-        fun onItemClick(id: Int)
+        fun onItemClick(id: Int, title: String)
     }
 }

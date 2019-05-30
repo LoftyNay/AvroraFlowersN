@@ -29,12 +29,14 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
 
     companion object {
         val KEY_ID = "id"
+        val KEY_TITLE = "title"
         val TAG = "ProductsFragment"
 
-        fun getInstance(id: Int): ProductsFragment {
+        fun getInstance(id: Int, title: String): ProductsFragment {
             val fragment = ProductsFragment()
             val bundle = Bundle()
             bundle.putInt(KEY_ID, id)
+            bundle.putString(KEY_TITLE, title)
             fragment.arguments = bundle
             return fragment
         }
@@ -48,9 +50,10 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
         productsFragmentPresenter.attach()
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
-        toolbarSearch.title = "dd"
         val categoryId = arguments?.getInt(KEY_ID)
+        val title =  arguments?.getString(KEY_TITLE)
         if (categoryId != null) {
+            toolbarSearch.title = title
             productsFragmentPresenter.getProductsFromServerByCategoryId(categoryId)
         }
     }
@@ -69,8 +72,9 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
         recyclerViewProductsFragment.adapter = productsAdapter
     }
 
-    override fun onItemClick(id: Int) {
-        val fragment = InnerProductFragment.getInstance(id)
+    override fun onItemClick(id: Int, title: String) {
+        val fragment = InnerProductFragment.getInstance(id, title
+        )
         parentFragment?.childFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentCatalogContainer, fragment, InnerProductFragment.TAG)
             ?.show(fragment)

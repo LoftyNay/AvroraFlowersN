@@ -64,8 +64,8 @@ class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardI
         ordersFragmentPresenter.destroy()
     }
 
-    override fun onItemClick(id: Int) {
-        val fragment = InnerOrderFragment.getInstance(id)
+    override fun onItemClick(id: Int, date: String) {
+        val fragment = InnerOrderFragment.getInstance(id, date)
         parentFragment?.childFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentOrdersContainer, fragment, InnerOrderFragment.TAG)
             ?.show(fragment)

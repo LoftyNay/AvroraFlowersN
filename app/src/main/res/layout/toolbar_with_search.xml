@@ -24,10 +24,11 @@
 
     <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardSearchEdit"
+            android:foreground="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginTop="7dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
             android:layout_width="match_parent"
@@ -37,10 +38,13 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
+        <TextView
                 android:id="@+id/catalogSearchEdit"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:focusable="false"
                 android:enabled="false"
                 android:background="@drawable/search_edit_outline_catalog"
                 android:hint="@string/search"

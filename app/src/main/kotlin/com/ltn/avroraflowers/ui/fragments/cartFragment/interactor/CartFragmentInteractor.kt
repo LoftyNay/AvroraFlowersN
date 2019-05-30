@@ -1,6 +1,5 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment.interactor
 
-import android.util.Log
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.network.RequestBody.AddOrder
 import com.ltn.avroraflowers.network.RequestBody.ProductInOrder
@@ -12,13 +11,29 @@ import io.reactivex.schedulers.Schedulers
 
 class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
 
+    override fun requestDeleteProductsFromCart(onDeleteCartProductsListener: OnDeleteCartProductsListener) {
+        disposable = Observable.fromIterable(CartProductsRepository.getInstance().getList())
+            .flatMap { i -> apiAvrora.deleteProductInCart(Constants.TEST_TOKEN, i._id) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onDeleteCartProductsListener.onRequestStart() }
+            .doFinally { onDeleteCartProductsListener.onRequestEnded() }
+            .doOnComplete { onDeleteCartProductsListener.onSuccessful() }
+            .subscribe({
+                disposable.dispose()
+            }, {
+                disposable.dispose()
+                onDeleteCartProductsListener.onFailure(it)
+            })
+    }
+
     override fun requestCartProducts(onRequestCartProductsListener: OnRequestCartProductsListener) {
         disposable = apiAvrora.getProductsInCart(Constants.TEST_TOKEN)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestCartProductsListener.onRequestStart() }
             .doFinally { onRequestCartProductsListener.onRequestEnded() }
-            .doOnError { onRequestCartProductsListener.onFailure() }
+            .doOnError { onRequestCartProductsListener.onFailure(it) }
             .subscribe(
                 { result ->
                     onRequestCartProductsListener.onSuccessful(result.sortedWith(compareByDescending({ it._id })))
@@ -40,14 +55,17 @@ class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onDeleteCartProductsListener.onRequestStart() }
             .doFinally { onDeleteCartProductsListener.onRequestEnded() }
-            .doOnComplete { onDeleteCartProductsListener.onSuccessful() }
-            .subscribe({}, {
-                onDeleteCartProductsListener.onFailure()
+            .subscribe({
+                onDeleteCartProductsListener.onSuccessful()
+                disposable.dispose()
+            }, {
+                onDeleteCartProductsListener.onFailure(it)
+                disposable.dispose()
             })
     }
 
     override fun requestSendOrder(onSendOrderListener: OnSendOrderListener) {
-        disposable = apiAvrora.addOrder(Constants.TEST_TOKEN, AddOrder("10$", "На обработке"))
+        disposable = apiAvrora.addOrder(Constants.TEST_TOKEN, AddOrder("", "На обработке"))
             .flatMap {
                 Observable.fromIterable(CartProductsRepository.getInstance().getList()).flatMap {
                     apiAvrora.addProductsInOrder(
@@ -59,10 +77,14 @@ class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .doOnSubscribe { onSendOrderListener.onRequestStart() }
-            .doOnError { onSendOrderListener.onFailure() }
+            .doOnError { onSendOrderListener.onFailure(it) }
             .doFinally { onSendOrderListener.onRequestEnded() }
             .doOnComplete { onSendOrderListener.onSuccessful() }
-            .subscribe()
+            .subscribe({
+                disposable.dispose()
+            }, {
+                disposable.dispose()
+            })
     }
 }
 

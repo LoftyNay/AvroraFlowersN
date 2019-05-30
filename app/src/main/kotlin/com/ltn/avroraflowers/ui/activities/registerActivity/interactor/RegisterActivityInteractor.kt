@@ -19,7 +19,6 @@ class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRegisterUserListener.onRequestStart() }
             .doFinally { onRegisterUserListener.onRequestEnded() }
-            .doOnError { onRegisterUserListener.onFailure() }
             .subscribe(
                 { result ->
                     when (result.code) {
@@ -33,6 +32,7 @@ class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor
                     disposable.dispose()
                 },
                 {
+                    onRegisterUserListener.onFailure(it)
                     disposable.dispose()
                 }
             )

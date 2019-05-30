@@ -1,0 +1,27 @@
+<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardSearchEdit"
+        android:layout_marginBottom="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/searchEdit"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
+            android:singleLine="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/search_edit_outline_catalog"
+            android:hint="@string/search"
+            android:textSize="14sp"
+            android:drawableEnd="@drawable/ic_search_catalog"/>
+</com.google.android.material.card.MaterialCardView>

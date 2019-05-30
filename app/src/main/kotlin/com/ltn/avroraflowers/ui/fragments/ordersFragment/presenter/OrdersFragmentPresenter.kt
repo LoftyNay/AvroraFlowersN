@@ -34,7 +34,7 @@ class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragm
                 viewState.invalidateRecycler()
             }
 
-            override fun onFailure() {
+            override fun onFailure(throwable: Throwable) {
             }
 
             override fun onRequestEnded() {

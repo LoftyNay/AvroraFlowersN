@@ -5,6 +5,7 @@ import com.ltn.avroraflowers.network.RequestBody.*
 import com.ltn.avroraflowers.network.Response.LoginResponse
 import com.ltn.avroraflowers.network.Response.RegisterResponse
 import com.ltn.avroraflowers.network.Response.SampleResponse
+import com.ltn.avroraflowers.network.Response.SearchResponse
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -53,4 +54,7 @@ interface ApiAvrora {
 
     @GET("/user/orders/{id}/products")
     fun getProductsInOrderById(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<List<OrderInner>>
+
+    @GET("/products")
+    fun getProducts(@Query("limit") limit: Int): Observable<SearchResponse>
 }
