@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 class InnerOrderFragmentInteractor : BaseInteractor(), IInnerOrderFragmentInteractor {
 
     override fun requestOrderInfoFromServer(id: Int, onRequestOrderInfoListener: OnRequestOrderInfoListener) {
-        disposable = apiAvrora.getProductsInOrderById(Constants.TEST_TOKEN, id)
+        disposable = apiAvrora.getProductsInOrderById(preferencesUtils.getToken()!!, id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestOrderInfoListener.onRequestStart() }

@@ -34,7 +34,6 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             }
 
             override fun onFailure(throwable: Throwable) {
-                Log.d("GLL", "fail")
             }
 
             override fun onRequestEnded() {
@@ -47,12 +46,15 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
     override fun addProductToCart(id: Int, count: Int, perPack: Int) {
         productsFragmentInteractor.requestAddProductToCart(id, count, perPack, object : OnAddToCartProductsListener {
             override fun onRequestStart() {
+           //     viewState
             }
 
             override fun onSuccessful() {
+               // viewState.
             }
 
             override fun onFailure(throwable: Throwable) {
+                Log.d("GLL", throwable.message)
             }
 
             override fun onRequestEnded() {

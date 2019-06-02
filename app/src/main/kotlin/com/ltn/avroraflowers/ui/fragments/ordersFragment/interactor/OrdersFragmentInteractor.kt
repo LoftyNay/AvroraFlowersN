@@ -8,7 +8,7 @@ import io.reactivex.schedulers.Schedulers
 class OrdersFragmentInteractor : BaseInteractor(), IOrdersFragmentInteractor {
 
     override fun requestOrdersFromServer(onRequestOrdersListener: OnRequestOrdersListener) {
-        disposable = apiAvrora.getOrders(Constants.TEST_TOKEN)
+        disposable = apiAvrora.getOrders(preferencesUtils.getToken()!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onRequestOrdersListener.onRequestStart() }

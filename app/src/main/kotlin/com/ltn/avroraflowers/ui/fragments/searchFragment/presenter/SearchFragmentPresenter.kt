@@ -1,8 +1,11 @@
 package com.ltn.avroraflowers.ui.fragments.searchFragment.presenter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.ltn.avroraflowers.model.Product
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
+import com.ltn.avroraflowers.network.RequestBody.AddToCart
+import com.ltn.avroraflowers.ui.base.BaseInteractor
+import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.OnAddToCartProductsListener
 import com.ltn.avroraflowers.ui.fragments.searchFragment.interactor.OnSearchListener
 import com.ltn.avroraflowers.ui.fragments.searchFragment.interactor.SearchFragmentInteractor
 import com.ltn.avroraflowers.ui.fragments.searchFragment.view.SearchFragmentView
@@ -48,13 +51,36 @@ class SearchFragmentPresenter(private val view: SearchFragmentView) {
         Observable.fromIterable(products)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .filter { product -> product.title == request }
+            .filter { product -> product.title.toLowerCase().contains(request.trim().toLowerCase()) }
             .toList()
             .subscribe({ result ->
-                Log.d("GLL", "Dsdsds")
                 view.showResults(result)
             }, {
                 view.showConnectionProblem()
             })
+    }
+
+    fun addToCart(
+        id: Int,
+        count: Int,
+        perPack: Int
+    ) {
+        searchFragmentInteractor.addToCart(id, count, perPack, object : OnAddToCartProductsListener {
+            override fun onSuccessful() {
+
+            }
+
+            override fun onFailure(throwable: Throwable) {
+
+            }
+
+            override fun onRequestEnded() {
+                CartProductsRepository.getInstance().callUpdate()
+            }
+
+            override fun onRequestStart() {
+
+            }
+        })
     }
 }

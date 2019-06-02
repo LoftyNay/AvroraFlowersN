@@ -6,9 +6,9 @@ import com.ltn.avroraflowers.network.Response.LoginResponse
 class PreferencesUtils(private val sharedPreferences: SharedPreferences) {
 
     companion object {
-        val SHARED_PREFERENCES = "PreferencesAvrora"
-        val NAME = "NAME"
-        val TOKEN = "TOKEN"
+        const val SHARED_PREFERENCES = "PreferencesAvrora"
+        const val NAME = "NAME"
+        const val TOKEN = "TOKEN"
     }
 
     private val DEF_VALUE = "def"
@@ -53,6 +53,6 @@ class PreferencesUtils(private val sharedPreferences: SharedPreferences) {
 
 
     fun isLogin():Boolean {
-        return sharedPreferences.contains(TOKEN)
+        return sharedPreferences.getString(TOKEN, DEF_VALUE) != DEF_VALUE
     }
 }

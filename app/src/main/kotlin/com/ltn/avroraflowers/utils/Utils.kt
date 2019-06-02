@@ -16,6 +16,11 @@ class Utils(var context: Context) {
         }
     }
 
+    fun hideSoftKeyboard(view: View) {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+        imm!!.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
     //FOR PROGRESS BAR IN BUTTON
     fun viewToFront(view: View) {
         view.z = 99f

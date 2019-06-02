@@ -2,16 +2,12 @@ package com.ltn.avroraflowers.ui.fragments.cartFragment
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.Toast
-import androidx.appcompat.widget.DialogTitle
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -24,10 +20,8 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
 import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragment
-import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import com.ltn.avroraflowers.utils.Constants
 import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
-import kotlinx.android.synthetic.main.footer_recycler_item.*
 import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.header_recycler_cart.*
 
@@ -60,7 +54,6 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         initRecycler()
         toConfirmCartProductsButton.setOnClickListener(this)
         datePickButtonCart.setOnClickListener(this)
-        CartProductsRepository.getInstance().callUpdate()
     }
 
     private fun initRecycler() {
@@ -75,6 +68,9 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
     }
 
     override fun invalidateRecycler(invalidateType: Int) {
+        if (invalidateType == CartProductsAdapter.INVALIDATE)
+            cartProductsAdapter.clear()
+
         cartProductsAdapter.invalidate(invalidateType)
     }
 
@@ -82,7 +78,6 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG)
             .show()
         cartFragmentPresenter.deleteProductsFromCart()
-        cartProductsAdapter.clear()
     }
 
     override fun onClick(v: View?) {
@@ -95,7 +90,23 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                                 showDatePicker(object : DatePickerDialog.OnDateSetListener {
                                     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                                         convertAndSetData(month, dayOfMonth, year)
-                                        cartFragmentPresenter.sendOrder()
+                                        showDialog(preferencesUtils.getName()!!,
+                                            getString(R.string.confirm_order_message, tvDateCart.text, tvCity.text),
+                                            getString(R.string.confirm),
+                                            getString(R.string.cancel),
+                                            object : DialogListener {
+                                                override fun onPositive() {
+                                                    cartFragmentPresenter.sendOrder()
+                                                }
+
+                                                override fun onNegative() {
+                                                    Toast.makeText(
+                                                        activity,
+                                                        getString(R.string.error_send_order),
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
+                                                }
+                                            })
                                     }
                                 })
                             }
@@ -106,7 +117,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                         })
                 } else {
                     showDialog(preferencesUtils.getName()!!,
-                        getString(R.string.confirm_order_message),
+                        getString(R.string.confirm_order_message, tvDateCart.text, tvCity.text),
                         getString(R.string.confirm),
                         getString(R.string.cancel),
                         object : DialogListener {
@@ -130,19 +141,20 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         }
     }
 
+
     override fun userLogin(status: Boolean) {
         when (status) {
             true -> {
-                hideNeedAutorizationBlock()
                 contentBlock.visibility = View.VISIBLE
                 footerCart.visibility = View.VISIBLE
-                cartProductsAdapter.invalidate()
+                hideNeedAutorizationBlock()
+                CartProductsRepository.getInstance().callUpdate()
             }
             false -> {
                 hideEmptyBlock()
                 contentBlock.visibility = View.GONE
                 footerCart.visibility = View.GONE
-                showNeedAutorizationBlock(View.OnClickListener {
+                showNeedAutorizationBlock(R.string.autorization_message_cart, View.OnClickListener {
                     startActivity(
                         Intent(
                             activity,
@@ -167,6 +179,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         if (preferencesUtils.isLogin()) {
             showEmptyBlock(
                 getString(R.string.empty_cart),
+                "В каталог",
                 View.OnClickListener { mContext.setPagerItem(ViewPagerAdapter.CATALOG_FRAGMENT) })
             contentBlock.visibility = View.GONE
             footerCart.visibility = View.GONE

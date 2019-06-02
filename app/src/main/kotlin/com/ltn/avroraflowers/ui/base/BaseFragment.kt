@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
+import com.ltn.avroraflowers.ui.fragments.searchFragment.HostSearch
 import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import kotlinx.android.synthetic.main.empty_layout.*
 import kotlinx.android.synthetic.main.need_autorization_layout.*
@@ -40,7 +41,7 @@ abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
         if (toolbarSearch != null) {
             toolbarSearch.title = toolbarTitle
             cardSearchEdit.setOnClickListener {
-                SearchFragment.getInstance().show(fragmentManager!!, SearchFragment.TAG)
+                HostSearch.getInstance().show(fragmentManager!!, SearchFragment.TAG)
             }
         }
 
@@ -51,6 +52,8 @@ abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
 
 
 //TODO TO MESSAGE BASE FRAGMENT!!!
+
+
 
     fun showDialog(
         title: String,
@@ -93,9 +96,10 @@ abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
         datePickerDialog.show()
     }
 
-    fun showNeedAutorizationBlock(listener: View.OnClickListener) {
+    fun showNeedAutorizationBlock(message: Int, listener: View.OnClickListener) {
         if (needAutorizationBlock != null) {
             needAutorizationBlock.visibility = View.VISIBLE
+            tvNeedAutorization.text = getString(message)
             buttonNeedAutorization.setOnClickListener(listener)
         }
     }
@@ -107,10 +111,11 @@ abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
         }
     }
 
-    fun showEmptyBlock(text: String, listener: View.OnClickListener) {
+    fun showEmptyBlock(text: String, textButton: String, listener: View.OnClickListener) {
         if (emptyBlock != null) {
             tvEmpty.text = text
             emptyBlock.visibility = View.VISIBLE
+            buttonEmpty.text = textButton
             buttonEmpty.setOnClickListener(listener)
         }
     }

@@ -49,6 +49,7 @@ class RegisterActivityPresenter : BasePresenter<RegisterActivityView>(), IRegist
             }
             else -> {
                 registerActivityInteractor.registerUser(
+                    nameEditText.text?.trim().toString(),
                     emailEditText.text?.trim().toString(),
                     passwordEditText.text?.trim().toString(),
                     this

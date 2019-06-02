@@ -9,11 +9,12 @@ import io.reactivex.schedulers.Schedulers
 class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor {
 
     override fun registerUser(
+        name: String,
         email: String,
         password: String,
         onRegisterUserListener: OnRegisterUserListener
     ) {
-        val userData = UserRegister(email, password)
+        val userData = UserRegister(name, email, password)
         disposable = apiAvrora.userRegister(userData)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -73,8 +74,7 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
     }
 
     override fun onItemClick(id: Int, title: String) {
-        val fragment = InnerProductFragment.getInstance(id, title
-        )
+        val fragment = InnerProductFragment.getInstance(id, title)
         parentFragment?.childFragmentManager?.beginTransaction()
             ?.add(R.id.fragmentCatalogContainer, fragment, InnerProductFragment.TAG)
             ?.show(fragment)
@@ -87,9 +87,15 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
         productsFragmentPresenter.addProductToCart(id, count, perPack)
     }
 
+    override fun userLogin(status: Boolean) {
+        productsAdapter.invalidate(status)
+    }
+
     override fun showProducts(products: List<Product>) {
         productsAdapter.addAll(products)
     }
+
+
 
     override fun showProgress() {
         progressBarProducts.visibility = View.VISIBLE
@@ -100,6 +106,6 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
     }
 
     override fun showConnectionProblem() {
-
+        Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
     }
 }

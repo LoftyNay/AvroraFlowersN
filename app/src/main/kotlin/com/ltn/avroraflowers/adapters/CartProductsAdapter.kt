@@ -31,6 +31,7 @@ class CartProductsAdapter(
     companion object {
         val INVALIDATE_TYPE_DELETE = 0
         val INVALIDATE_TYPE_ADD = 1
+        val INVALIDATE = 2
     }
 
     private val TYPE_ITEM = 1
@@ -95,6 +96,9 @@ class CartProductsAdapter(
                 }
             }
             INVALIDATE_TYPE_ADD -> {
+                notifyDataSetChanged()
+            }
+            INVALIDATE -> {
                 notifyDataSetChanged()
             }
         }

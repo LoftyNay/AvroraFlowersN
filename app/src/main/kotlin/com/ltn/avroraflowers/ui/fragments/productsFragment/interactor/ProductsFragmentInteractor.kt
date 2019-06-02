@@ -35,13 +35,17 @@ class ProductsFragmentInteractor : BaseInteractor(), IProductsFragmentInteractor
         onAddToCartProductsListener: OnAddToCartProductsListener
     ) {
         val addToCardBody = AddToCart(id, count, perPack)
-        disposable = apiAvrora.addProductInCart(Constants.TEST_TOKEN, addToCardBody)
+        disposable = apiAvrora.addProductInCart(preferencesUtils.getToken()!!, addToCardBody)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onAddToCartProductsListener.onRequestStart() }
             .doFinally { onAddToCartProductsListener.onRequestEnded() }
-            .subscribe({}, {
+            .subscribe({
+                onAddToCartProductsListener.onSuccessful()
+                disposable.dispose()
+            }, {
                 onAddToCartProductsListener.onFailure(it)
+                disposable.dispose()
             })
     }
 }

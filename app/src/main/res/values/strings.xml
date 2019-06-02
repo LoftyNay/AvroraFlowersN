@@ -16,7 +16,7 @@
     <string name="send_order">Заказ передан на обработку</string>
 
 
-    <string name="confirm_order_message">Оформление заказа на дату 1%s, пункт вывоза - 2%s.</string>
+    <string name="confirm_order_message">Оформление заказа на дату <b>%s</b>, пункт вывоза - <b>%s</b>.</string>
     <string name="confirm">Подтвердить</string>
 
     <string name="empty_cart">Ваша корзина пуста\nВы можете перейти в каталог для добавления товаров</string>
@@ -56,5 +56,6 @@
     <string name="login_for_order">Авторизоваться \nдля заказа</string>
     <string name="exit_profile">Выйти из профиля?</string>
     <string name="login_nf">Войти</string>
-    <string name="autorization_message">Для просмотра корзины необходимо выполнить вход в свой профиль</string>
+    <string name="autorization_message_cart">Для просмотра корзины необходимо выполнить вход в свой профиль</string>
+    <string name="autorization_message_orders">Для просмотра истории заказов необходимо выполнить вход в свой профиль</string>
 </resources>

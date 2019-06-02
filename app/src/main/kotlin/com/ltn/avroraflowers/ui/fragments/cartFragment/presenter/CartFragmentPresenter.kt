@@ -45,7 +45,6 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
             }
 
             override fun onFailure(throwable: Throwable) {
-                Log.d("GLL", throwable.toString())
                 if (throwable !is IllegalStateException)
                     viewState.showConnectionProblem()
             }
@@ -90,7 +89,6 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
 
             override fun onSuccessful() {
                 viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
-
             }
 
             override fun onRequestEnded() {
@@ -108,11 +106,11 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
 
             override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
+
             }
 
             override fun onSuccessful() {
-                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
-
+                viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE)
             }
 
             override fun onRequestEnded() {

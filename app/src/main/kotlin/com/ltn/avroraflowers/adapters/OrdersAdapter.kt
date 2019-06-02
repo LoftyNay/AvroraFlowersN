@@ -9,10 +9,14 @@ import com.google.android.material.card.MaterialCardView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.model.OrderItem
 import com.ltn.avroraflowers.model.Repository.OrdersRepository
+import com.ltn.avroraflowers.ui.base.BaseFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-class OrdersAdapter(private val onClickCardListener: OnCardItemClickListener) :
+class OrdersAdapter(
+    private val onClickCardListener: OnCardItemClickListener,
+    private val emptyListener: BaseFragment.EmptyListener
+) :
     RecyclerView.Adapter<OrdersAdapter.ViewHolder>() {
 
     private var ordersList: MutableList<OrderItem> = OrdersRepository.getInstance().getList()
@@ -29,6 +33,11 @@ class OrdersAdapter(private val onClickCardListener: OnCardItemClickListener) :
     }
 
     fun invalidate() {
+        if (ordersList.isNullOrEmpty()) {
+            emptyListener.onShowEmpty()
+        } else {
+            emptyListener.onHideEmpty()
+        }
         notifyDataSetChanged()
     }
 
@@ -38,7 +47,7 @@ class OrdersAdapter(private val onClickCardListener: OnCardItemClickListener) :
         holder.orderCardItem.setOnClickListener { onClickCardListener.onItemClick(ordersList[position]._id, date) }
         holder.status.text = ordersList[position].status
         holder.date.text = date
-      //  holder.price.text = ordersList[position].price
+        //  holder.price.text = ordersList[position].price
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

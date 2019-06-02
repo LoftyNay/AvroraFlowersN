@@ -1,5 +1,6 @@
 package com.ltn.avroraflowers.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,8 +21,11 @@ class ProductsAdapter(
 ) : RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
 
     private var products: MutableList<Product> = ArrayList()
+    private var userLogin = false
+    private lateinit var parentContext: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        parentContext = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item_recycler, parent, false)
         return ViewHolder(view)
     }
@@ -36,8 +40,18 @@ class ProductsAdapter(
         notifyDataSetChanged()
     }
 
+    fun invalidate(userIsLogin: Boolean) {
+        userLogin = userIsLogin
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.cardItem.setOnClickListener { onClickCardListener.onItemClick(products[position]._id, products[position].title) }
+        holder.cardItem.setOnClickListener {
+            onClickCardListener.onItemClick(
+                products[position]._id,
+                products[position].title
+            )
+        }
 
         Picasso.get()
             .load(products[position].image)
@@ -60,6 +74,7 @@ class ProductsAdapter(
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 currentSpinnerItem = listSpinner[position]
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
@@ -73,16 +88,28 @@ class ProductsAdapter(
             plusCount(count, holder)
         }
 
-        holder.addInCardButton.setOnClickListener {
-            onAddToCartClickListener.onAddToCartClick(
-                products[position]._id,
-                Integer.decode(holder.countInCard.text.toString()),
-                currentSpinnerItem
-            )
+        if (userLogin) {
+            holder.addInCardButton.setOnClickListener {
+                onAddToCartClickListener.onAddToCartClick(
+                    products[position]._id,
+                    Integer.decode(holder.countInCard.text.toString()),
+                    currentSpinnerItem
+                )
+            }
+        } else {
+            holder.addInCardButton.setOnClickListener {
+                Toast.makeText(
+                    parentContext,
+                    "Выполните вход в свой профиль",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val tvPack = itemView.findViewById<TextView>(R.id.textViewPackProductsRecycler)
+        val tvOrder = itemView.findViewById<TextView>(R.id.textViewOrderProductsRecycler)
         val cardItem = itemView.findViewById<MaterialCardView>(R.id.productsCardItem)
         val image = itemView.findViewById<AppCompatImageView>(R.id.imageItemProductRecycler)
         val title = itemView.findViewById<TextView>(R.id.textViewHeadProductsRecycler)

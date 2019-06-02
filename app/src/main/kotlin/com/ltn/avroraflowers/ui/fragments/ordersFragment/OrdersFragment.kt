@@ -1,5 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.ordersFragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,16 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.OrdersAdapter
+import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.model.Repository.OrdersRepository
+import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
-import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
 import com.ltn.avroraflowers.ui.fragments.innerOrderFragment.InnerOrderFragment
 import com.ltn.avroraflowers.ui.fragments.ordersFragment.presenter.OrdersFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.ordersFragment.view.OrdersFragmentView
 import com.ltn.avroraflowers.utils.Constants
+import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_orders.*
 
-class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardItemClickListener {
+class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardItemClickListener,
+    BaseFragment.EmptyListener {
 
     @InjectPresenter
     lateinit var ordersFragmentPresenter: OrdersFragmentPresenter
@@ -42,11 +46,10 @@ class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardI
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         (incToolbarOrders as Toolbar).title = resources.getString(R.string.orders_item_nav)
-        OrdersRepository.getInstance().callUpdate()
     }
 
     private fun initRecycler() {
-        ordersAdapter = OrdersAdapter(this)
+        ordersAdapter = OrdersAdapter(this, this)
         recyclerViewOrdersFragment.addItemDecoration(
             GridSpacingItemDecoration(
                 1,
@@ -76,6 +79,44 @@ class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardI
 
     override fun invalidateRecycler() {
         ordersAdapter.invalidate()
+    }
+
+    override fun userLogin(status: Boolean) {
+        when (status) {
+            true -> {
+                OrdersRepository.getInstance().callUpdate()
+                hideNeedAutorizationBlock()
+                recyclerViewOrdersFragment.visibility = View.VISIBLE
+                invalidateRecycler()
+            }
+            false -> {
+                hideEmptyBlock()
+                recyclerViewOrdersFragment.visibility = View.GONE
+                showNeedAutorizationBlock(R.string.autorization_message_orders, View.OnClickListener {
+                    startActivity(
+                        Intent(
+                            activity,
+                            EntryActivity::class.java
+                        )
+                    )
+                })
+            }
+        }
+    }
+
+    override fun onShowEmpty() {
+        if (preferencesUtils.isLogin()) {
+            recyclerViewOrdersFragment.visibility = View.GONE
+            showEmptyBlock("Вы еще ничего не заказывали, оформить заказ можно в корзине", "В корзину",
+                View.OnClickListener { mContext.setPagerItem(ViewPagerAdapter.CART_FRAGMENT) })
+        } else {
+            onHideEmpty()
+        }
+    }
+
+    override fun onHideEmpty() {
+        recyclerViewOrdersFragment.visibility = View.VISIBLE
+        hideEmptyBlock()
     }
 
     override fun showProgress() {
