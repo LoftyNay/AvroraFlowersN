@@ -11,6 +11,15 @@ import kotlinx.android.synthetic.main.fragment_entry_start.*
 
 class EntryStartFragment : BaseFragment() {
 
+    override fun showProgress() {
+    }
+
+    override fun hideProgress() {
+    }
+
+    override fun showConnectionProblem() {
+    }
+
     override fun inflateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_entry_start, container, false)
     }

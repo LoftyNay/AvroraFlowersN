@@ -2,14 +2,11 @@ package com.ltn.avroraflowers.ui.base
 
 import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.google.android.material.card.MaterialCardView
-import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
 import com.ltn.avroraflowers.ui.fragments.searchFragment.HostSearch
 import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
@@ -20,7 +17,7 @@ import kotlinx.android.synthetic.main.toolbar_with_search.*
 import java.util.*
 
 
-abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
+abstract class BaseFragment : BaseLoginFragment(), BaseView, IConnectionProblem {
 
     var toolbarTitle: String? = null
     lateinit var mContext: MainActivity
@@ -50,10 +47,15 @@ abstract class BaseFragment : BaseLoginFragment(), IConnectionProblem {
         }
     }
 
+    override fun resultOk(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun showConnectionProblem() {
+        Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
+    }
 
 //TODO TO MESSAGE BASE FRAGMENT!!!
-
-
 
     fun showDialog(
         title: String,

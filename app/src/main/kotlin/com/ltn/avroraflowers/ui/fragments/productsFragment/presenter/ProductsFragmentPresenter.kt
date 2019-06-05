@@ -11,6 +11,7 @@ import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.OnAddToCar
 import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.OnRequestProductsListener
 import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.ProductsFragmentInteractor
 import com.ltn.avroraflowers.ui.fragments.productsFragment.view.ProductsFragmentView
+import java.util.logging.Handler
 import javax.inject.Inject
 
 @InjectViewState
@@ -34,6 +35,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             }
 
             override fun onFailure(throwable: Throwable) {
+                viewState.showConnectionProblem()
             }
 
             override fun onRequestEnded() {
@@ -46,15 +48,14 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
     override fun addProductToCart(id: Int, count: Int, perPack: Int) {
         productsFragmentInteractor.requestAddProductToCart(id, count, perPack, object : OnAddToCartProductsListener {
             override fun onRequestStart() {
-           //     viewState
             }
 
             override fun onSuccessful() {
-               // viewState.
+                viewState.resultOk("Добавлен в корзину")
             }
 
             override fun onFailure(throwable: Throwable) {
-                Log.d("GLL", throwable.message)
+                viewState.showConnectionProblem()
             }
 
             override fun onRequestEnded() {

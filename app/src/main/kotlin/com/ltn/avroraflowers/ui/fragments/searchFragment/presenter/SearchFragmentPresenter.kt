@@ -67,11 +67,11 @@ class SearchFragmentPresenter(private val view: SearchFragmentView) {
     ) {
         searchFragmentInteractor.addToCart(id, count, perPack, object : OnAddToCartProductsListener {
             override fun onSuccessful() {
-
+                view.resultOk("Добавлен в корзину")
             }
 
             override fun onFailure(throwable: Throwable) {
-
+                view.showConnectionProblem()
             }
 
             override fun onRequestEnded() {

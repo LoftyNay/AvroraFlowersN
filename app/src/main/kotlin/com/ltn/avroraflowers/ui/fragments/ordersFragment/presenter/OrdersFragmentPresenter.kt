@@ -35,6 +35,7 @@ class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragm
             }
 
             override fun onFailure(throwable: Throwable) {
+                viewState.showConnectionProblem()
             }
 
             override fun onRequestEnded() {

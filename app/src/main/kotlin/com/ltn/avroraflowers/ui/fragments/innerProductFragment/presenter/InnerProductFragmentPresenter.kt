@@ -25,10 +25,11 @@ class InnerProductFragmentPresenter: BasePresenter<InnerProductFragmentView>(), 
     fun addToCart(id: Int, count: Int, perPack: Int) {
         innerProductFragmentInteractor.requestAddToCart(id, count, perPack, object: OnAddToCartProductsListener {
             override fun onSuccessful() {
-
+                viewState.resultOk("Добавлен в корзину")
             }
 
             override fun onFailure(throwable: Throwable) {
+                viewState.showConnectionProblem()
             }
 
             override fun onRequestEnded() {
@@ -49,12 +50,10 @@ class InnerProductFragmentPresenter: BasePresenter<InnerProductFragmentView>(), 
 
             override fun onSuccessful(product: Product) {
                 viewState.showProductInfo(product)
-                Log.d("GLL", "ok")
             }
 
             override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
-                Log.d("GLL", "fail")
             }
 
             override fun onRequestEnded() {

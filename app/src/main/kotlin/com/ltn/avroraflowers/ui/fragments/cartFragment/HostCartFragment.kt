@@ -11,6 +11,15 @@ import com.ltn.avroraflowers.ui.fragments.catalogFragment.CatalogFragment
 
 class HostCartFragment : BaseFragment() {
 
+    override fun showProgress() {
+    }
+
+    override fun hideProgress() {
+    }
+
+    override fun showConnectionProblem() {
+    }
+
     companion object {
         fun getInstance(): HostCartFragment {
             return HostCartFragment()

@@ -58,4 +58,5 @@
     <string name="login_nf">Войти</string>
     <string name="autorization_message_cart">Для просмотра корзины необходимо выполнить вход в свой профиль</string>
     <string name="autorization_message_orders">Для просмотра истории заказов необходимо выполнить вход в свой профиль</string>
+    <string name="please_wait">Пожалуйста подождите...</string>
 </resources>

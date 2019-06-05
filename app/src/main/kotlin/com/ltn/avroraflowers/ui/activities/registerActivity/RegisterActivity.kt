@@ -21,6 +21,8 @@ import javax.inject.Inject
 
 class RegisterActivity : BaseActivity(), RegisterActivityView, View.OnClickListener {
 
+    override fun resultOk(message: String) {}
+
     @InjectPresenter
     lateinit var registerActivityPresenter: RegisterActivityPresenter
 

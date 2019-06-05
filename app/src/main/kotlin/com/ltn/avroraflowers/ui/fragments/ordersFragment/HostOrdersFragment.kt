@@ -9,6 +9,15 @@ import com.ltn.avroraflowers.ui.base.BaseFragment
 
 class HostOrdersFragment : BaseFragment() {
 
+    override fun showProgress() {
+    }
+
+    override fun hideProgress() {
+    }
+
+    override fun showConnectionProblem() {
+    }
+
     companion object {
         val TAG = "HostCatalogFragment"
 

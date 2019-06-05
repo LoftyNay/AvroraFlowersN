@@ -6,4 +6,6 @@ import com.ltn.avroraflowers.ui.base.BaseView
 interface CartFragmentView: BaseView {
     fun invalidateRecycler(invalidateType: Int)
     fun orderSended()
+    fun showLoadingDialog()
+    fun hideLoadingDialog()
 }

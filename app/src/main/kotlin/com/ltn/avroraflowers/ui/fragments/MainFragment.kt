@@ -2,7 +2,6 @@ package com.ltn.avroraflowers.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +9,7 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
-import com.ltn.avroraflowers.ui.base.BaseLoginFragment
-import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.android.synthetic.main.toolbar_with_search.*
 
 class MainFragment : BaseFragment() {
 
@@ -36,8 +32,8 @@ class MainFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         autorizationButtonFragmentMain.setOnClickListener { startActivity(Intent(context, EntryActivity::class.java)) }
         createOrderButton.setOnClickListener { mContext.setPagerItem(ViewPagerAdapter.CART_FRAGMENT) }
-        repeatLastOrderButton.setOnClickListener {  }
-        loadLastOrderButton.setOnClickListener {  }
+        repeatLastOrderButton.setOnClickListener { }
+        loadLastOrderButton.setOnClickListener { }
         exitButtonFragmentMain.setOnClickListener {
             showDialog(
                 preferencesUtils.getName()!!,
@@ -84,4 +80,8 @@ class MainFragment : BaseFragment() {
             }
         }
     }
+
+    override fun showProgress() {}
+
+    override fun hideProgress() {}
 }

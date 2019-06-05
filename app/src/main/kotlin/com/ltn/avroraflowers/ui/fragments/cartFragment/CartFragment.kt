@@ -230,4 +230,12 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         footerCart.isEnabled = true
         contentBlock.isEnabled = true
     }
+
+    override fun showLoadingDialog() {
+        mContext.showLoadingDialog()
+    }
+
+    override fun hideLoadingDialog() {
+        mContext.closeDialogs()
+    }
 }

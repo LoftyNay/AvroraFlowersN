@@ -1,7 +1,7 @@
 package com.ltn.avroraflowers.ui.fragments.cartFragment.presenter
 
 import android.content.Context
-import android.util.Log
+import android.os.Handler
 import com.arellomobile.mvp.InjectViewState
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.adapters.CartProductsAdapter
@@ -14,8 +14,6 @@ import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.OnDeleteCartPr
 import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.OnRequestCartProductsListener
 import com.ltn.avroraflowers.ui.fragments.cartFragment.interactor.OnSendOrderListener
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
-import retrofit2.HttpException
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @InjectViewState
@@ -80,7 +78,7 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
     override fun deleteProductsFromCart(listIds: MutableList<Int>) {
         cartFragmentInteractor.requestDeleteProductsFromCart(listIds, object : OnDeleteCartProductsListener {
             override fun onRequestStart() {
-                viewState.showProgress()
+                viewState.showLoadingDialog()
             }
 
             override fun onFailure(throwable: Throwable) {
@@ -89,10 +87,13 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
 
             override fun onSuccessful() {
                 viewState.invalidateRecycler(CartProductsAdapter.INVALIDATE_TYPE_DELETE)
+                viewState.resultOk("Готово")
             }
 
             override fun onRequestEnded() {
-                viewState.hideProgress()
+                Handler().postDelayed({
+                    viewState.hideLoadingDialog()
+                }, 500)
             }
         })
     }
@@ -101,12 +102,12 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
     override fun deleteProductsFromCart() {
         cartFragmentInteractor.requestDeleteProductsFromCart(object : OnDeleteCartProductsListener {
             override fun onRequestStart() {
-                viewState.showProgress()
+                viewState.showLoadingDialog()
             }
 
             override fun onFailure(throwable: Throwable) {
                 viewState.showConnectionProblem()
-
+                viewState.resultOk("Готово")
             }
 
             override fun onSuccessful() {
@@ -114,7 +115,7 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
             }
 
             override fun onRequestEnded() {
-                viewState.hideProgress()
+                viewState.hideLoadingDialog()
             }
         })
     }
