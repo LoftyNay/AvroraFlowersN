@@ -22,7 +22,7 @@ class MainFragmentPresenter(private val view: MainFragmentView) {
             }
 
             override fun onFailure(throwable: Throwable) {
-                Log.d("GLL", throwable.message)
+                Log.d("GLL", throwable.message) //TODO
                 view.showConnectionProblem()
             }
 
