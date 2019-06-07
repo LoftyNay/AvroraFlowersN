@@ -19,6 +19,8 @@
     <string name="confirm_order_message">Оформление заказа на дату <b>%s</b>, пункт вывоза - <b>%s</b>.</string>
     <string name="confirm">Подтвердить</string>
 
+    <string name="continue_b">Продолжить</string>
+
     <string name="empty_cart">Ваша корзина пуста\nВы можете перейти в каталог для добавления товаров</string>
     <string name="confirm_exit_message">Вы действительно хотите выйти из приложения?</string>
 
@@ -59,4 +61,10 @@
     <string name="autorization_message_cart">Для просмотра корзины необходимо выполнить вход в свой профиль</string>
     <string name="autorization_message_orders">Для просмотра истории заказов необходимо выполнить вход в свой профиль</string>
     <string name="please_wait">Пожалуйста подождите...</string>
+    <string name="load_last_order">Повтор прошлого заказа</string>
+    <string name="load_last_order_message">Товары из прошлого заказа будут загружены в корзину, а имеющиеся в корзине удалены.
+        Вы уверены, что хотите продолжить?
+    </string>
+    <string name="delete_title">Удаление</string>
+    <string name="delete_message">Удалить товары из корзины?</string>
 </resources>

@@ -64,13 +64,23 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
     }
 
     override fun onDeleteButtonClick(listIds: MutableList<Int>) {
-        cartFragmentPresenter.deleteProductsFromCart(listIds)
+        showDialog(getString(R.string.delete_title),
+            getString(R.string.delete_message),
+            getString(R.string.confirm),
+            getString(R.string.cancel),
+            object : DialogListener {
+                override fun onPositive() {
+                    cartFragmentPresenter.deleteProductsFromCart(listIds)
+
+                }
+                override fun onNegative() {}
+            }
+        )
     }
 
     override fun invalidateRecycler(invalidateType: Int) {
         if (invalidateType == CartProductsAdapter.INVALIDATE)
             cartProductsAdapter.clear()
-
         cartProductsAdapter.invalidate(invalidateType)
     }
 

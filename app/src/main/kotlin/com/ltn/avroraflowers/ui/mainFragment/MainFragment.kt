@@ -1,4 +1,4 @@
-package com.ltn.avroraflowers.ui.fragments
+package com.ltn.avroraflowers.ui.mainFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,13 @@ import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
+import com.ltn.avroraflowers.ui.mainFragment.presenter.MainFragmentPresenter
+import com.ltn.avroraflowers.ui.mainFragment.view.MainFragmentView
 import kotlinx.android.synthetic.main.fragment_main.*
 
-class MainFragment : BaseFragment() {
+class MainFragment : BaseFragment(), MainFragmentView {
+
+    private lateinit var mainFragmentPresenter: MainFragmentPresenter
 
     companion object {
         fun getInstance(): MainFragment {
@@ -25,6 +29,7 @@ class MainFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainFragmentPresenter = MainFragmentPresenter(this)
         toolbarTitle = resources.getString(R.string.app_name)
     }
 
@@ -32,7 +37,9 @@ class MainFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         autorizationButtonFragmentMain.setOnClickListener { startActivity(Intent(context, EntryActivity::class.java)) }
         createOrderButton.setOnClickListener { mContext.setPagerItem(ViewPagerAdapter.CART_FRAGMENT) }
-        repeatLastOrderButton.setOnClickListener { }
+        repeatLastOrderButton.setOnClickListener {
+            showDialogRepeatLastOrder()
+        }
         loadLastOrderButton.setOnClickListener { }
         exitButtonFragmentMain.setOnClickListener {
             showDialog(
@@ -55,6 +62,22 @@ class MainFragment : BaseFragment() {
 
     fun showRepeatLastOrderDialog() {
         //TODO
+    }
+
+    private fun showDialogRepeatLastOrder() {
+        showDialog(
+            getString(R.string.load_last_order),
+            getString(R.string.load_last_order_message),
+            getString(R.string.continue_b),
+            getString(R.string.cancel),
+            object : DialogListener {
+                override fun onPositive() {
+                    mainFragmentPresenter.repeatLastOrder()
+                }
+
+                override fun onNegative() {}
+            }
+        )
     }
 
     override fun userLogin(status: Boolean) {
@@ -81,7 +104,11 @@ class MainFragment : BaseFragment() {
         }
     }
 
-    override fun showProgress() {}
+    override fun showProgress() {
+        mContext.showLoadingDialog()
+    }
 
-    override fun hideProgress() {}
+    override fun hideProgress() {
+        mContext.closeDialogs()
+    }
 }

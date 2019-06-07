@@ -52,6 +52,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
 
             override fun onSuccessful() {
                 viewState.resultOk("Добавлен в корзину")
+                CartProductsRepository.getInstance().callUpdate()
             }
 
             override fun onFailure(throwable: Throwable) {
@@ -59,7 +60,6 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             }
 
             override fun onRequestEnded() {
-                CartProductsRepository.getInstance().callUpdate()
             }
         })
     }
