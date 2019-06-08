@@ -55,8 +55,14 @@ interface ApiAvrora {
     @GET("/user/orders/{id}/products")
     fun getProductsInOrderById(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<List<OrderInner>>
 
+    @POST("/user/cart/save")
+    fun saveCart(@Header("access-token") accessToken: String, @Body name: SaveCartName): Observable<SampleResponse>
+
     @GET("/user/orders/last_in_cart")
     fun getLastOrderAndSetToCart(@Header("access-token") accessToken: String): Observable<SampleResponse>
+
+    @DELETE("/user/cart/all")
+    fun deleteAllProductsInCart(@Header("access-token") accessToken: String): Observable<SampleResponse>
 
     @GET("/products")
     fun getProducts(@Query("limit") limit: Int): Observable<SearchResponse>

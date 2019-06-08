@@ -5,6 +5,7 @@ import com.ltn.avroraflowers.model.CartItem
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.network.RequestBody.AddOrder
 import com.ltn.avroraflowers.network.RequestBody.ProductInOrder
+import com.ltn.avroraflowers.network.RequestBody.SaveCartName
 import com.ltn.avroraflowers.network.Response.SampleResponse
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import com.ltn.avroraflowers.utils.Constants
@@ -17,20 +18,41 @@ import io.reactivex.schedulers.Schedulers
 
 class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
 
+
+    fun requestSaveCart(name: String, onSaveCartListener: OnSaveCartListener) {
+        disposable = apiAvrora.saveCart(preferencesUtils.getToken()!!, SaveCartName(name))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onSaveCartListener.onRequestStart() }
+            .doFinally { onSaveCartListener.onRequestEnded() }
+            .subscribe(
+                { result ->
+                    onSaveCartListener.onSuccessful()
+                    disposable.dispose()
+                },
+                {
+                    onSaveCartListener.onFailure(it)
+                    disposable.dispose()
+                }
+            )
+    }
+
     override fun requestDeleteProductsFromCart(onDeleteCartProductsListener: OnDeleteCartProductsListener) {
-        disposable = Observable.fromIterable(CartProductsRepository.getInstance().getList())
-            .flatMap { i -> apiAvrora.deleteProductInCart(preferencesUtils.getToken()!!, i.product_id) }
+        disposable = apiAvrora.deleteAllProductsInCart(preferencesUtils.getToken()!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onDeleteCartProductsListener.onRequestStart() }
             .doFinally { onDeleteCartProductsListener.onRequestEnded() }
-            .subscribe({
-                onDeleteCartProductsListener.onSuccessful()
-                disposable.dispose()
-            }, {
-                onDeleteCartProductsListener.onFailure(it)
-                disposable.dispose()
-            })
+            .subscribe(
+                { result ->
+                    onDeleteCartProductsListener.onSuccessful()
+                    disposable.dispose()
+                },
+                {
+                    onDeleteCartProductsListener.onFailure(it)
+                    disposable.dispose()
+                }
+            )
     }
 
     override fun requestDeleteProductsFromCart(
@@ -86,10 +108,8 @@ class CartFragmentInteractor : BaseInteractor(), ICartFragmentInteractor {
             .doFinally { onSendOrderListener.onRequestEnded() }
             .subscribe({
                 onSendOrderListener.onSuccessful()
-                disposable.dispose()
             }, {
                 onSendOrderListener.onFailure(it)
-                disposable.dispose()
             })
     }
 }

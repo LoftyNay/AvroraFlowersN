@@ -54,6 +54,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         initRecycler()
         toConfirmCartProductsButton.setOnClickListener(this)
         datePickButtonCart.setOnClickListener(this)
+        saveCartProductsButton.setOnClickListener(this)
     }
 
     private fun initRecycler() {
@@ -73,6 +74,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                     cartFragmentPresenter.deleteProductsFromCart(listIds)
 
                 }
+
                 override fun onNegative() {}
             }
         )
@@ -84,10 +86,10 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         cartProductsAdapter.invalidate(invalidateType)
     }
 
+    //TODO DELETE
     override fun orderSended() {
         Toast.makeText(activity, getString(R.string.send_order), Toast.LENGTH_LONG)
             .show()
-        cartFragmentPresenter.deleteProductsFromCart()
     }
 
     override fun onClick(v: View?) {
@@ -147,6 +149,9 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                         convertAndSetData(month, dayOfMonth, year)
                     }
                 })
+            }
+            saveCartProductsButton -> {
+                cartFragmentPresenter.saveCart("1111")
             }
         }
     }

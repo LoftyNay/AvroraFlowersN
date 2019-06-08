@@ -52,10 +52,11 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
         val categoryId = arguments?.getInt(KEY_ID)
-        val title =  arguments?.getString(KEY_TITLE)
+        val title = arguments?.getString(KEY_TITLE)
         if (categoryId != null) {
             toolbarSearch.title = title
             productsFragmentPresenter.getProductsFromServerByCategoryId(categoryId)
+            setNavigationIcon(toolbarSearch, title!!)
         }
     }
 
@@ -95,7 +96,13 @@ class ProductsFragment : BaseFragment(), ProductsFragmentView, ProductsAdapter.O
         productsAdapter.addAll(products)
     }
 
+    override fun showLoadingDialog() {
+        mContext.showLoadingDialog()
+    }
 
+    override fun hideLoadingDialog() {
+        mContext.closeDialogs()
+    }
 
     override fun showProgress() {
         progressBarProducts.visibility = View.VISIBLE

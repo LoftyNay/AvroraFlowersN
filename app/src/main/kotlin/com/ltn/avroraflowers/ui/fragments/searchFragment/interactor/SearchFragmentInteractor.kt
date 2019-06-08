@@ -40,8 +40,12 @@ class SearchFragmentInteractor : BaseInteractor() {
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSubscribe { onAddToCartProductsListener.onRequestStart() }
             .doFinally { onAddToCartProductsListener.onRequestEnded() }
-            .subscribe({}, {
+            .subscribe({
+                onAddToCartProductsListener.onSuccessful()
+                disposable.dispose()
+            }, {
                 onAddToCartProductsListener.onFailure(it)
+                disposable.dispose()
             })
     }
 }

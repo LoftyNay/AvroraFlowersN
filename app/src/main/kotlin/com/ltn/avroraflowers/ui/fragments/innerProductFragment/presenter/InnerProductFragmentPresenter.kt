@@ -1,6 +1,6 @@
 package com.ltn.avroraflowers.ui.fragments.innerProductFragment.presenter
 
-import android.util.Log
+import android.os.Handler
 import com.arellomobile.mvp.InjectViewState
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.model.Product
@@ -13,7 +13,7 @@ import com.ltn.avroraflowers.ui.fragments.productsFragment.interactor.OnAddToCar
 import javax.inject.Inject
 
 @InjectViewState
-class InnerProductFragmentPresenter: BasePresenter<InnerProductFragmentView>(), IInnerProductFragmentPresenter {
+class InnerProductFragmentPresenter : BasePresenter<InnerProductFragmentView>(), IInnerProductFragmentPresenter {
 
     @Inject
     lateinit var innerProductFragmentInteractor: InnerProductFragmentInteractor
@@ -23,9 +23,10 @@ class InnerProductFragmentPresenter: BasePresenter<InnerProductFragmentView>(), 
     }
 
     fun addToCart(id: Int, count: Int, perPack: Int) {
-        innerProductFragmentInteractor.requestAddToCart(id, count, perPack, object: OnAddToCartProductsListener {
+        innerProductFragmentInteractor.requestAddToCart(id, count, perPack, object : OnAddToCartProductsListener {
             override fun onSuccessful() {
                 viewState.resultOk("Добавлен в корзину")
+                CartProductsRepository.getInstance().callUpdate()
             }
 
             override fun onFailure(throwable: Throwable) {
@@ -33,11 +34,13 @@ class InnerProductFragmentPresenter: BasePresenter<InnerProductFragmentView>(), 
             }
 
             override fun onRequestEnded() {
-                CartProductsRepository.getInstance().callUpdate()
+                Handler().postDelayed({
+                    viewState.hideLoadingDialog()
+                }, 300)
             }
 
             override fun onRequestStart() {
-
+                viewState.showLoadingDialog()
             }
         })
     }

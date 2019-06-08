@@ -1,7 +1,5 @@
 package com.ltn.avroraflowers.ui.fragments.ordersFragment.presenter
 
-import android.content.Context
-import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.ltn.avroraflowers.App
 import com.ltn.avroraflowers.model.OrderItem
@@ -13,7 +11,8 @@ import com.ltn.avroraflowers.ui.fragments.ordersFragment.view.OrdersFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragmentPresenter, OrdersRepository.OnOrdersListener {
+class OrdersFragmentPresenter : BasePresenter<OrdersFragmentView>(), IOrdersFragmentPresenter,
+    OrdersRepository.OnOrdersListener {
 
     @Inject
     lateinit var ordersFragmentInteractor: OrdersFragmentInteractor
@@ -35,7 +34,8 @@ class OrdersFragmentPresenter: BasePresenter<OrdersFragmentView>(), IOrdersFragm
             }
 
             override fun onFailure(throwable: Throwable) {
-                viewState.showConnectionProblem()
+                if (throwable !is IllegalStateException)
+                    viewState.showConnectionProblem()
             }
 
             override fun onRequestEnded() {

@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
+import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.ui.activities.mainActivity.MainActivity
 import com.ltn.avroraflowers.ui.fragments.searchFragment.HostSearch
 import com.ltn.avroraflowers.ui.fragments.searchFragment.SearchFragment
 import kotlinx.android.synthetic.main.empty_layout.*
+import kotlinx.android.synthetic.main.fragment_products_inner.*
 import kotlinx.android.synthetic.main.need_autorization_layout.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_with_search.*
@@ -53,6 +56,14 @@ abstract class BaseFragment : BaseLoginFragment(), BaseView, IConnectionProblem 
 
     override fun showConnectionProblem() {
         Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
+    }
+
+    fun setNavigationIcon(toolbar: View, title: String) {
+        (toolbar as Toolbar).title = title
+        toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
+        toolbar.setNavigationOnClickListener {
+            parentFragment?.childFragmentManager?.popBackStack()
+        }
     }
 
 //TODO TO MESSAGE BASE FRAGMENT!!!

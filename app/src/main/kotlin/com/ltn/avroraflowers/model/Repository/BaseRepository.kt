@@ -18,18 +18,20 @@ abstract class BaseRepository<T1, T2> {
     }
 
 
+    fun clear() {
+        list.clear()
+    }
+
     fun registerListener(listener: T2) {
         if (!listeners.contains(listener)) {
             listeners.add(listener)
         }
-        Log.d("GLL", listeners.size.toString())
     }
 
     fun unregisterListener(listener: T2) {
         if (listeners.contains(listener)) {
             listeners.removeAt(listeners.indexOf(listener))
         }
-        Log.d("GLL", listeners.size.toString())
     }
 
     abstract fun callUpdate()

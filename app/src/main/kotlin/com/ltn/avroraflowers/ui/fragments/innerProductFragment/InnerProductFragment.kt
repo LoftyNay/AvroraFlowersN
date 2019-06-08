@@ -61,12 +61,8 @@ class InnerProductFragment : BaseFragment(), InnerProductFragmentView {
         val title = arguments?.getString(KEY_TITLE)
 
         if (productId != null) {
+            setNavigationIcon(toolbarInnerProd, title!!)
             innerProductFragmentPresenter.getProduct(productId!!)
-            (toolbarInnerProd as Toolbar).title = title
-            (toolbarInnerProd as Toolbar).setNavigationIcon(R.drawable.ic_back_arrow)
-            (toolbarInnerProd as Toolbar).setNavigationOnClickListener {
-                parentFragment?.childFragmentManager?.popBackStack()
-            }
         }
 
         minusInCardInnerProduct.setOnClickListener {
@@ -114,6 +110,14 @@ class InnerProductFragment : BaseFragment(), InnerProductFragmentView {
         progressBarProductInner.visibility = View.GONE
     }
 
+    override fun showLoadingDialog() {
+        mContext.showLoadingDialog()
+    }
+
+    override fun hideLoadingDialog() {
+        mContext.closeDialogs()
+    }
+
     interface OnCardItemClickListener {
         fun onItemClick(id: Int, title: String)
     }
@@ -132,9 +136,5 @@ class InnerProductFragment : BaseFragment(), InnerProductFragmentView {
         } else {
             countInnerProduct.text = (count + 1).toString()
         }
-    }
-
-    override fun showConnectionProblem() {
-
     }
 }

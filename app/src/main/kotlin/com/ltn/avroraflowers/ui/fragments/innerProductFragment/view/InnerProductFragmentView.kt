@@ -5,4 +5,6 @@ import com.ltn.avroraflowers.ui.base.BaseView
 
 interface InnerProductFragmentView : BaseView {
     fun showProductInfo(product: Product)
+    fun showLoadingDialog()
+    fun hideLoadingDialog()
 }

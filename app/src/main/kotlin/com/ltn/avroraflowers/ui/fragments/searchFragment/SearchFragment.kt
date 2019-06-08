@@ -99,12 +99,25 @@ class SearchFragment : BaseFragment(), SearchFragmentView, ProductsAdapter.OnCar
         )
         recyclerSearch.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerSearch.adapter = searchResults
+        recyclerSearch.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                utils.hideSoftKeyboard(recyclerView)
+            }
+        })
     }
 
     override fun showResults(results: List<Product>) {
         searchResults.addAll(results)
     }
 
+    override fun showLoadingDialog() {
+        mContext.showLoadingDialog()
+    }
+
+    override fun hideLoadingDialog() {
+        mContext.closeDialogs()
+    }
 
     override fun showEmpty() {
     }

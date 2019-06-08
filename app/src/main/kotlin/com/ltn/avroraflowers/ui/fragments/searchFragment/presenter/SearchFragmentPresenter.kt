@@ -1,6 +1,8 @@
 package com.ltn.avroraflowers.ui.fragments.searchFragment.presenter
 
 import android.annotation.SuppressLint
+import android.os.Handler
+import android.util.Log
 import com.ltn.avroraflowers.model.Product
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.network.RequestBody.AddToCart
@@ -68,6 +70,7 @@ class SearchFragmentPresenter(private val view: SearchFragmentView) {
         searchFragmentInteractor.addToCart(id, count, perPack, object : OnAddToCartProductsListener {
             override fun onSuccessful() {
                 view.resultOk("Добавлен в корзину")
+                CartProductsRepository.getInstance().callUpdate()
             }
 
             override fun onFailure(throwable: Throwable) {
@@ -75,11 +78,13 @@ class SearchFragmentPresenter(private val view: SearchFragmentView) {
             }
 
             override fun onRequestEnded() {
-                CartProductsRepository.getInstance().callUpdate()
+                Handler().postDelayed({
+                    view.hideLoadingDialog()
+                }, 300)
             }
 
             override fun onRequestStart() {
-
+                view.showLoadingDialog()
             }
         })
     }

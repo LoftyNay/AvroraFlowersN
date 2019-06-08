@@ -126,7 +126,4 @@ class OrdersFragment : BaseFragment(), OrdersFragmentView, OrdersAdapter.OnCardI
     override fun hideProgress() {
         progressBarOrders.visibility = View.GONE
     }
-
-    override fun showConnectionProblem() {
-    }
 }

@@ -48,6 +48,7 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
     override fun addProductToCart(id: Int, count: Int, perPack: Int) {
         productsFragmentInteractor.requestAddProductToCart(id, count, perPack, object : OnAddToCartProductsListener {
             override fun onRequestStart() {
+                viewState.showLoadingDialog()
             }
 
             override fun onSuccessful() {
@@ -60,6 +61,9 @@ class ProductsFragmentPresenter : BasePresenter<ProductsFragmentView>(), IProduc
             }
 
             override fun onRequestEnded() {
+                android.os.Handler().postDelayed({
+                    viewState.hideLoadingDialog()
+                }, 300)
             }
         })
     }

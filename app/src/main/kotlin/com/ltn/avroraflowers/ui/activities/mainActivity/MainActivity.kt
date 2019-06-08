@@ -1,16 +1,18 @@
 package com.ltn.avroraflowers.ui.activities.mainActivity
 
-import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.get
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.ui.base.BaseActivity
 import com.ltn.avroraflowers.utils.Constants
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -26,19 +28,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.bottom_navigation_main -> {
-                viewPagerMain.setCurrentItem(ViewPagerAdapter.MAIN_FRAGMENT)
+                viewPagerMain.currentItem = ViewPagerAdapter.MAIN_FRAGMENT
+                if (item.isChecked) toFirstFragmentInStack(ViewPagerAdapter.MAIN_FRAGMENT)
                 item.isChecked = true
             }
             R.id.bottom_navigation_cart -> {
-                viewPagerMain.setCurrentItem(ViewPagerAdapter.CART_FRAGMENT)
+                viewPagerMain.currentItem = ViewPagerAdapter.CART_FRAGMENT
+                if (item.isChecked) toFirstFragmentInStack(ViewPagerAdapter.CART_FRAGMENT)
                 item.isChecked = true
             }
             R.id.bottom_navigation_catalog -> {
-                viewPagerMain.setCurrentItem(ViewPagerAdapter.CATALOG_FRAGMENT)
+                viewPagerMain.currentItem = ViewPagerAdapter.CATALOG_FRAGMENT
+                if (item.isChecked) toFirstFragmentInStack(ViewPagerAdapter.CATALOG_FRAGMENT)
                 item.isChecked = true
             }
             R.id.bottom_navigation_orders -> {
-                viewPagerMain.setCurrentItem(ViewPagerAdapter.ORDERS_FRAGMENT)
+                viewPagerMain.currentItem = ViewPagerAdapter.ORDERS_FRAGMENT
+                if (item.isChecked) toFirstFragmentInStack(ViewPagerAdapter.ORDERS_FRAGMENT)
                 item.isChecked = true
             }
         }
@@ -56,6 +62,26 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         viewPagerMain.offscreenPageLimit = Constants.PAGE_LIMIT
         viewPagerMain.adapter = viewPagerAdapter
+    }
+
+    fun clearBackStack() {
+        clearStack(viewPagerAdapter.getItem(ViewPagerAdapter.MAIN_FRAGMENT).childFragmentManager)
+        clearStack(viewPagerAdapter.getItem(ViewPagerAdapter.CART_FRAGMENT).childFragmentManager)
+        clearStack(viewPagerAdapter.getItem(ViewPagerAdapter.CATALOG_FRAGMENT).childFragmentManager)
+        clearStack(viewPagerAdapter.getItem(ViewPagerAdapter.ORDERS_FRAGMENT).childFragmentManager)
+    }
+
+    private fun clearStack(fm: FragmentManager) {
+        for (i in 0 until fm.backStackEntryCount) {
+            fm.popBackStack()
+        }
+    }
+
+    private fun toFirstFragmentInStack(item: Int) {
+        val currentItem = viewPagerAdapter.getItem(item)
+        if (currentItem.childFragmentManager.backStackEntryCount != 0) {
+            clearStack(currentItem.childFragmentManager)
+        }
     }
 
     override fun onBackPressed() {

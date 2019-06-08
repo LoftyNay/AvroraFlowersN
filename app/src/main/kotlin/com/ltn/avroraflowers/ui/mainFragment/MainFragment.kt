@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
+import com.ltn.avroraflowers.model.Repository.CartProductsRepository
+import com.ltn.avroraflowers.model.Repository.OrdersRepository
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.mainFragment.presenter.MainFragmentPresenter
@@ -40,7 +42,9 @@ class MainFragment : BaseFragment(), MainFragmentView {
         repeatLastOrderButton.setOnClickListener {
             showDialogRepeatLastOrder()
         }
-        loadLastOrderButton.setOnClickListener { }
+        loadLastOrderButton.setOnClickListener {
+
+        }
         exitButtonFragmentMain.setOnClickListener {
             showDialog(
                 preferencesUtils.getName()!!,
@@ -50,6 +54,9 @@ class MainFragment : BaseFragment(), MainFragmentView {
                 object : DialogListener {
                     override fun onPositive() {
                         preferencesUtils.clearUserData()
+                        mContext.clearBackStack()
+                        OrdersRepository.getInstance().clear()
+                        CartProductsRepository.getInstance().clear()
                     }
 
                     override fun onNegative() {
@@ -60,8 +67,8 @@ class MainFragment : BaseFragment(), MainFragmentView {
         }
     }
 
-    fun showRepeatLastOrderDialog() {
-        //TODO
+    override fun navigateToCart() {
+        mContext.setPagerItem(ViewPagerAdapter.CART_FRAGMENT)
     }
 
     private fun showDialogRepeatLastOrder() {
@@ -104,11 +111,15 @@ class MainFragment : BaseFragment(), MainFragmentView {
         }
     }
 
-    override fun showProgress() {
+    override fun showLoadingDialog() {
         mContext.showLoadingDialog()
     }
 
-    override fun hideProgress() {
+    override fun hideLoadingDialog() {
         mContext.closeDialogs()
     }
+
+    override fun showProgress() {}
+
+    override fun hideProgress() {}
 }

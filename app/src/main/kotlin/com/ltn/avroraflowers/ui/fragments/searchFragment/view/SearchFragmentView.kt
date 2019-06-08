@@ -6,4 +6,6 @@ import com.ltn.avroraflowers.ui.base.BaseView
 interface SearchFragmentView: BaseView {
     fun showResults(results: List<Product>)
     fun showEmpty()
+    fun showLoadingDialog()
+    fun hideLoadingDialog()
 }

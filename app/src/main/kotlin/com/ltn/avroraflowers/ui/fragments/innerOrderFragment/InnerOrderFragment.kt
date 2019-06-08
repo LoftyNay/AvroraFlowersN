@@ -53,7 +53,7 @@ class InnerOrderFragment : BaseFragment(), InnerOrderFragmentView, InnerOrderAda
         val orderId = arguments?.getInt(KEY_ID)
         val date = arguments?.getString(KEY_DATE)
         if (orderId != null) {
-            (toolbarInnerOrder as Toolbar).title = date
+            setNavigationIcon(toolbarInnerOrder, date!!)
             innerOrderFragmentPresenter.getOrderInfo(orderId)
         }
     }
@@ -90,8 +90,5 @@ class InnerOrderFragment : BaseFragment(), InnerOrderFragmentView, InnerOrderAda
 
     override fun hideProgress() {
         progressBarInnerOrder.visibility = View.GONE
-    }
-
-    override fun showConnectionProblem() {
     }
 }

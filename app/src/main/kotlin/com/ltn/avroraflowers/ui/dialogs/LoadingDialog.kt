@@ -8,17 +8,27 @@ import android.view.Window.FEATURE_NO_TITLE
 import androidx.fragment.app.DialogFragment
 
 
-class Dialog : DialogFragment() {
+class LoadingDialog : DialogFragment() {
 
     companion object {
-        private const val MESSAGE = "message"
+        private const val CANCELABLE = "cancelable"
         const val TAG = "dialog_tag"
 
-        fun newInstance() = Dialog()
+        fun newInstance(isCancelable: Boolean) : LoadingDialog {
+            val bundle = Bundle()
+            val fragment = LoadingDialog()
+            bundle.putBoolean(CANCELABLE, isCancelable)
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val isCancelable = savedInstanceState?.getBoolean(CANCELABLE)
+        if (isCancelable != null) {
+            this.isCancelable = isCancelable
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

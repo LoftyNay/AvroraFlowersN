@@ -86,8 +86,4 @@ class CatalogFragment : BaseFragment(), CatalogFragmentView, CategoriesAdapter.O
     override fun hideProgress() {
         progressBarCatalog.visibility = View.GONE
     }
-
-    override fun showConnectionProblem() {
-        Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
-    }
 }

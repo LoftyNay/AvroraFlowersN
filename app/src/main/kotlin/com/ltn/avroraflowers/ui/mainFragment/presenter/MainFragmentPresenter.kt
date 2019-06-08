@@ -1,5 +1,6 @@
 package com.ltn.avroraflowers.ui.mainFragment.presenter
 
+import android.os.Handler
 import android.util.Log
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.ui.mainFragment.interactor.MainFragmentInteractor
@@ -13,21 +14,39 @@ class MainFragmentPresenter(private val view: MainFragmentView) {
     fun repeatLastOrder() {
         mainFragmentInteractor.requestLoadLastOrderInCart(object : OnLoadLastOrderInCart {
             override fun onRequestStart() {
-                view.showProgress()
+                view.showLoadingDialog()
             }
 
             override fun onSuccessful() {
-                view.resultOk("Заказ успешно загружен в корзину")
-                CartProductsRepository.getInstance().callUpdate()
+                mainFragmentInteractor.loadProductsInCart(object : OnLoadLastOrderInCart {
+                    override fun onSuccessful() {
+                        CartProductsRepository.getInstance().callUpdate()
+                        view.resultOk("Заказ успешно загружен в корзину")
+                        view.navigateToCart()
+                    }
+
+                    override fun onFailure(throwable: Throwable) {
+                        view.showConnectionProblem()
+                    }
+
+                    override fun onRequestEnded() {
+                        Handler().postDelayed({
+                            view.hideLoadingDialog()
+                        }, 300)
+                    }
+
+                    override fun onRequestStart() {
+                        view.showLoadingDialog()
+                    }
+                })
             }
 
             override fun onFailure(throwable: Throwable) {
-                Log.d("GLL", throwable.message) //TODO
                 view.showConnectionProblem()
             }
 
             override fun onRequestEnded() {
-                view.hideProgress()
+                view.hideLoadingDialog()
             }
         })
     }
