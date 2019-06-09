@@ -37,7 +37,7 @@ class SelectSavedOrderAdapter(
 
     fun addAllProducts(list: HashMap<SavedProductKey, MutableList<SavedProduct>>) {
         savedOrders.clear()
-        savedOrders.putAll(list)
+        savedOrders.putAll(list.toSortedMap(compareByDescending { it.id }))
         notifyDataSetChanged()
         invalidateEmptyDialog(list)
     }
