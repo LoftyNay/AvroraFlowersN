@@ -53,4 +53,23 @@ class SelectSavedOrderDialogInteractor : BaseInteractor() {
             }
         return savedOrdersHash
     }
+
+    fun requestAddSavedOrderInCart(orderId: Int, onAddSavedOrderInCart: OnAddSavedOrderInCart) {
+        disposable = apiAvrora.getSavedOrderAndSendInCart(preferencesUtils.getToken()!!, orderId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .retry(3)
+            .doOnSubscribe { onAddSavedOrderInCart.onRequestStart() }
+            .doFinally { onAddSavedOrderInCart.onRequestEnded() }
+            .subscribe(
+                { res ->
+                    onAddSavedOrderInCart.onSuccessful()
+                    disposable.dispose()
+                },
+                {
+                    onAddSavedOrderInCart.onFailure(it)
+                    disposable.dispose()
+                }
+            )
+    }
 }

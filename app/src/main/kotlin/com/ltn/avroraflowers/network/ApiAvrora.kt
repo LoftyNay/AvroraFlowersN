@@ -66,4 +66,7 @@ interface ApiAvrora {
 
     @GET("/user/cart/save")
     fun getSavedOrders(@Header("access-token") accessToken: String): Observable<List<SavedOrder>>
+
+    @GET("/user/save_order_to_cart/{id}")
+    fun getSavedOrderAndSendInCart(@Header("access-token") accessToken: String, @Path("id") id: Int): Observable<SampleResponse>
 }

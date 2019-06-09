@@ -7,6 +7,20 @@
 
     <include layout="@layout/toolbar" android:id="@+id/savedOrdersToolbar"/>
 
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvEmpty"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:text="Сохраненные заказы\nотсутствуют"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSavedOrders"
             android:layout_width="match_parent"

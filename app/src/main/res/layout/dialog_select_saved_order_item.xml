@@ -3,8 +3,13 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="4dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" android:id="@+id/cvSavedOrders">
+        android:layout_height="wrap_content"
+        android:id="@+id/cvSavedOrders">
+
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:padding="13dp"
@@ -23,16 +28,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvProductsInSavedOrder"
-                android:text="fekgoregoergiergi ewf we  rewr wer wer wer w"
-                android:layout_width="wrap_content"
+
+        <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipContainerSelectSavedOrder"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="5dp"
+                app:chipSpacingVertical="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvSavedOrderName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvSavedOrderName"/>
-
+                android:layout_marginTop="12dp">
+        </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

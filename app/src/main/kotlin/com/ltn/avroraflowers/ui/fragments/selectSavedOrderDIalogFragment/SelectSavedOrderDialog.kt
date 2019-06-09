@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.SelectSavedOrderAdapter
+import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.model.SavedProduct
 import com.ltn.avroraflowers.model.SavedProductKey
 import com.ltn.avroraflowers.network.Response.SavedOrder
+import com.ltn.avroraflowers.ui.base.BaseDialogFragment
+import com.ltn.avroraflowers.ui.base.BaseFragment
 import com.ltn.avroraflowers.ui.dialogs.LoadingDialog
 import com.ltn.avroraflowers.ui.fragments.selectSavedOrderDIalogFragment.presenter.SelectSavedOrderDialogPresenter
 import com.ltn.avroraflowers.ui.fragments.selectSavedOrderDIalogFragment.view.SelectSavedOrderDialogView
@@ -22,7 +25,7 @@ import com.ltn.avroraflowers.utils.GridSpacingItemDecoration
 import kotlinx.android.synthetic.main.dialog_select_saved_order.*
 
 
-class SelectSavedOrderDialog : DialogFragment(), SelectSavedOrderDialogView,
+class SelectSavedOrderDialog : BaseDialogFragment(), SelectSavedOrderDialogView, BaseFragment.EmptyListener,
     SelectSavedOrderAdapter.OnCardItemClickListener {
 
     lateinit var selectSavedOrderDialogPresenter: SelectSavedOrderDialogPresenter
@@ -64,11 +67,11 @@ class SelectSavedOrderDialog : DialogFragment(), SelectSavedOrderDialogView,
     }
 
     private fun initRecycler() {
-        adapter = SelectSavedOrderAdapter(this)
+        adapter = SelectSavedOrderAdapter(this, this)
         rvSavedOrders.addItemDecoration(
             GridSpacingItemDecoration(
                 1,
-                20,
+                40,
                 true,
                 0
             )
@@ -82,7 +85,17 @@ class SelectSavedOrderDialog : DialogFragment(), SelectSavedOrderDialogView,
     }
 
     override fun onItemClick(saveOrderId: Int) {
+        selectSavedOrderDialogPresenter.addSavedOrderToCart(saveOrderId)
+    }
 
+    override fun onShowEmpty() {
+        tvEmpty.visibility = View.VISIBLE
+        rvSavedOrders.visibility = View.GONE
+    }
+
+    override fun onHideEmpty() {
+        tvEmpty.visibility = View.GONE
+        rvSavedOrders.visibility = View.VISIBLE
     }
 
     override fun showProgress() {
@@ -99,5 +112,17 @@ class SelectSavedOrderDialog : DialogFragment(), SelectSavedOrderDialogView,
         Toast.makeText(activity, "Ошибка соединения, попробуйте позже", Toast.LENGTH_LONG).show()
     }
 
-    override fun resultOk(message: String) {}
+    override fun showLoadingDialog() {
+        mContext.showLoadingDialog()
+    }
+
+    override fun hideLoadingDialog() {
+        mContext.closeDialogs()
+    }
+
+    override fun resultOk(message: String) {
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
+        mContext.setPagerItem(ViewPagerAdapter.CART_FRAGMENT)
+        dismiss()
+    }
 }

@@ -17,27 +17,9 @@ class MainFragmentPresenter(private val view: MainFragmentView) {
             }
 
             override fun onSuccessful() {
-                mainFragmentInteractor.loadProductsInCart(object : OnLoadLastOrderInCart {
-                    override fun onSuccessful() {
-                        CartProductsRepository.getInstance().callUpdate()
-                        view.resultOk("Заказ успешно загружен в корзину")
-                        view.navigateToCart()
-                    }
-
-                    override fun onFailure(throwable: Throwable) {
-                        view.showConnectionProblem()
-                    }
-
-                    override fun onRequestEnded() {
-                        Handler().postDelayed({
-                            view.hideLoadingDialog()
-                        }, 300)
-                    }
-
-                    override fun onRequestStart() {
-                        view.showLoadingDialog()
-                    }
-                })
+                CartProductsRepository.getInstance().callUpdate()
+                view.resultOk("Заказ успешно загружен в корзину")
+                view.navigateToCart()
             }
 
             override fun onFailure(throwable: Throwable) {
