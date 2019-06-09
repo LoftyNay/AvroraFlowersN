@@ -1,4 +1,4 @@
-package com.ltn.avroraflowers.ui.mainFragment
+package com.ltn.avroraflowers.ui.fragments.mainFragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +11,9 @@ import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.model.Repository.OrdersRepository
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
-import com.ltn.avroraflowers.ui.mainFragment.presenter.MainFragmentPresenter
-import com.ltn.avroraflowers.ui.mainFragment.view.MainFragmentView
+import com.ltn.avroraflowers.ui.fragments.mainFragment.presenter.MainFragmentPresenter
+import com.ltn.avroraflowers.ui.fragments.mainFragment.view.MainFragmentView
+import com.ltn.avroraflowers.ui.fragments.selectSavedOrderDIalogFragment.SelectSavedOrderDialog
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment(), MainFragmentView {
@@ -43,7 +44,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
             showDialogRepeatLastOrder()
         }
         loadLastOrderButton.setOnClickListener {
-
+            SelectSavedOrderDialog.newInstance().show(fragmentManager!!, SelectSavedOrderDialog.TAG)
         }
         exitButtonFragmentMain.setOnClickListener {
             showDialog(

@@ -67,4 +67,10 @@
     </string>
     <string name="delete_title">Удаление</string>
     <string name="delete_message">Удалить товары из корзины?</string>
+    <string name="ok">Ок</string>
+    <string name="name_order">Имя заказа</string>
+    <string name="save_cart_message">Введите название сохраняемого заказа. Товары в корзине будут сохранены для
+        дальнейшей загрузки в нее из списка сохраненных заказов под этим названием.
+    </string>
+    <string name="saved_orders">Сохраненные заказы</string>
 </resources>

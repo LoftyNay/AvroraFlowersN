@@ -3,6 +3,7 @@ package com.ltn.avroraflowers.ui.fragments.cartFragment
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.textfield.TextInputEditText
 import com.ltn.avroraflowers.R
 import com.ltn.avroraflowers.adapters.CartProductsAdapter
 import com.ltn.avroraflowers.adapters.ViewPagerAdapter
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
+import com.ltn.avroraflowers.ui.dialogs.InputDialog
 import com.ltn.avroraflowers.ui.fragments.cartFragment.presenter.CartFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.cartFragment.view.CartFragmentView
 import com.ltn.avroraflowers.ui.fragments.innerProductFragment.InnerProductFragment
@@ -26,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_cart.*
 import kotlinx.android.synthetic.main.header_recycler_cart.*
 
 class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.AdapterListener, BaseFragment.EmptyListener,
-    View.OnClickListener {
+    View.OnClickListener, InputDialog.OnEditTextConfirmListener {
 
     @InjectPresenter
     lateinit var cartFragmentPresenter: CartFragmentPresenter
@@ -151,11 +154,17 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                 })
             }
             saveCartProductsButton -> {
-                cartFragmentPresenter.saveCart("1111")
+                val inputDialog = InputDialog.newInstance()
+                inputDialog.setTargetFragment(this, 0)
+                inputDialog.show(fragmentManager!!, InputDialog.TAG)
             }
         }
     }
 
+    //Callback confirm save cart
+    override fun onConfirm(name: String) {
+        cartFragmentPresenter.saveCart(name)
+    }
 
     override fun userLogin(status: Boolean) {
         when (status) {

@@ -1,11 +1,10 @@
-package com.ltn.avroraflowers.ui.mainFragment.presenter
+package com.ltn.avroraflowers.ui.fragments.mainFragment.presenter
 
 import android.os.Handler
-import android.util.Log
 import com.ltn.avroraflowers.model.Repository.CartProductsRepository
-import com.ltn.avroraflowers.ui.mainFragment.interactor.MainFragmentInteractor
-import com.ltn.avroraflowers.ui.mainFragment.interactor.OnLoadLastOrderInCart
-import com.ltn.avroraflowers.ui.mainFragment.view.MainFragmentView
+import com.ltn.avroraflowers.ui.fragments.mainFragment.interactor.MainFragmentInteractor
+import com.ltn.avroraflowers.ui.fragments.mainFragment.interactor.OnLoadLastOrderInCart
+import com.ltn.avroraflowers.ui.fragments.mainFragment.view.MainFragmentView
 
 class MainFragmentPresenter(private val view: MainFragmentView) {
 

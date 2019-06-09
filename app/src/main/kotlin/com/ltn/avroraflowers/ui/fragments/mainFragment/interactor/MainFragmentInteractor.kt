@@ -1,6 +1,5 @@
-package com.ltn.avroraflowers.ui.mainFragment.interactor
+package com.ltn.avroraflowers.ui.fragments.mainFragment.interactor
 
-import android.util.Log
 import com.ltn.avroraflowers.ui.base.BaseInteractor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

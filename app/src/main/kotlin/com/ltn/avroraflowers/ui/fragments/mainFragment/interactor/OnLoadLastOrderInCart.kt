@@ -1,4 +1,4 @@
-package com.ltn.avroraflowers.ui.mainFragment.interactor
+package com.ltn.avroraflowers.ui.fragments.mainFragment.interactor
 
 import com.ltn.avroraflowers.ui.base.BaseCallback
 

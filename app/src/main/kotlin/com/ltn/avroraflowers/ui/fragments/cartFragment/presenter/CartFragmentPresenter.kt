@@ -55,7 +55,7 @@ class CartFragmentPresenter : BasePresenter<CartFragmentView>(), ICartFragmentPr
     fun saveCart(name: String) {
         cartFragmentInteractor.requestSaveCart(name, object : OnSaveCartListener {
             override fun onSuccessful() {
-                viewState.resultOk("Товары успешно сохранены")
+                viewState.resultOk("Заказ сохранен и может быть выбран для загрузки")
             }
 
             override fun onFailure(throwable: Throwable) {

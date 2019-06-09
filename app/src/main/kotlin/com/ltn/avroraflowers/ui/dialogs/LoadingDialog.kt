@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window.FEATURE_NO_TITLE
 import androidx.fragment.app.DialogFragment
+import com.ltn.avroraflowers.R
 
 
 class LoadingDialog : DialogFragment() {
 
     companion object {
         private const val CANCELABLE = "cancelable"
-        const val TAG = "dialog_tag"
+        const val TAG = "dialog_loading_tag"
 
-        fun newInstance(isCancelable: Boolean) : LoadingDialog {
+        fun newInstance(isCancelable: Boolean): LoadingDialog {
             val bundle = Bundle()
             val fragment = LoadingDialog()
             bundle.putBoolean(CANCELABLE, isCancelable)
@@ -32,7 +33,7 @@ class LoadingDialog : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(com.ltn.avroraflowers.R.layout.dialog_loading, container)
+        return inflater.inflate(R.layout.dialog_loading, container)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): android.app.Dialog {

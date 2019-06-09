@@ -2,10 +2,7 @@ package com.ltn.avroraflowers.network
 
 import com.ltn.avroraflowers.model.*
 import com.ltn.avroraflowers.network.RequestBody.*
-import com.ltn.avroraflowers.network.Response.LoginResponse
-import com.ltn.avroraflowers.network.Response.RegisterResponse
-import com.ltn.avroraflowers.network.Response.SampleResponse
-import com.ltn.avroraflowers.network.Response.SearchResponse
+import com.ltn.avroraflowers.network.Response.*
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -66,4 +63,7 @@ interface ApiAvrora {
 
     @GET("/products")
     fun getProducts(@Query("limit") limit: Int): Observable<SearchResponse>
+
+    @GET("/user/cart/save")
+    fun getSavedOrders(@Header("access-token") accessToken: String): Observable<List<SavedOrder>>
 }
