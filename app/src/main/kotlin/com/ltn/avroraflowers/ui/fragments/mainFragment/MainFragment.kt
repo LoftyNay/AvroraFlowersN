@@ -11,9 +11,11 @@ import com.ltn.avroraflowers.model.Repository.CartProductsRepository
 import com.ltn.avroraflowers.model.Repository.OrdersRepository
 import com.ltn.avroraflowers.ui.activities.EntryActivity
 import com.ltn.avroraflowers.ui.base.BaseFragment
+import com.ltn.avroraflowers.ui.dialogs.InfoDialog
 import com.ltn.avroraflowers.ui.fragments.mainFragment.presenter.MainFragmentPresenter
 import com.ltn.avroraflowers.ui.fragments.mainFragment.view.MainFragmentView
 import com.ltn.avroraflowers.ui.fragments.selectSavedOrderDIalogFragment.SelectSavedOrderDialog
+import kotlinx.android.synthetic.main.contacts_about_buttons_layout.*
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment(), MainFragmentView {
@@ -46,8 +48,14 @@ class MainFragment : BaseFragment(), MainFragmentView {
         loadLastOrderButton.setOnClickListener {
             SelectSavedOrderDialog.newInstance().show(fragmentManager!!, SelectSavedOrderDialog.TAG)
         }
+        contactsMainButton.setOnClickListener {
+            InfoDialog.newInstanceContacts("Контакты").show(fragmentManager!!, InfoDialog.TAG)
+        }
+        aboutMainButton.setOnClickListener {
+            InfoDialog.newInstanceAbout("О компании").show(fragmentManager!!, InfoDialog.TAG)
+        }
         exitButtonFragmentMain.setOnClickListener {
-            showDialog(
+            mContext.showDialog(
                 preferencesUtils.getName()!!,
                 getString(R.string.exit_profile),
                 getString(R.string.yes),
@@ -73,7 +81,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     private fun showDialogRepeatLastOrder() {
-        showDialog(
+        mContext.showDialog(
             getString(R.string.load_last_order),
             getString(R.string.load_last_order_message),
             getString(R.string.continue_b),

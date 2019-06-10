@@ -27,10 +27,7 @@ class InputDialog : DialogFragment() {
         const val MESSAGE = "dialog_input_message"
 
         fun newInstance(): InputDialog {
-            // val bundle = Bundle()
             val fragment = InputDialog()
-            //  bundle.putString(MESSAGE, message)
-            //  fragment.arguments = bundle
             return fragment
         }
     }

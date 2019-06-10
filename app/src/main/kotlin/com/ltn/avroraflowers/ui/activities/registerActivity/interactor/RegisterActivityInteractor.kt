@@ -2,7 +2,7 @@ package com.ltn.avroraflowers.ui.activities.registerActivity.interactor
 
 import com.ltn.avroraflowers.network.RequestBody.UserRegister
 import com.ltn.avroraflowers.ui.base.BaseInteractor
-import com.ltn.avroraflowers.utils.STATUS_CODE
+import com.ltn.avroraflowers.utils.StatusCode
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -23,10 +23,10 @@ class RegisterActivityInteractor : BaseInteractor(), IRegisterActivityInteractor
             .subscribe(
                 { result ->
                     when (result.code) {
-                        STATUS_CODE.USER_EXIST.value -> {
+                        StatusCode.USER_EXIST.value -> {
                             onRegisterUserListener.onUserExist()
                         }
-                        STATUS_CODE.CREATED.value -> {
+                        StatusCode.CREATED.value -> {
                             onRegisterUserListener.onUserRegistered()
                         }
                     }

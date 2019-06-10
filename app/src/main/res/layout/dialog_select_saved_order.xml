@@ -13,6 +13,7 @@
             android:textSize="20sp"
             android:text="Сохраненные заказы\nотсутствуют"
             android:layout_width="0dp"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

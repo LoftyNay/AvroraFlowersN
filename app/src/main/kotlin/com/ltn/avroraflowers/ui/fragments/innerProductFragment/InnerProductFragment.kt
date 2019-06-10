@@ -94,7 +94,7 @@ class InnerProductFragment : BaseFragment(), InnerProductFragmentView {
     }
 
     override fun showProductInfo(product: Product) {
-        Picasso.get().load(product.image).into(imageProductInner)
+        Picasso.get().load(product.image).fit().centerCrop().into(imageProductInner)
         titleProductInner.text = product.title
         colorProductInner.text = product.color
         descriptionInnerProduct.text = product.description

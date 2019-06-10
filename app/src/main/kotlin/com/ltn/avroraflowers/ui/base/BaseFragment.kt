@@ -68,28 +68,6 @@ abstract class BaseFragment : BaseLoginFragment(), BaseView, IConnectionProblem 
 
 //TODO TO MESSAGE BASE FRAGMENT!!!
 
-    fun showDialog(
-        title: String,
-        message: String,
-        positiveTitle: String,
-        negativeTitle: String,
-        listener: DialogListener
-    ) {
-        val alertDialog = AlertDialog.Builder(activity!!)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton(positiveTitle) { dialog, which ->
-                listener.onPositive()
-                dialog.dismiss()
-            }
-            .setNegativeButton(negativeTitle) { dialog, which ->
-                listener.onNegative()
-                dialog.dismiss()
-            }
-            .create()
-        alertDialog.show()
-    }
-
     fun showAlert(message: String, positiveTitle: String) {
         val alertDialog = AlertDialog.Builder(activity!!)
             .setMessage(message)

@@ -25,11 +25,13 @@ class SelectSavedOrderDialogPresenter(val view: SelectSavedOrderDialogView) {
             }
 
             override fun onFailure(throwable: Throwable) {
-                view.showConnectionProblem()
+                if (throwable !is IllegalStateException)
+                    view.showConnectionProblem()
             }
 
             override fun onRequestEnded() {
                 view.hideProgress()
+                view.invalidateRecycler()
             }
 
             override fun onRequestStart() {

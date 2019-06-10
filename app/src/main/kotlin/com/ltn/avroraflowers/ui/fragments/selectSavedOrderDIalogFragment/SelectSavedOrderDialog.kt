@@ -80,12 +80,27 @@ class SelectSavedOrderDialog : BaseDialogFragment(), SelectSavedOrderDialogView,
         rvSavedOrders.adapter = adapter
     }
 
+    override fun invalidateRecycler() {
+        adapter.invalidate()
+    }
+
     override fun showSavedOrders(savedOrders: HashMap<SavedProductKey, MutableList<SavedProduct>>) {
         adapter.addAllProducts(savedOrders)
     }
 
-    override fun onItemClick(saveOrderId: Int) {
-        selectSavedOrderDialogPresenter.addSavedOrderToCart(saveOrderId)
+    override fun onItemClick(savedOrderName: String, saveOrderId: Int) {
+        mContext.showDialog(
+            savedOrderName,
+            getString(R.string.load_saved_order),
+            getString(R.string.continue_b),
+            getString(R.string.cancel),
+            object : BaseFragment.DialogListener {
+                override fun onPositive() {
+                    selectSavedOrderDialogPresenter.addSavedOrderToCart(saveOrderId)
+                }
+                override fun onNegative() {}
+            }
+        )
     }
 
     override fun onShowEmpty() {

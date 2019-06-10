@@ -15,15 +15,13 @@ class MainFragmentInteractor : BaseInteractor() {
             .doFinally { onLoadLastOrderInCart.onRequestEnded() }
             .subscribe(
                 { result ->
-                    onLoadLastOrderInCart.onSuccessful()
+                    onLoadLastOrderInCart.onSuccessful(result.code)
                     disposable.dispose()
                 },
                 {
                     onLoadLastOrderInCart.onFailure(it)
-                    Log.d("GLL", it.message)
                     disposable.dispose()
                 }
             )
     }
-
 }

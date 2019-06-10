@@ -3,7 +3,7 @@ package com.ltn.avroraflowers.ui.fragments.entryLoginFragment.interactor
 import android.util.Log
 import com.ltn.avroraflowers.network.RequestBody.UserLogin
 import com.ltn.avroraflowers.ui.base.BaseInteractor
-import com.ltn.avroraflowers.utils.STATUS_CODE
+import com.ltn.avroraflowers.utils.StatusCode
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -20,13 +20,13 @@ class EntryLoginInteractor : BaseInteractor(), IEntryLoginInteractor {
             .subscribe(
                 { result ->
                     when (result.code) {
-                        STATUS_CODE.OK.value -> {
+                        StatusCode.OK.value -> {
                             onCheckUserDataListener.onValidUserData(result)
                         }
-                        STATUS_CODE.USER_NOT_FOUND.value -> {
+                        StatusCode.USER_NOT_FOUND.value -> {
                             onCheckUserDataListener.onEmailNotFound()
                         }
-                        STATUS_CODE.WRONG_PASSWORD.value -> {
+                        StatusCode.WRONG_PASSWORD.value -> {
                             onCheckUserDataListener.onWrongPassword()
                         }
                     }

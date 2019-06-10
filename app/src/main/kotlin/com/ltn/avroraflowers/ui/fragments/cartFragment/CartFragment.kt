@@ -68,7 +68,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
     }
 
     override fun onDeleteButtonClick(listIds: MutableList<Int>) {
-        showDialog(getString(R.string.delete_title),
+        mContext.showDialog(getString(R.string.delete_title),
             getString(R.string.delete_message),
             getString(R.string.confirm),
             getString(R.string.cancel),
@@ -99,13 +99,13 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
         when (v) {
             toConfirmCartProductsButton -> {
                 if (tvDateCart.text == "") {
-                    showDialog("Внимание", getString(R.string.pick_date_message, preferencesUtils.getName()),
+                    mContext.showDialog("Внимание", getString(R.string.pick_date_message, preferencesUtils.getName()),
                         getString(R.string.pick_date_positive), getString(R.string.cancel), object : DialogListener {
                             override fun onPositive() {
                                 showDatePicker(object : DatePickerDialog.OnDateSetListener {
                                     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
                                         convertAndSetData(month, dayOfMonth, year)
-                                        showDialog(preferencesUtils.getName()!!,
+                                        mContext.showDialog(preferencesUtils.getName()!!,
                                             getString(R.string.confirm_order_message, tvDateCart.text, tvCity.text),
                                             getString(R.string.confirm),
                                             getString(R.string.cancel),
@@ -131,7 +131,7 @@ class CartFragment : BaseFragment(), CartFragmentView, CartProductsAdapter.Adapt
                             }
                         })
                 } else {
-                    showDialog(preferencesUtils.getName()!!,
+                    mContext.showDialog(preferencesUtils.getName()!!,
                         getString(R.string.confirm_order_message, tvDateCart.text, tvCity.text),
                         getString(R.string.confirm),
                         getString(R.string.cancel),

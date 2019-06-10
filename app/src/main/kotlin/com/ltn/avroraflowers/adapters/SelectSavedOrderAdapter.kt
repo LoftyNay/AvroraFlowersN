@@ -39,11 +39,10 @@ class SelectSavedOrderAdapter(
         savedOrders.clear()
         savedOrders.putAll(list.toSortedMap(compareByDescending { it.id }))
         notifyDataSetChanged()
-        invalidateEmptyDialog(list)
     }
 
-    private fun invalidateEmptyDialog(list: HashMap<SavedProductKey, MutableList<SavedProduct>>) {
-        if (list.size != 0) {
+    fun invalidate() {
+        if (savedOrders.size != 0) {
             onEmptyListener.onHideEmpty()
         } else {
             onEmptyListener.onShowEmpty()
@@ -52,7 +51,7 @@ class SelectSavedOrderAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.cardItem.setOnClickListener {
-            onClickCardListener.onItemClick(savedOrders.toList()[position].first.id)
+            onClickCardListener.onItemClick(savedOrders.toList()[position].first.name, savedOrders.toList()[position].first.id)
         }
         holder.savedOrderName.text = savedOrders.toList()[position].first.name
         savedOrders.toList()[position].second.forEach {
@@ -61,7 +60,8 @@ class SelectSavedOrderAdapter(
             chip.setTextColor(ContextCompat.getColor(holder.cardItem.context, android.R.color.white))
             chip.isEnabled = false
             chip.isClickable = false
-            chip.chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(holder.cardItem.context, R.color.chipsColor))
+            chip.chipBackgroundColor =
+                ColorStateList.valueOf(ContextCompat.getColor(holder.cardItem.context, R.color.chipsColor))
             holder.chipContainer.addView(chip)
         }
     }
@@ -74,6 +74,6 @@ class SelectSavedOrderAdapter(
     }
 
     interface OnCardItemClickListener {
-        fun onItemClick(saveOrderId: Int)
+        fun onItemClick(savedOrderName: String, saveOrderId: Int)
     }
 }

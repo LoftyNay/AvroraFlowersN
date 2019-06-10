@@ -65,6 +65,8 @@
     <string name="load_last_order_message">Товары из прошлого заказа будут загружены в корзину, а имеющиеся в корзине удалены.
         Вы уверены, что хотите продолжить?
     </string>
+    <string name="load_saved_order">Товары из заказа будут загружены в корзину, а имеющиеся в корзине удалены. Вы уверены, что хотите продолжить?
+    </string>
     <string name="delete_title">Удаление</string>
     <string name="delete_message">Удалить товары из корзины?</string>
     <string name="ok">Ок</string>
