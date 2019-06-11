@@ -76,6 +76,7 @@ class ProductsAdapter(
         holder.packSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 currentSpinnerItem = listSpinner[position]
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
