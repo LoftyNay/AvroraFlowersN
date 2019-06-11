@@ -191,6 +191,9 @@ class CartProductsAdapter(
     }
 
     private fun initCountPackSpinner(holder: ItemViewHolder, position: Int) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            holder.countPackSpinner.background = holder.countPackSpinner.context.getDrawable(R.drawable.spinner_outline_no_arrow)
+        }
         val listCountSpinner = Constants.LIST_COUNT_PACK
         val arrayAdapter = ArrayAdapter<Int>(
             holder.cartCardItem.context,
@@ -217,6 +220,9 @@ class CartProductsAdapter(
     }
 
     private fun initPerPackSpinner(holder: ItemViewHolder, position: Int) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            holder.perPackSpinner.background = holder.perPackSpinner.context.getDrawable(R.drawable.spinner_outline_no_arrow)
+        }
         val listPerPackSpinner = Constants.LIST_PER_PACK
         holder.perPackSpinner.adapter = ArrayAdapter<Int>(
             holder.cartCardItem.context,

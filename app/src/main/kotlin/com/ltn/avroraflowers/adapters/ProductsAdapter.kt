@@ -70,6 +70,9 @@ class ProductsAdapter(
 
         var currentSpinnerItem = listSpinner[0]
 
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.M) {
+            holder.packSpinner.background = holder.packSpinner.context.getDrawable(R.drawable.spinner_outline_no_arrow)
+        }
         holder.packSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 currentSpinnerItem = listSpinner[position]
