@@ -19,7 +19,7 @@
 
     <style name="SplashScreen" parent="AppTheme">
         <item name="colorPrimaryDark">@android:color/white</item>
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
 
     <style name="ToolbarTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
